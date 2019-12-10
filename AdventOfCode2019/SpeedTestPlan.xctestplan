@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "9B588EE9-4229-4307-9065-211351E83D1A",
+      "id" : "317B7A06-926E-46F3-99DE-6A2E8D89F1BA",
       "name" : "Configuration 1",
       "options" : {
 
@@ -13,7 +13,7 @@
   },
   "testTargets" : [
     {
-      "skippedTests" : [
+      "selectedTests" : [
         "AscendingNumbersTests\/testIncrementSpeed()"
       ],
       "target" : {

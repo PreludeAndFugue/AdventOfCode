@@ -14,7 +14,7 @@ class ComputerTests: XCTestCase {
         let output = [2, 0, 0, 0, 99]
         let computer = Computer(memory: input, console: AutoConsole(input: [0]), debug: true)
         computer.run()
-        XCTAssertEqual(output, computer.memory)
+        XCTAssertEqual(output, computer.memory.asArray)
     }
 
 
@@ -23,7 +23,7 @@ class ComputerTests: XCTestCase {
         let output = [2, 3, 0, 6, 99]
         let computer = Computer(memory: input, console: AutoConsole(input: [0]))
         computer.run()
-        XCTAssertEqual(output, computer.memory)
+        XCTAssertEqual(output, computer.memory.asArray)
     }
 
 
@@ -32,7 +32,7 @@ class ComputerTests: XCTestCase {
         let output = [2,4,4,5,99,9801]
         let computer = Computer(memory: input, console: AutoConsole(input: [0]))
         computer.run()
-        XCTAssertEqual(output, computer.memory)
+        XCTAssertEqual(output, computer.memory.asArray)
     }
 
 
@@ -41,7 +41,7 @@ class ComputerTests: XCTestCase {
         let output = [30,1,1,4,2,5,6,0,99]
         let computer = Computer(memory: input, console: AutoConsole(input: [0]))
         computer.run()
-        XCTAssertEqual(output, computer.memory)
+        XCTAssertEqual(output, computer.memory.asArray)
     }
 
 
@@ -50,7 +50,7 @@ class ComputerTests: XCTestCase {
         let output = [1002,4,3,4,99]
         let computer = Computer(memory: input, console: AutoConsole(input: [0]))
         computer.run()
-        XCTAssertEqual(output, computer.memory)
+        XCTAssertEqual(output, computer.memory.asArray)
     }
 
 
@@ -59,7 +59,7 @@ class ComputerTests: XCTestCase {
         let output = [1101,100,-1,4,99]
         let computer = Computer(memory: input, console: AutoConsole(input: [0]))
         computer.run()
-        XCTAssertEqual(output, computer.memory)
+        XCTAssertEqual(output, computer.memory.asArray)
     }
 
 

@@ -17,7 +17,7 @@ final class Problem08: Problem {
     func run() {
         let r1 = part1()
         let r2 = part2()
-        printResults(r1, r2)
+        printResults(number: 8, r1, r2)
     }
 }
 

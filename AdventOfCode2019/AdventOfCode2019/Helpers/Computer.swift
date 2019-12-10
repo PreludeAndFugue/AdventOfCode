@@ -56,11 +56,11 @@ final class Computer {
     private var relativeBase = 0
     private let debug: Bool
     private let console: Console
-    var memory: [Int]
+    var memory: Memory
 
 
     init(memory: [Int], console: Console, runMode: RunMode = .toEnd, debug: Bool = false) {
-        self.memory = memory
+        self.memory = Memory(fromArray: memory)
         self.console = console
         self.runMode = runMode
         self.debug = debug
@@ -76,16 +76,16 @@ final class Computer {
         }
         while state == .running {
             let opcodeData = OpcodeData(memory[pointer])
-//            print("step, pointer", pointer)
+//            print("pointer, relativeBase", pointer, relativeBase)
 //            print(opcodeData)
-//            print(memory)
+//            print(memory.asArray)
             switch opcodeData.opcode {
             case .add:
                 add(modes: opcodeData.parameterModes)
             case .multiply:
                 multiply(modes: opcodeData.parameterModes)
             case .input:
-                input()
+                input(mode: opcodeData.parameterModes[0])
             case .output:
                 output(mode: opcodeData.parameterModes[0])
             case .jumpIfTrue:
@@ -146,10 +146,10 @@ private extension Computer {
     }
 
 
-    private func input() {
+    private func input(mode: ParameterMode) {
         let value = console.read()
         let p1 = memory[pointer + 1]
-        memory[p1] = value
+        memory[p1 + relativeBase] = value
         debug(opcode: "input", modes: [], m1: 0, m2: 0, p3: 0, result: 0)
         next(2)
     }
@@ -221,7 +221,8 @@ private extension Computer {
     private func relativeBaseOffset(mode: ParameterMode) {
         let m1 = getValue(pointer: pointer + 1, mode: mode)
         relativeBase += m1
-        
+//        print("relative-base-offset")
+        next(2)
     }
 
 

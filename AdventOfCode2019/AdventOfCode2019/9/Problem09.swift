@@ -7,10 +7,14 @@
 //
 
 final class Problem09: Problem {
+    private let file = "9/data09.txt"
+    private lazy var input = self.makeInput()
+
+
     func run() {
         let r1 = part1()
         let r2 = part2()
-        printResults(r1, r2)
+        printResults(number: 9, r1, r2)
     }
 }
 
@@ -19,11 +23,20 @@ final class Problem09: Problem {
 
 private extension Problem09 {
     private func part1() -> Int {
-        return 0
+        let console = AutoConsole(input: [1])
+        let computer = Computer(memory: input, console: console)
+        computer.run()
+        print(console.output)
+        return 1
     }
 
 
     private func part2() -> Int {
         return 0
+    }
+
+
+    private func makeInput() -> [Int] {
+        return try! String(contentsOfFile: path + file).makeIntegers(separator: ",")
     }
 }
