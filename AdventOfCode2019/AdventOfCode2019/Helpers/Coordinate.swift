@@ -6,6 +6,8 @@
 //  Copyright © 2019 Gary Kerr. All rights reserved.
 //
 
+import Foundation
+
 struct Coordinate {
     let x: Int
     let y: Int
@@ -15,9 +17,19 @@ struct Coordinate {
         return abs(x) + abs(y)
     }
 
+
+    var theta: Double {
+        return atan2(Double(y), Double(x))
+    }
+
     
     static func + (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         return Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+    }
+
+
+    static func - (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
+        return Coordinate(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
 
 
