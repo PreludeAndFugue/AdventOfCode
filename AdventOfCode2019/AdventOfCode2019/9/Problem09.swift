@@ -26,8 +26,7 @@ private extension Problem09 {
         let console = AutoConsole(input: [1])
         let computer = Computer(memory: input, console: console)
         computer.run()
-        print(console.output)
-        return 1
+        return console.output.first!
     }
 
 
