@@ -124,37 +124,54 @@ final class Computer {
 // MARK: - Private
 
 private extension Computer {
+    /// Addition, opcode 1
+    ///
+    /// - Parameter modes: parameter modes
     private func add(modes: [ParameterMode]) {
         let m1 = getValue(pointer: pointer + 1, mode: modes[0])
         let m2 = getValue(pointer: pointer + 2, mode: modes[1])
         let p3 = memory[pointer + 3]
+        assert(modes[2] != .immediate)
         let result = m1 + m2
-        memory[p3] = result
+        let relative = modes[2] == .relative ? relativeBase : 0
+        memory[p3 + relative] = result
         debug(opcode: "add", modes: modes, m1: m1, m2: m2, p3: p3, result: result)
         next(4)
     }
 
 
+    /// Multiplication, opcode 2
+    ///
+    /// - Parameter modes: parameter modes
     private func multiply(modes: [ParameterMode]) {
         let m1 = getValue(pointer: pointer + 1, mode: modes[0])
         let m2 = getValue(pointer: pointer + 2, mode: modes[1])
         let p3 = memory[pointer + 3]
+        assert(modes[2] != .immediate)
         let result = m1 * m2
-        memory[p3] = result
+        let relative = modes[2] == .relative ? relativeBase : 0
+        memory[p3 + relative] = result
         debug(opcode: "multiply", modes: modes, m1: m1, m2: m2, p3: p3, result: result)
         next(4)
     }
 
 
+    /// Input, opcode 3
+    ///
+    /// - Parameter mode: paramater modes
     private func input(mode: ParameterMode) {
         let value = console.read()
         let p1 = memory[pointer + 1]
-        memory[p1 + relativeBase] = value
+        let relative = mode == .relative ? relativeBase : 0
+        memory[p1 + relative] = value
         debug(opcode: "input", modes: [], m1: 0, m2: 0, p3: 0, result: 0)
         next(2)
     }
 
 
+    /// Output, opcode 4
+    ///
+    /// - Parameter mode: parameter modes
     private func output(mode: ParameterMode) {
         let m1 = getValue(pointer: pointer + 1, mode: mode)
         console.write(m1)
@@ -169,6 +186,9 @@ private extension Computer {
     }
 
 
+    /// Jump if true, opcode 5
+    ///
+    /// - Parameter modes: parameter modes
     private func jumpIfTrue(modes: [ParameterMode]) {
         let m1 = getValue(pointer: pointer + 1, mode: modes[0])
         if m1 != 0 {
@@ -180,6 +200,9 @@ private extension Computer {
     }
 
 
+    /// Jump if false, opcode 6
+    ///
+    /// - Parameter modes: paramater modes
     private func jumpIfFalse(modes: [ParameterMode]) {
         let m1 = getValue(pointer: pointer + 1, mode: modes[0])
         if m1 == 0 {
@@ -191,41 +214,53 @@ private extension Computer {
     }
 
 
+    /// Less than, opcode 7
+    ///
+    /// - Parameter modes: parameter modes
     private func lessThan(modes: [ParameterMode]) {
         let m1 = getValue(pointer: pointer + 1, mode: modes[0])
         let m2 = getValue(pointer: pointer + 2, mode: modes[1])
-        let m3 = getValue(pointer: pointer + 3, mode: .immediate)
+        assert(modes[2] != .immediate)
+        let p3 = memory[pointer + 3]
+        let relative = modes[2] == .relative ? relativeBase : 0
         if m1 < m2 {
-            memory[m3] = 1
+            memory[p3 + relative] = 1
         } else {
-            memory[m3] = 0
+            memory[p3 + relative] = 0
         }
         next(4)
     }
 
 
+    /// Equals, opcode 8
+    ///
+    /// - Parameter modes: parameter modes
     private func equals(modes: [ParameterMode]) {
         let m1 = getValue(pointer: pointer + 1, mode: modes[0])
         let m2 = getValue(pointer: pointer + 2, mode: modes[1])
-        let m3 = getValue(pointer: pointer + 3, mode: .immediate)
-//        print(pointer + 3, m3, modes[2])
+        assert(modes[2] != .immediate)
+        let p3 = memory[pointer + 3]
+        let relative = modes[2] == .relative ? relativeBase : 0
         if m1 == m2 {
-            memory[m3] = 1
+            memory[p3 + relative] = 1
         } else {
-            memory[m3] = 0
+            memory[p3 + relative] = 0
         }
         next(4)
     }
 
 
+    /// Relative base offset, opcode 9
+    ///
+    /// - Parameter mode: parameter modes
     private func relativeBaseOffset(mode: ParameterMode) {
         let m1 = getValue(pointer: pointer + 1, mode: mode)
         relativeBase += m1
-//        print("relative-base-offset")
         next(2)
     }
 
 
+    /// Finish, opcode 99
     private func finish() {
         state = .finished
     }
@@ -254,7 +289,7 @@ private extension Computer {
         print("pointer", pointer)
         print(opcode, m1, ",", m2, ",", p3, "->", result)
         print(modes)
-        print(memory)
+        print(memory.asArray)
         print()
     }
 }
