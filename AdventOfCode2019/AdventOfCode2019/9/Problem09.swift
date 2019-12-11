@@ -31,7 +31,10 @@ private extension Problem09 {
 
 
     private func part2() -> Int {
-        return 0
+        let console = AutoConsole(input: [2])
+        let computer = Computer(memory: input, console: console)
+        computer.run()
+        return console.output.first!
     }
 
 
