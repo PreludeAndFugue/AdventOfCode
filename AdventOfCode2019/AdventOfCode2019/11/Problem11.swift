@@ -24,13 +24,16 @@ final class Problem11: Problem {
 
 private extension Problem11 {
     private func part1() -> Int {
-        let robot = Robot(memory: input)
+        let robot = Robot(memory: input, start: .black)
         robot.start()
         return robot.panelsPainted
     }
 
 
     private func part2() -> Int {
+        let robot = Robot(memory: input, start: .white)
+        robot.start()
+        print(robot.picture)
         return 0
     }
 }
