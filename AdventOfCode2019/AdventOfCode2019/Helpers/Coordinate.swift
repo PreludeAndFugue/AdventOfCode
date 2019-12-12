@@ -22,6 +22,13 @@ struct Coordinate {
         return atan2(Double(y), Double(x))
     }
 
+
+    var length: Double {
+        let w = Double(x)
+        let z = Double(y)
+        return sqrt(w * w + z * z)
+    }
+
     
     static func + (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         return Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
