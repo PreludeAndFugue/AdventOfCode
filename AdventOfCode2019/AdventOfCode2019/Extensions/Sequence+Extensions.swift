@@ -87,3 +87,25 @@ extension Sequence {
         indices[minusJ] = temp
     }
 }
+
+
+// MARK: - Combinations
+
+extension Sequence {
+    func combinations(r: Int? = nil) -> [[Element]] {
+        var results: [[Element]] = []
+        let pool = Array(self)
+        let n = pool.count
+        let r_ = r ?? n
+        if r_ > n {
+            return results
+        }
+        for permutation in Array(0..<n).permutations(r: r) {
+            if permutation.sorted() == permutation {
+                let result = permutation.map({ pool[$0] })
+                results.append(result)
+            }
+        }
+        return results
+    }
+}

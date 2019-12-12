@@ -34,6 +34,9 @@
 		4E7A0601239E778700B78183 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFD2B4B239D5DB600E8905E /* String+Extensions.swift */; };
 		4E7A0604239E77CF00B78183 /* Problem09Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A0603239E77CF00B78183 /* Problem09Tests.swift */; };
 		4E7A0605239E787E00B78183 /* Problem09.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A05FF239E75CB00B78183 /* Problem09.swift */; };
+		4E919B2123A2E7EB00DA8B30 /* Problem12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2023A2E7EB00DA8B30 /* Problem12.swift */; };
+		4E919B2323A2E89100DA8B30 /* Coordinate3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2223A2E89100DA8B30 /* Coordinate3.swift */; };
+		4E919B2523A2E92E00DA8B30 /* Moon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2423A2E92E00DA8B30 /* Moon.swift */; };
 		4EA807092399B6D80034F6EA /* Problem05.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA807082399B6D80034F6EA /* Problem05.swift */; };
 		4EA8070B2399D4EC0034F6EA /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA8070A2399D4EC0034F6EA /* Console.swift */; };
 		4EA8070C2399D66B0034F6EA /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA8070A2399D4EC0034F6EA /* Console.swift */; };
@@ -89,6 +92,9 @@
 		4E490D1723A088A300B686E1 /* data10.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data10.txt; sourceTree = "<group>"; };
 		4E7A05FF239E75CB00B78183 /* Problem09.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem09.swift; sourceTree = "<group>"; };
 		4E7A0603239E77CF00B78183 /* Problem09Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem09Tests.swift; sourceTree = "<group>"; };
+		4E919B2023A2E7EB00DA8B30 /* Problem12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem12.swift; sourceTree = "<group>"; };
+		4E919B2223A2E89100DA8B30 /* Coordinate3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate3.swift; sourceTree = "<group>"; };
+		4E919B2423A2E92E00DA8B30 /* Moon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moon.swift; sourceTree = "<group>"; };
 		4EA807072399B6CE0034F6EA /* data05.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data05.txt; sourceTree = "<group>"; };
 		4EA807082399B6D80034F6EA /* Problem05.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem05.swift; sourceTree = "<group>"; };
 		4EA8070A2399D4EC0034F6EA /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
@@ -214,6 +220,14 @@
 			path = 9;
 			sourceTree = "<group>";
 		};
+		4E919B1F23A2E7D900DA8B30 /* 12 */ = {
+			isa = PBXGroup;
+			children = (
+				4E919B2023A2E7EB00DA8B30 /* Problem12.swift */,
+			);
+			path = 12;
+			sourceTree = "<group>";
+		};
 		4EA74A8C239C69EA005A8B39 /* Problem */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +322,7 @@
 				4E7A05FE239E75BD00B78183 /* 9 */,
 				4E490D1023A07FE700B686E1 /* 10 */,
 				4E12AF1B23A1CC7A0039705B /* 11 */,
+				4E919B1F23A2E7D900DA8B30 /* 12 */,
 				4EE6E7A32394778F00672729 /* main.swift */,
 			);
 			path = AdventOfCode2019;
@@ -329,8 +344,10 @@
 				4EC0DB0723972E960058EB46 /* Computer.swift */,
 				4EA8070A2399D4EC0034F6EA /* Console.swift */,
 				4EC0DB132397432F0058EB46 /* Coordinate.swift */,
+				4E919B2223A2E89100DA8B30 /* Coordinate3.swift */,
 				4EC0DB15239743E10058EB46 /* Direction.swift */,
 				4E490D0923A0455000B686E1 /* Memory.swift */,
+				4E919B2423A2E92E00DA8B30 /* Moon.swift */,
 				4E12AF2023A1CEC40039705B /* Robot.swift */,
 			);
 			path = Helpers;
@@ -481,10 +498,13 @@
 				4EE89733239BF1330076D8B9 /* Problem07.swift in Sources */,
 				4E7A0600239E75CB00B78183 /* Problem09.swift in Sources */,
 				4EE6E7AC239477AD00672729 /* Problem01.swift in Sources */,
+				4E919B2523A2E92E00DA8B30 /* Moon.swift in Sources */,
+				4E919B2123A2E7EB00DA8B30 /* Problem12.swift in Sources */,
 				4EAB4075239C5FAF00CE3270 /* Problem.swift in Sources */,
 				4E12AF2123A1CEC40039705B /* Robot.swift in Sources */,
 				4EC0DB16239743E10058EB46 /* Direction.swift in Sources */,
 				4E490D0A23A0455000B686E1 /* Memory.swift in Sources */,
+				4E919B2323A2E89100DA8B30 /* Coordinate3.swift in Sources */,
 				4E12AF1D23A1CC870039705B /* Problem11.swift in Sources */,
 				4E3E8E6D239B2FCC008645C6 /* Problem06.swift in Sources */,
 				4EC0DAF823972A920058EB46 /* Problem02.swift in Sources */,
