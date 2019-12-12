@@ -40,8 +40,9 @@ final class Robot {
 
 
     func start() {
-        while !computer.isFinished {
+        while true {
             computer.run()
+            if computer.isFinished { break }
             switch state {
             case .move:
                 move()
