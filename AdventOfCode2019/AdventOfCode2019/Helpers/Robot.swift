@@ -65,12 +65,7 @@ private extension Robot {
 //        print("move")
         let output = console.getMostRecentOutput()
         let turn = Turn(rawValue: output)!
-        switch turn {
-        case .left:
-            direction = direction.turnLeft()
-        case .right:
-            direction = direction.turnRight()
-        }
+        direction = direction.turn(turn)
         coordinate = coordinate + direction.vector
         if let panelColour = panels[coordinate] {
             console.addInput(panelColour.rawValue)
@@ -78,7 +73,7 @@ private extension Robot {
             panels[coordinate] = .black
             console.addInput(Colour.black.rawValue)
         }
-        state = .paint
+        updateState()
     }
 
 
@@ -87,6 +82,28 @@ private extension Robot {
         let output = console.getMostRecentOutput()
         let colour = Colour(rawValue: output)!
         panels[coordinate] = colour
-        state = .move
+        updateState()
+    }
+
+
+    private func updateState() {
+        switch state {
+        case .move:
+            state = .paint
+        case .paint:
+            state = .move
+        }
+    }
+}
+
+
+private extension Direction {
+    func turn(_ turn: Robot.Turn) -> Direction {
+        switch turn {
+        case .left:
+            return turnLeft()
+        case .right:
+            return turnRight()
+        }
     }
 }
