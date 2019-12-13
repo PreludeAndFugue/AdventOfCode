@@ -21,52 +21,42 @@ private struct CoordState: Hashable {
 
 
 private struct State {
-    var xDone = false
-    var xCount = 0
-    var xStates: Set<CoordState> = []
-    var yDone = false
-    var yCount = 0
-    var yStates: Set<CoordState> = []
-    var zDone = false
-    var zCount = 0
-    var zStates: Set<CoordState> = []
+    struct Part {
+        var isDone = false
+        var count = 0
+        var states: Set<CoordState> = []
+
+        mutating func update(coordState: CoordState) {
+            if !isDone {
+                if states.contains(coordState) {
+                    isDone = true
+                } else {
+                    count += 1
+                    states.insert(coordState)
+                }
+            }
+        }
+    }
+
+    var x = Part()
+    var y = Part()
+    var z = Part()
 
 
     var isDone: Bool {
-        return xDone && yDone && zDone
+        return x.isDone && y.isDone && z.isDone
     }
 
 
     var periods: [Int] {
-        return [xCount, yCount, zCount]
+        return [x.count, y.count, z.count]
     }
 
 
     mutating func update(x: CoordState, y: CoordState, z: CoordState) {
-        if !xDone {
-            if xStates.contains(x) {
-                xDone = true
-            } else {
-                xCount += 1
-                xStates.insert(x)
-            }
-        }
-        if !yDone {
-            if yStates.contains(y) {
-                yDone = true
-            } else {
-                yCount += 1
-                yStates.insert(y)
-            }
-        }
-        if !zDone {
-            if zStates.contains(z) {
-                zDone = true
-            } else {
-                zCount += 1
-                zStates.insert(z)
-            }
-        }
+        self.x.update(coordState: x)
+        self.y.update(coordState: y)
+        self.z.update(coordState: z)
     }
 }
 
@@ -101,8 +91,9 @@ private extension Problem12 {
 
 
     private func part2() -> Int {
+//        let moons = input
+        let moons = makeMoons(fromString: input)
         var state = State()
-        let moons = input
         while !state.isDone {
             let coordStates = makeCoordStates(of: moons)
             state.update(x: coordStates.x, y: coordStates.y, z: coordStates.z)
