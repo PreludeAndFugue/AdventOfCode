@@ -24,6 +24,21 @@ extension Coordinate3 {
     }
 
 
+    static func += (lhs: inout Coordinate3, rhs: Coordinate3) {
+        lhs = lhs + rhs
+    }
+
+
+    static func -= (lhs: inout Coordinate3, rhs: Coordinate3) {
+        lhs = lhs - rhs
+    }
+
+
+    static prefix func - (coordinate: Coordinate3) -> Coordinate3 {
+        return Coordinate3(x: -coordinate.x, y: -coordinate.y, z: -coordinate.z)
+    }
+
+
     static var origin: Coordinate3 {
         return Coordinate3(x: 0, y: 0, z: 0)
     }
