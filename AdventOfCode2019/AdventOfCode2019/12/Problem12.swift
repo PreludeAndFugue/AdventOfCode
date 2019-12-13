@@ -92,7 +92,7 @@ private extension Problem12 {
 
     private func part2() -> Int {
 //        let moons = input
-        let moons = makeMoons(fromString: input)
+        let moons = makeMoons(fromString: input1)
         var state = State()
         while !state.isDone {
             let coordStates = makeCoordStates(of: moons)
