@@ -8,7 +8,7 @@
 
 import Foundation
 
-private struct CoordState: Hashable {
+private struct CoordState: Equatable, CustomDebugStringConvertible {
     let a1: Int
     let a2: Int
     let a3: Int
@@ -17,30 +17,40 @@ private struct CoordState: Hashable {
     let a6: Int
     let a7: Int
     let a8: Int
+
+    var debugDescription: String {
+        [a1, a2, a3, a4, a5, a6, a7, a8].map({ String($0 )}).joined(separator: ", ")
+    }
 }
 
 
 private struct State {
     struct Part {
         var isDone = false
-        var count = 0
-        var states: Set<CoordState> = []
+        var count = 1
+        let state: CoordState
 
         mutating func update(coordState: CoordState) {
             if !isDone {
-                if states.contains(coordState) {
+                if coordState == state {
                     isDone = true
                 } else {
                     count += 1
-                    states.insert(coordState)
                 }
             }
         }
     }
 
-    var x = Part()
-    var y = Part()
-    var z = Part()
+    var x: Part
+    var y: Part
+    var z: Part
+
+
+    init(x: CoordState, y: CoordState, z: CoordState) {
+        self.x = Part(state: x)
+        self.y = Part(state: y)
+        self.z = Part(state: z)
+    }
 
 
     var isDone: Bool {
@@ -59,7 +69,6 @@ private struct State {
         self.z.update(coordState: z)
     }
 }
-
 
 
 final class Problem12: Problem {
@@ -91,13 +100,13 @@ private extension Problem12 {
 
 
     private func part2() -> Int {
-//        let moons = input
-        let moons = makeMoons(fromString: input1)
-        var state = State()
+        let moons = input
+        let cs = makeCoordStates(of: moons)
+        var state = State(x: cs.x, y: cs.y, z: cs.z)
         while !state.isDone {
-            let coordStates = makeCoordStates(of: moons)
-            state.update(x: coordStates.x, y: coordStates.y, z: coordStates.z)
             step(moons: moons)
+            let cs = makeCoordStates(of: moons)
+            state.update(x: cs.x, y: cs.y, z: cs.z)
         }
         return lcm(numbers: state.periods)
     }
