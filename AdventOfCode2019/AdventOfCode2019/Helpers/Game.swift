@@ -15,12 +15,21 @@ final class Game {
         case ball = 4
     }
 
-    private let components: [Coordinate: Component]
+    private var sleep: UInt32? = nil
+    var score = 0
+    private var components: [Coordinate: Component] = [:]
+    private let console: GameConsole
+    private let computer: Computer
+    private let screen: GameScreen?
+    private var ballCoordinate: Coordinate?
+    private var paddleCoordinate: Coordinate?
 
 
-    init(data: [Int]) {
-        let dictData = triplets(data).map({ (Coordinate(x: $0.x, y: $0.y), Component(rawValue: $0.c)!) })
-        components = Dictionary(uniqueKeysWithValues: dictData)
+    init(data: [Int], screen: GameScreen?) {
+        console = GameConsole()
+        computer = Computer(memory: data, console: console)
+        self.screen = screen
+        console.add(delegate: self)
     }
 
 
@@ -29,18 +38,39 @@ final class Game {
     }
 
 
-    func draw() -> String {
-        let xCoords = components.keys.map({ $0.x })
-        let yCoords = components.keys.map({ $0.y })
-        let (xMin, xMax) = (xCoords.min()!, xCoords.max()!)
-        let (yMin, yMax) = (yCoords.min()!, yCoords.max()!)
-        assert(xMin >= 0)
-        assert(yMin >= 0)
-        var screen = Array(repeating: Array(repeating: "", count: xMax + 1), count: yMax + 1)
-        for (coord, component) in components {
-            screen[coord.y][coord.x] = component.graphic
+    func run() {
+        computer.run()
+    }
+}
+
+
+// MARK: - GameConsoleDelegate
+
+extension Game: GameConsoleDelegate {
+    func receive(triplet: GameConsole.Triplet, from console: GameConsole) {
+        if triplet.x == -1 {
+            score = triplet.c
+        } else {
+            let (coordinate, component) = makeComponent(from: triplet)
+            components[coordinate] = component
         }
-        return screen.map({ $0.joined() }).joined(separator: "\n")
+        screen?.draw(components: components, score: score, sleep: sleep)
+    }
+
+
+    func inputRequest(from console: GameConsole) {
+        sleep = 6_000
+        guard let ball = ballCoordinate, let paddle = paddleCoordinate else {
+            console.addInput(0)
+            return
+        }
+        if ball.x < paddle.x {
+            console.addInput(-1)
+        } else if ball.x == paddle.x {
+            console.addInput(0)
+        } else {
+            console.addInput(1)
+        }
     }
 }
 
@@ -68,20 +98,14 @@ extension Game.Component {
 // MARK: - Private
 
 private extension Game {
-
-}
-
-private typealias Triplet = (x: Int, y: Int, c: Int)
-
-private func triplets(_ numbers: [Int]) -> [Triplet] {
-    var result: [Triplet] = []
-    var triplet: [Int] = []
-    for (i, n) in numbers.enumerated() {
-        triplet.append(n)
-        if i % 3 == 2 {
-            result.append((x: triplet[0], y: triplet[1], c: triplet[2]))
-            triplet = []
+    private func makeComponent(from triplet: GameConsole.Triplet) -> (Coordinate, Component) {
+        let coordinate = Coordinate(x: triplet.x, y: triplet.y)
+        let component = Component(rawValue: triplet.c)!
+        switch component {
+        case .ball: ballCoordinate = coordinate
+        case .paddle: paddleCoordinate = coordinate
+        default: break
         }
+        return (coordinate, component)
     }
-    return result
 }

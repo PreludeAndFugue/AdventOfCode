@@ -24,15 +24,17 @@ final class Problem13: Problem {
 
 private extension Problem13 {
     private func part1() -> Int {
-        let console = AutoConsole(input: [])
-        let computer = Computer(memory: input, console: console)
-        computer.run()
-        let game = Game(data: console.output)
+        let game = Game(data: input, screen: nil)
+        game.run()
         return game.blockCount
     }
 
 
     private func part2() -> Int {
-        return 0
+        var newInput = input
+        newInput[0] = 2
+        let game = Game(data: newInput, screen: GameScreen())
+        game.run()
+        return game.score
     }
 }

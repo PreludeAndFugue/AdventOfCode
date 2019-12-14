@@ -19,6 +19,8 @@
 		4E12AF1F23A1CD0C0039705B /* data11.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E12AF1E23A1CD0C0039705B /* data11.txt */; };
 		4E12AF2123A1CEC40039705B /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E12AF2023A1CEC40039705B /* Robot.swift */; };
 		4E12AF2223A1CEC40039705B /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E12AF2023A1CEC40039705B /* Robot.swift */; };
+		4E19EBFE23A52655003D3C0E /* GameConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFD23A52655003D3C0E /* GameConsole.swift */; };
+		4E19EC0023A533E3003D3C0E /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFF23A533E3003D3C0E /* GameScreen.swift */; };
 		4E3E8E69239B2886008645C6 /* Computer+OpcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */; };
 		4E3E8E6D239B2FCC008645C6 /* Problem06.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E6C239B2FCC008645C6 /* Problem06.swift */; };
 		4E45B8EE239C878900524149 /* Problem07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE89732239BF1330076D8B9 /* Problem07.swift */; };
@@ -88,6 +90,8 @@
 		4E12AF1C23A1CC870039705B /* Problem11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem11.swift; sourceTree = "<group>"; };
 		4E12AF1E23A1CD0C0039705B /* data11.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data11.txt; sourceTree = "<group>"; };
 		4E12AF2023A1CEC40039705B /* Robot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Robot.swift; sourceTree = "<group>"; };
+		4E19EBFD23A52655003D3C0E /* GameConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConsole.swift; sourceTree = "<group>"; };
+		4E19EBFF23A533E3003D3C0E /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
 		4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Computer+OpcodeTests.swift"; sourceTree = "<group>"; };
 		4E3E8E6B239B2FC2008645C6 /* data06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data06.txt; sourceTree = "<group>"; };
 		4E3E8E6C239B2FCC008645C6 /* Problem06.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem06.swift; sourceTree = "<group>"; };
@@ -369,11 +373,13 @@
 				4EC0DB132397432F0058EB46 /* Coordinate.swift */,
 				4E919B2223A2E89100DA8B30 /* Coordinate3.swift */,
 				4EC0DB15239743E10058EB46 /* Direction.swift */,
+				4EA3F2D723A4631D00EF10A7 /* Game.swift */,
+				4E19EBFD23A52655003D3C0E /* GameConsole.swift */,
+				4E19EBFF23A533E3003D3C0E /* GameScreen.swift */,
 				4E490D0923A0455000B686E1 /* Memory.swift */,
 				4E919B2423A2E92E00DA8B30 /* Moon.swift */,
 				4E12AF2023A1CEC40039705B /* Robot.swift */,
 				4E919B2823A31E7F00DA8B30 /* Maths.swift */,
-				4EA3F2D723A4631D00EF10A7 /* Game.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -522,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EA807092399B6D80034F6EA /* Problem05.swift in Sources */,
+				4E19EBFE23A52655003D3C0E /* GameConsole.swift in Sources */,
 				4EC0DB142397432F0058EB46 /* Coordinate.swift in Sources */,
 				4EC0DB1023973ED40058EB46 /* Problem03.swift in Sources */,
 				4EE89733239BF1330076D8B9 /* Problem07.swift in Sources */,
@@ -547,6 +554,7 @@
 				4E490D1223A07FFB00B686E1 /* Problem10.swift in Sources */,
 				4EE6E7B023947B4200672729 /* Sequence+Extensions.swift in Sources */,
 				4EE6E7A42394778F00672729 /* main.swift in Sources */,
+				4E19EC0023A533E3003D3C0E /* GameScreen.swift in Sources */,
 				4E085D1C23986F4700E8F402 /* AscendingNumbers.swift in Sources */,
 				4E085D142398644400E8F402 /* Int+Extensions.swift in Sources */,
 				4EA3F2D423A4605500EF10A7 /* Problem13.swift in Sources */,
