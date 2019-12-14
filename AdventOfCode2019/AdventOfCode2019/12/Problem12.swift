@@ -185,6 +185,8 @@ private extension Problem12 {
 }
 
 
+// MARK: - Test input
+
 private let input1 = """
 <x=-1, y=0, z=2>
 <x=2, y=-10, z=-7>
