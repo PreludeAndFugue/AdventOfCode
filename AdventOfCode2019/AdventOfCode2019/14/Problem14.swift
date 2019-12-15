@@ -43,7 +43,7 @@ private class Matrix {
     let allNames: [String]
     let nonOreNames: [String]
     let oreNames: [String]
-    var solution: [Int]
+    var fuelRow: [Int]
 
     init(relationships: [Relationship]) {
         var oreNames: Set<String> = []
@@ -68,7 +68,7 @@ private class Matrix {
         self.allNames = [fuel] + self.oreNames + self.nonOreNames + [ore]
 
         var rows: [[Int]] = []
-        var solutionRow: [Int]?
+        var fuelRow: [Int]?
         for relationship in relationships {
             var row = Array(repeating: 0, count: allNames.count)
             let i = allNames.firstIndex(of: relationship.rhs.name)!
@@ -78,32 +78,98 @@ private class Matrix {
                 row[j] = -material.quantity
             }
             if relationship.containsFuel {
-                solutionRow = row
+                fuelRow = row
             } else {
                 rows.append(row)
             }
         }
 
         self.matrix = rows
-        self.solution = solutionRow!
+        self.fuelRow = fuelRow!
+
+
+//        print(allNames)
+//        print("ore", self.oreNames)
+//        print("no ore", self.nonOreNames)
     }
 
 
-    func solve() -> Int{
-        while anyLessThanZero(solutionElements()) {
-            for (i, n) in solutionElements().enumerated() {
+    func solve() -> Int {
+        while anyLessThanZero(fuelElements()) {
+            for (i, n) in fuelElements().enumerated() {
                 if n < 0 {
                     let row = findRowWith(postiveIndex: i + 1)
                     updateSolution(withRow: row)
                 }
             }
         }
-        return -solution.last!
+        return -fuelRow.last!
     }
 
 
-    private func solutionElements() -> ArraySlice<Int> {
-        solution[1...(self.solution.count - 2)]
+    func solve2() -> Int {
+//        print("\n\n\n")
+        let totalOre = 1_000_000_000_000
+//        let totalOre = 1_000
+        let orePerFuel = 579797
+
+
+        var solution = Array(repeating: 0, count: fuelRow.count)
+        solution[solution.endIndex - 1] = totalOre
+
+//        print(matrix.map({ $0.map({ String($0) }).joined(separator: ", ") }).joined(separator: "\n"))
+//        print(fuelRow)
+//        print(solution)
+
+        func hasOre() -> Bool { solution.last! > 0 }
+        func addFuel(mult: Int = 1) { solution = zip(solution, fuelRow).map({ $0 + mult * $1 }) }
+        func solutionElements() -> ArraySlice<Int> { solution[1...(solution.count - 2)] }
+        func add(row: [Int], mult: Int = 1) { solution = zip(solution, row).map({ $0 + mult * $1 }) }
+        func balanceSolution() {
+            while anyLessThanZero(solutionElements()) {
+                for (i, n) in solutionElements().enumerated() {
+                    if n < 0 {
+                        let row = findRowWith(postiveIndex: i + 1)
+                        var mult = abs(solution[i + 1]) / row[i + 1]
+                        if mult == 0 { mult = 1}
+
+//                        print(i + 1)
+//                        print(mult)
+//                        print(row)
+//                        print(solution)
+                        add(row: row, mult: mult)
+//                        print(solution)
+//                        print("\n")
+                    }
+                }
+            }
+        }
+
+        let baseFuel = totalOre / orePerFuel
+//        print("base fuel", baseFuel)
+        addFuel(mult: baseFuel)
+//        solution[solution.endIndex - 1] = totalOre - orePerFuel * baseFuel
+        balanceSolution()
+
+        while hasOre() {
+            let baseFuel = solution.last! / orePerFuel
+            if baseFuel == 0 { break }
+//            print("base fuel", baseFuel)
+            addFuel(mult: baseFuel)
+//            print("\n\n")
+            balanceSolution()
+//            print("add fuel")
+//            print(solution)
+//            print("\n\n")
+        }
+
+//        print(solution)
+        return solution[0]
+    }
+
+
+    private func fuelElements() -> ArraySlice<Int> {
+        fuelRow[1...(self.fuelRow.count - 2)]
     }
 
 
@@ -128,7 +194,7 @@ private class Matrix {
 
 
     private func updateSolution(withRow row: [Int]) {
-        solution = zip(solution, row).map({ $0 + $1 })
+        fuelRow = zip(fuelRow, row).map({ $0 + $1 })
     }
 }
 
@@ -139,7 +205,7 @@ final class Problem14: Problem {
 
     func run() {
         let r1 = part1()
-        let r2 = 0
+        let r2 = part2()
         printResults(number: 14, r1, r2)
     }
 }
@@ -152,6 +218,13 @@ private extension Problem14 {
         let relationships = makeInput(string: input)
         let matrix = Matrix(relationships: relationships)
         return matrix.solve()
+    }
+
+
+    private func part2() -> Int {
+        let relationships = makeInput(string: input)
+        let matrix = Matrix(relationships: relationships)
+        return matrix.solve2()
     }
 
 
