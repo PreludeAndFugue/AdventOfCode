@@ -21,6 +21,8 @@
 		4E12AF2223A1CEC40039705B /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E12AF2023A1CEC40039705B /* Robot.swift */; };
 		4E19EBFE23A52655003D3C0E /* GameConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFD23A52655003D3C0E /* GameConsole.swift */; };
 		4E19EC0023A533E3003D3C0E /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFF23A533E3003D3C0E /* GameScreen.swift */; };
+		4E33893F23A5552E00CE4673 /* Problem14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E33893E23A5552E00CE4673 /* Problem14.swift */; };
+		4E33894123A555A700CE4673 /* data14.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E33894023A555A700CE4673 /* data14.txt */; };
 		4E3E8E69239B2886008645C6 /* Computer+OpcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */; };
 		4E3E8E6D239B2FCC008645C6 /* Problem06.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E6C239B2FCC008645C6 /* Problem06.swift */; };
 		4E45B8EE239C878900524149 /* Problem07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE89732239BF1330076D8B9 /* Problem07.swift */; };
@@ -92,6 +94,8 @@
 		4E12AF2023A1CEC40039705B /* Robot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Robot.swift; sourceTree = "<group>"; };
 		4E19EBFD23A52655003D3C0E /* GameConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConsole.swift; sourceTree = "<group>"; };
 		4E19EBFF23A533E3003D3C0E /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
+		4E33893E23A5552E00CE4673 /* Problem14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem14.swift; sourceTree = "<group>"; };
+		4E33894023A555A700CE4673 /* data14.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data14.txt; sourceTree = "<group>"; };
 		4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Computer+OpcodeTests.swift"; sourceTree = "<group>"; };
 		4E3E8E6B239B2FC2008645C6 /* data06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data06.txt; sourceTree = "<group>"; };
 		4E3E8E6C239B2FCC008645C6 /* Problem06.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem06.swift; sourceTree = "<group>"; };
@@ -191,6 +195,15 @@
 				4E12AF1C23A1CC870039705B /* Problem11.swift */,
 			);
 			path = 11;
+			sourceTree = "<group>";
+		};
+		4E33893D23A5552100CE4673 /* 14 */ = {
+			isa = PBXGroup;
+			children = (
+				4E33894023A555A700CE4673 /* data14.txt */,
+				4E33893E23A5552E00CE4673 /* Problem14.swift */,
+			);
+			path = 14;
 			sourceTree = "<group>";
 		};
 		4E3E8E6A239B2FA5008645C6 /* 6 */ = {
@@ -350,6 +363,7 @@
 				4E12AF1B23A1CC7A0039705B /* 11 */,
 				4E919B1F23A2E7D900DA8B30 /* 12 */,
 				4EA3F2D223A4604800EF10A7 /* 13 */,
+				4E33893D23A5552100CE4673 /* 14 */,
 				4EE6E7A32394778F00672729 /* main.swift */,
 			);
 			path = AdventOfCode2019;
@@ -446,7 +460,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Gary Kerr";
 				TargetAttributes = {
 					4EC0DAFD23972E760058EB46 = {
@@ -488,6 +502,7 @@
 				4E919B2723A2FA9D00DA8B30 /* data12.txt in Resources */,
 				4E12AF1F23A1CD0C0039705B /* data11.txt in Resources */,
 				4E490D1823A088A300B686E1 /* data10.txt in Resources */,
+				4E33894123A555A700CE4673 /* data14.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E33893F23A5552E00CE4673 /* Problem14.swift in Sources */,
 				4EA807092399B6D80034F6EA /* Problem05.swift in Sources */,
 				4E19EBFE23A52655003D3C0E /* GameConsole.swift in Sources */,
 				4EC0DB142397432F0058EB46 /* Coordinate.swift in Sources */,
@@ -716,6 +732,7 @@
 		4EE6E7A82394778F00672729 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T59AZ797LW;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -727,6 +744,7 @@
 		4EE6E7A92394778F00672729 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T59AZ797LW;
 				ENABLE_HARDENED_RUNTIME = YES;
