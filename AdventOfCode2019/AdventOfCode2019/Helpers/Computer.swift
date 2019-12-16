@@ -105,6 +105,11 @@ final class Computer {
     }
 
 
+    func stop() {
+        state = .finished
+    }
+
+
     func addInput(_ n: Int) {
         console.addInput(n)
     }

@@ -12,6 +12,11 @@ struct Coordinate {
     let x: Int
     let y: Int
 
+    
+    var isOrigin: Bool {
+        return x == 0 && y == 0
+    }
+
 
     var manhattanDistanceFromOrigin: Int {
         return abs(x) + abs(y)
