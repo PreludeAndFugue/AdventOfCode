@@ -12,6 +12,7 @@ final class DroidController {
     private var position: Coordinate
     var oxygenSystemPosition: Coordinate?
     private var direction: Direction
+    private var hasLeftOrigin = false
 
     init(memory: [Int]) {
         let console = RepairDroid.DroidConsole()
@@ -27,6 +28,12 @@ final class DroidController {
         droid.run()
         print(drawMap())
     }
+
+
+    func getCoords() -> (oxygen: Coordinate, map: Set<Coordinate>) {
+        droid.run()
+        return (oxygenSystemPosition!, map)
+    }
 }
 
 
@@ -35,6 +42,11 @@ final class DroidController {
 extension DroidController: DroidConsoleDelegate {
     func receive(output: RepairDroid.Output, from console: RepairDroid.DroidConsole) {
 //        print("robot output:", output)
+        if !position.isOrigin { hasLeftOrigin = true}
+        if position.isOrigin && hasLeftOrigin {
+            droid.stop()
+            return
+        }
         switch output {
         case .blocked:
             direction = direction.turnLeft()
@@ -46,7 +58,6 @@ extension DroidController: DroidConsoleDelegate {
             position = position + direction.vector
             map.insert(position)
             oxygenSystemPosition = position
-            droid.stop()
         }
     }
 
@@ -85,7 +96,7 @@ private extension DroidController {
         let (yMin, yMax) = (yCoords.min()!, yCoords.max()!)
         let xCount = xMax - xMin + 3
         let yCount = yMax - yMin + 3
-        var grid = Array(repeating: Array(repeating: " ", count: xCount), count: yCount)
+        var grid = Array(repeating: Array(repeating: "#", count: xCount), count: yCount)
         for coord in map {
             grid[coord.y - yMin + 1][coord.x - xMin + 1] = getMapSymbol(for: coord)
         }
@@ -99,7 +110,7 @@ private extension DroidController {
         } else if coordinate == oxygenSystemPosition {
             return "X"
         } else {
-            return "*"
+            return " "
         }
     }
 }

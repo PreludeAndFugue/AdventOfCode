@@ -25,6 +25,7 @@
 		4E33894123A555A700CE4673 /* data14.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E33894023A555A700CE4673 /* data14.txt */; };
 		4E3E8E69239B2886008645C6 /* Computer+OpcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */; };
 		4E3E8E6D239B2FCC008645C6 /* Problem06.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E6C239B2FCC008645C6 /* Problem06.swift */; };
+		4E3E968E23AAEC7A008719E7 /* MazeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E968D23AAEC7A008719E7 /* MazeScreen.swift */; };
 		4E45B8EE239C878900524149 /* Problem07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE89732239BF1330076D8B9 /* Problem07.swift */; };
 		4E45B8F0239C879800524149 /* Problem07Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E45B8EF239C879800524149 /* Problem07Tests.swift */; };
 		4E45B8F1239C8C4D00524149 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAB4074239C5FAF00CE3270 /* Problem.swift */; };
@@ -108,6 +109,7 @@
 		4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Computer+OpcodeTests.swift"; sourceTree = "<group>"; };
 		4E3E8E6B239B2FC2008645C6 /* data06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data06.txt; sourceTree = "<group>"; };
 		4E3E8E6C239B2FCC008645C6 /* Problem06.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem06.swift; sourceTree = "<group>"; };
+		4E3E968D23AAEC7A008719E7 /* MazeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeScreen.swift; sourceTree = "<group>"; };
 		4E45B8EF239C879800524149 /* Problem07Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem07Tests.swift; sourceTree = "<group>"; };
 		4E490D0923A0455000B686E1 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		4E490D0C23A048CC00B686E1 /* data09.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data09.txt; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			children = (
 				4E50F05423A6E29200971EBA /* RepairDroid.swift */,
 				4E50F05723A6E63000971EBA /* DroidController.swift */,
+				4E3E968D23AAEC7A008719E7 /* MazeScreen.swift */,
 			);
 			path = RepairDroid;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				4EE6E7B023947B4200672729 /* Sequence+Extensions.swift in Sources */,
 				4EE6E7A42394778F00672729 /* main.swift in Sources */,
 				4E19EC0023A533E3003D3C0E /* GameScreen.swift in Sources */,
+				4E3E968E23AAEC7A008719E7 /* MazeScreen.swift in Sources */,
 				4E085D1C23986F4700E8F402 /* AscendingNumbers.swift in Sources */,
 				4E085D142398644400E8F402 /* Int+Extensions.swift in Sources */,
 				4E50F05523A6E29200971EBA /* RepairDroid.swift in Sources */,
