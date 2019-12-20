@@ -6,10 +6,23 @@
 //  Copyright © 2019 Gary Kerr. All rights reserved.
 //
 
+///
+///
+/// Part 2 method
+/// -------------
+///
+/// If position is greater than half way through the array then all values are 1
+/// in the repeating pattern. Then to calculate the FFT of the signal  values is
+/// a simple sum.
+///
+/// Input has 650 digits -> repeat 10,000 times -> 6,500,000 digits.
+/// Position is 5,972,877. This position is greater than half way so onlly need
+/// to consider digits from this position to the end.
+///
 final class Problem16: Problem {
     func run() {
         let r1 = part1()
-        let r2 = 0
+        let r2 = part2()
         printResults(number: 16, r1, r2)
     }
 }
@@ -19,15 +32,22 @@ final class Problem16: Problem {
 
 private extension Problem16 {
     private func part1() -> Int {
-        var signal = makeInput(string: input7)
-        signal = signal + signal + signal + signal + signal + signal + signal + signal + signal + signal + signal + signal + signal + signal + signal
-        for position in 0...100 {
-            print(position, makeOutput(a: signal))
+        var signal = makeInput(string: input)
+        for position in 1...100 {
             signal = fft(a: signal, position: position)
         }
+        return Int(signal[..<8].map({ String($0) }).joined())!
+    }
 
 
-        return 0
+    private func part2() -> Int {
+        let temp = makeInput(string: input)
+        var signal = temp.repeated(count: 10_000)
+        signal = Array(signal[(offset)...])
+        for _ in 1...100 {
+            signal = fft2(a: signal)
+        }
+        return Int(signal[..<8].map({ String($0) }).joined())!
     }
 
 
@@ -91,6 +111,18 @@ private extension Problem16 {
     }
 
 
+    private func fft2(a: [Int]) -> [Int] {
+        var result: [Int] = []
+        var total = 0
+        for n in a.reversed() {
+            total += n
+            total %= 10
+            result.append(total)
+        }
+        return result.reversed()
+    }
+
+
     private func makeOutput(a: [Int]) -> String {
 //        a[..<8].map({ String($0) }).joined()
         a.map({ String($0) }).joined()
@@ -103,6 +135,7 @@ private var patterns: [Int: [Int]] = [:]
 
 
 private let input = "59728776137831964407973962002190906766322659303479564518502254685706025795824872901465838782474078135479504351754597318603898249365886373257507600323820091333924823533976723324070520961217627430323336204524247721593859226704485849491418129908885940064664115882392043975997862502832791753443475733972832341211432322108298512512553114533929906718683734211778737511609226184538973092804715035096933160826733751936056316586618837326144846607181591957802127283758478256860673616576061374687104534470102346796536051507583471850382678959394486801952841777641763547422116981527264877636892414006855332078225310912793451227305425976335026620670455240087933409"
+let offset = 5972877
 
 
 private let input2 = "12345678"
@@ -114,5 +147,10 @@ private let input4  = "19617804207202209144916044189917"
 private let input5 = "69317163492948606335995924319873"
 
 private let input6 = "03036732577212944063491565474664"
+private let offset6 = 303673
 
 private let input7 = "02935109699940807407585447034323"
+private let offset7 = 293510
+
+private let input8 = "03081770884921959731165446850517"
+private let offset8 = 308177
