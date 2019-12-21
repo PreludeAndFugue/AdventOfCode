@@ -34,6 +34,16 @@ struct Coordinate {
         return sqrt(w * w + z * z)
     }
 
+
+    func getGridNeighbours() -> [Coordinate] {
+        return [
+            self + Direction.left.vector,
+            self + Direction.up.vector,
+            self + Direction.right.vector,
+            self + Direction.down.vector
+        ]
+    }
+
     
     static func + (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         return Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
