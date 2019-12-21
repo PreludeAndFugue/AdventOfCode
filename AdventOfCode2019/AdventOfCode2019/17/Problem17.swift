@@ -15,7 +15,7 @@ final class Problem17: Problem {
 
     func run() {
         let r1 = part1()
-        let r2 = 0
+        let r2 = part2()
         printResults(number: 17, r1, r2)
     }
 }
@@ -58,7 +58,52 @@ private extension Problem17{
     }
 
 
+    private func part2() -> Int {
+        let instructions = answer.map({ Int($0.asciiValue!) })
+        let console = AutoConsole(input: instructions)
+        var memory = input
+        memory[0] = 2
+        let computer = Computer(memory: memory, console: console)
+        computer.run()
+        return console.output.last!
+    }
+
+
     private func alignmentParamater(_ coordinate: Coordinate) -> Int {
         return coordinate.x * coordinate.y
     }
 }
+
+
+// A
+private let a = "L,8,R,10,L,10"
+
+// B
+private let b = "R,10,L,8,L,8,L,10"
+
+// C
+private let c = "L,4,L,6,L,8,L,8"
+
+// ROUTE
+private let mainRoutine = "A,B,A,C,B,C,A,C,B,C"
+
+private let answer = """
+A,B,A,C,B,C,A,C,B,C
+L,8,R,10,L,10
+R,10,L,8,L,8,L,10
+L,4,L,6,L,8,L,8
+n
+
+"""
+
+
+//L,8,R,10,L,10,
+//R,10,L,8,L,8,L,10,
+//L,8,R,10,L,10,
+//L,4,L,6,L,8,L,8,
+//R,10,L,8,L,8,L,10,
+//L,4,L,6,L,8,L,8,
+//L,8,R,10,L,10,
+//L,4,L,6,L,8,L,8,
+//R,10,L,8,L,8,L,10,
+//L,4,L,6,L,8,L,8
