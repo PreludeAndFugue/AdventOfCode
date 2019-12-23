@@ -69,6 +69,8 @@
 		4EA8070B2399D4EC0034F6EA /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA8070A2399D4EC0034F6EA /* Console.swift */; };
 		4EA8070C2399D66B0034F6EA /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA8070A2399D4EC0034F6EA /* Console.swift */; };
 		4EAB4075239C5FAF00CE3270 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAB4074239C5FAF00CE3270 /* Problem.swift */; };
+		4EADC31D23B12E2F00B5E9BA /* Problem19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EADC31C23B12E2F00B5E9BA /* Problem19.swift */; };
+		4EADC31F23B12E6300B5E9BA /* data19.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4EADC31E23B12E6300B5E9BA /* data19.txt */; };
 		4EC0DAF823972A920058EB46 /* Problem02.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DAF723972A920058EB46 /* Problem02.swift */; };
 		4EC0DB0823972E960058EB46 /* Computer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB0723972E960058EB46 /* Computer.swift */; };
 		4EC0DB0A23972EB40058EB46 /* ComputerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB0923972EB40058EB46 /* ComputerTests.swift */; };
@@ -149,6 +151,8 @@
 		4EA807082399B6D80034F6EA /* Problem05.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem05.swift; sourceTree = "<group>"; };
 		4EA8070A2399D4EC0034F6EA /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		4EAB4074239C5FAF00CE3270 /* Problem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem.swift; sourceTree = "<group>"; };
+		4EADC31C23B12E2F00B5E9BA /* Problem19.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem19.swift; sourceTree = "<group>"; };
+		4EADC31E23B12E6300B5E9BA /* data19.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data19.txt; sourceTree = "<group>"; };
 		4EC0DAF723972A920058EB46 /* Problem02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem02.swift; sourceTree = "<group>"; };
 		4EC0DAF923972C120058EB46 /* data02.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data02.txt; sourceTree = "<group>"; };
 		4EC0DAFE23972E760058EB46 /* AdventOfCode2019Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdventOfCode2019Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -364,6 +368,15 @@
 			path = 5;
 			sourceTree = "<group>";
 		};
+		4EADC31B23B12E1D00B5E9BA /* 19 */ = {
+			isa = PBXGroup;
+			children = (
+				4EADC31E23B12E6300B5E9BA /* data19.txt */,
+				4EADC31C23B12E2F00B5E9BA /* Problem19.swift */,
+			);
+			path = 19;
+			sourceTree = "<group>";
+		};
 		4EC0DAF623972A7F0058EB46 /* 2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +461,7 @@
 				4EED8AB923AC2F51002E4E88 /* 16 */,
 				4E77AA0223AD7D01000DBF2D /* 17 */,
 				4E77AA0723ADA465000DBF2D /* 18 */,
+				4EADC31B23B12E1D00B5E9BA /* 19 */,
 				4EE6E7A32394778F00672729 /* main.swift */,
 			);
 			path = AdventOfCode2019;
@@ -595,6 +609,7 @@
 				4EA3F2D623A4608800EF10A7 /* data13.txt in Resources */,
 				4E919B2723A2FA9D00DA8B30 /* data12.txt in Resources */,
 				4E12AF1F23A1CD0C0039705B /* data11.txt in Resources */,
+				4EADC31F23B12E6300B5E9BA /* data19.txt in Resources */,
 				4E490D1823A088A300B686E1 /* data10.txt in Resources */,
 				4E77AA0623AD7D71000DBF2D /* data17.txt in Resources */,
 				4E33894123A555A700CE4673 /* data14.txt in Resources */,
@@ -680,6 +695,7 @@
 				4E19EC0023A533E3003D3C0E /* GameScreen.swift in Sources */,
 				4E3E968E23AAEC7A008719E7 /* MazeScreen.swift in Sources */,
 				4E085D1C23986F4700E8F402 /* AscendingNumbers.swift in Sources */,
+				4EADC31D23B12E2F00B5E9BA /* Problem19.swift in Sources */,
 				4E085D142398644400E8F402 /* Int+Extensions.swift in Sources */,
 				4E50F05523A6E29200971EBA /* RepairDroid.swift in Sources */,
 				4EA3F2D423A4605500EF10A7 /* Problem13.swift in Sources */,
