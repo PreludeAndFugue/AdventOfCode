@@ -16,4 +16,9 @@ extension Array {
         }
         return result
     }
+
+
+    var isNotEmpty: Bool {
+        return !isEmpty
+    }
 }
