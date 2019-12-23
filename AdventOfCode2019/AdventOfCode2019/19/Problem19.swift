@@ -27,9 +27,7 @@ final class Problem19: Problem {
     private let width = 100
 
     func run() {
-        let r1 = 0
-//        let r1 = part1()
-//        let r2 = 0
+        let r1 = part1()
         let r2 = part2()
         printResults(number: 19, r1, r2)
     }
@@ -63,23 +61,9 @@ private extension Problem19 {
             if count1 < width {
                 continue
             }
-            let (xMin2, xMax2) = getRowValues(y: y + width - 1)
-
-//            print(y, xMin1, xMax1)
-//            print(xMin2, xMax2)
-
+            let (xMin2, _) = getRowValues(y: y + width - 1)
             let count2 = xMax1 - xMin2 + 1
             if count2 == width {
-                print("y", y, "xMin2", xMin2)
-                print(10_000 * xMin2 + y)
-
-                print(y - 1, cache[y - 1])
-                print(y + width - 2, cache[y + width - 2])
-                print("---")
-                print(y, cache[y])
-                print(y + width - 1, cache[y + width - 1])
-                print("---")
-
                 xAnswer = xMin2
                 yAnswer = y
                 break
