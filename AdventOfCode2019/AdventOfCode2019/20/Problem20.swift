@@ -41,7 +41,6 @@ private extension Problem20 {
             getNeighbours: getNeighbours
         )
         let path = search.run().path
-        print(path)
         return path.count - 1
     }
 
