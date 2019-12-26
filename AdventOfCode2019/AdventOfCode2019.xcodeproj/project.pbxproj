@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E081E1723B41E98001B4A53 /* Problem21.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E1623B41E98001B4A53 /* Problem21.swift */; };
+		4E081E1923B41F06001B4A53 /* data21.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E081E1823B41F06001B4A53 /* data21.txt */; };
+		4E081E1C23B43BDB001B4A53 /* SpringDroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */; };
+		4E081E1D23B43BDB001B4A53 /* SpringDroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */; };
+		4E081E2123B43CA3001B4A53 /* SpringDroidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E2023B43CA3001B4A53 /* SpringDroidTests.swift */; };
+		4E081E2223B43E8F001B4A53 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB15239743E10058EB46 /* Direction.swift */; };
+		4E081E2323B43E9A001B4A53 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB132397432F0058EB46 /* Coordinate.swift */; };
+		4E081E2423B43EAA001B4A53 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFF23A533E3003D3C0E /* GameScreen.swift */; };
+		4E081E2523B43EC3001B4A53 /* Problem18Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34D6DF23AFFCC6005B0179 /* Problem18Helper.swift */; };
+		4E081E2623B43EF2001B4A53 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E77AA0023AD753C000DBF2D /* Array+Extensions.swift */; };
 		4E085D12239861F400E8F402 /* Problem04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D11239861F400E8F402 /* Problem04.swift */; };
 		4E085D142398644400E8F402 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D132398644400E8F402 /* Int+Extensions.swift */; };
 		4E085D18239864B100E8F402 /* Int+ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D17239864B100E8F402 /* Int+ExtensionsTests.swift */; };
@@ -106,6 +116,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4E081E1623B41E98001B4A53 /* Problem21.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem21.swift; sourceTree = "<group>"; };
+		4E081E1823B41F06001B4A53 /* data21.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data21.txt; sourceTree = "<group>"; };
+		4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDroid.swift; sourceTree = "<group>"; };
+		4E081E2023B43CA3001B4A53 /* SpringDroidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDroidTests.swift; sourceTree = "<group>"; };
 		4E085D11239861F400E8F402 /* Problem04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem04.swift; sourceTree = "<group>"; };
 		4E085D132398644400E8F402 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		4E085D17239864B100E8F402 /* Int+ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+ExtensionsTests.swift"; sourceTree = "<group>"; };
@@ -200,6 +214,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E081E1523B41E8C001B4A53 /* 21 */ = {
+			isa = PBXGroup;
+			children = (
+				4E081E1823B41F06001B4A53 /* data21.txt */,
+				4E081E1623B41E98001B4A53 /* Problem21.swift */,
+			);
+			path = 21;
+			sourceTree = "<group>";
+		};
+		4E081E1A23B43BCD001B4A53 /* SpringDroid */ = {
+			isa = PBXGroup;
+			children = (
+				4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */,
+			);
+			path = SpringDroid;
+			sourceTree = "<group>";
+		};
+		4E081E1E23B43C89001B4A53 /* 21 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = 21;
+			sourceTree = "<group>";
+		};
+		4E081E1F23B43C95001B4A53 /* SpringDroid */ = {
+			isa = PBXGroup;
+			children = (
+				4E081E2023B43CA3001B4A53 /* SpringDroidTests.swift */,
+			);
+			path = SpringDroid;
+			sourceTree = "<group>";
+		};
 		4E085D10239861E200E8F402 /* 4 */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +452,7 @@
 				4EC0DB17239749270058EB46 /* Helpers */,
 				4E45B8ED239C877E00524149 /* 7 */,
 				4E7A0602239E77BF00B78183 /* 9 */,
+				4E081E1E23B43C89001B4A53 /* 21 */,
 				4EC0DB0223972E760058EB46 /* Info.plist */,
 			);
 			path = AdventOfCode2019Tests;
@@ -423,6 +470,7 @@
 		4EC0DB17239749270058EB46 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4E081E1F23B43C95001B4A53 /* SpringDroid */,
 				4EC0DB0923972EB40058EB46 /* ComputerTests.swift */,
 				4E085D1E239870E500E8F402 /* AscendingNumbersTests.swift */,
 				4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */,
@@ -476,6 +524,7 @@
 				4E77AA0723ADA465000DBF2D /* 18 */,
 				4EADC31B23B12E1D00B5E9BA /* 19 */,
 				4EADC32323B17AC900B5E9BA /* 20 */,
+				4E081E1523B41E8C001B4A53 /* 21 */,
 				4EE6E7A32394778F00672729 /* main.swift */,
 			);
 			path = AdventOfCode2019;
@@ -495,6 +544,7 @@
 			children = (
 				4E50F05123A6E26C00971EBA /* Game */,
 				4E50F05323A6E27E00971EBA /* RepairDroid */,
+				4E081E1A23B43BCD001B4A53 /* SpringDroid */,
 				4E085D1B23986F4700E8F402 /* AscendingNumbers.swift */,
 				4E50F05A23A7026000971EBA /* BreadthFirstSearch.swift */,
 				4EC0DB0723972E960058EB46 /* Computer.swift */,
@@ -622,6 +672,7 @@
 				4EE89735239BF1970076D8B9 /* data07.txt in Resources */,
 				4EA3F2D623A4608800EF10A7 /* data13.txt in Resources */,
 				4E919B2723A2FA9D00DA8B30 /* data12.txt in Resources */,
+				4E081E1923B41F06001B4A53 /* data21.txt in Resources */,
 				4E12AF1F23A1CD0C0039705B /* data11.txt in Resources */,
 				4EADC31F23B12E6300B5E9BA /* data19.txt in Resources */,
 				4E490D1823A088A300B686E1 /* data10.txt in Resources */,
@@ -640,15 +691,19 @@
 			files = (
 				4E12AF2223A1CEC40039705B /* Robot.swift in Sources */,
 				4E50F05C23A7026000971EBA /* BreadthFirstSearch.swift in Sources */,
+				4E081E2323B43E9A001B4A53 /* Coordinate.swift in Sources */,
 				4E50F05623A6E29200971EBA /* RepairDroid.swift in Sources */,
 				4E490D0B23A0473400B686E1 /* Memory.swift in Sources */,
+				4E081E2423B43EAA001B4A53 /* GameScreen.swift in Sources */,
 				4E085D18239864B100E8F402 /* Int+ExtensionsTests.swift in Sources */,
 				4EE89738239C00810076D8B9 /* Array+ExtensionsTests.swift in Sources */,
 				4E919B2A23A31E7F00DA8B30 /* Maths.swift in Sources */,
 				4EE89736239C00700076D8B9 /* Sequence+Extensions.swift in Sources */,
 				4E50F05923A6E63000971EBA /* DroidController.swift in Sources */,
+				4E081E1D23B43BDB001B4A53 /* SpringDroid.swift in Sources */,
 				4E085D1D239870D500E8F402 /* AscendingNumbers.swift in Sources */,
 				4E490D1323A07FFB00B686E1 /* Problem10.swift in Sources */,
+				4E081E2123B43CA3001B4A53 /* SpringDroidTests.swift in Sources */,
 				4EC0DB19239749470058EB46 /* Computer.swift in Sources */,
 				4EA8070C2399D66B0034F6EA /* Console.swift in Sources */,
 				4E45B8EE239C878900524149 /* Problem07.swift in Sources */,
@@ -659,6 +714,9 @@
 				4E45B8F0239C879800524149 /* Problem07Tests.swift in Sources */,
 				4E7A0601239E778700B78183 /* String+Extensions.swift in Sources */,
 				4E3E8E69239B2886008645C6 /* Computer+OpcodeTests.swift in Sources */,
+				4E081E2623B43EF2001B4A53 /* Array+Extensions.swift in Sources */,
+				4E081E2223B43E8F001B4A53 /* Direction.swift in Sources */,
+				4E081E2523B43EC3001B4A53 /* Problem18Helper.swift in Sources */,
 				4E50F05223A6E27200971EBA /* GameConsole.swift in Sources */,
 				4EA3F2D923A4631D00EF10A7 /* Game.swift in Sources */,
 				4E7A0604239E77CF00B78183 /* Problem09Tests.swift in Sources */,
@@ -683,6 +741,7 @@
 				4E919B2523A2E92E00DA8B30 /* Moon.swift in Sources */,
 				4E919B2923A31E7F00DA8B30 /* Maths.swift in Sources */,
 				4E919B2123A2E7EB00DA8B30 /* Problem12.swift in Sources */,
+				4E081E1723B41E98001B4A53 /* Problem21.swift in Sources */,
 				4E77AA0423AD7D11000DBF2D /* Problem17.swift in Sources */,
 				4E50F05B23A7026000971EBA /* BreadthFirstSearch.swift in Sources */,
 				4EAB4075239C5FAF00CE3270 /* Problem.swift in Sources */,
@@ -704,6 +763,7 @@
 				4EC0DB0823972E960058EB46 /* Computer.swift in Sources */,
 				4EFD2B4E239D5F2400E8905E /* Problem08.swift in Sources */,
 				4E085D12239861F400E8F402 /* Problem04.swift in Sources */,
+				4E081E1C23B43BDB001B4A53 /* SpringDroid.swift in Sources */,
 				4EFD2B4C239D5DB600E8905E /* String+Extensions.swift in Sources */,
 				4E490D1223A07FFB00B686E1 /* Problem10.swift in Sources */,
 				4EE6E7B023947B4200672729 /* Sequence+Extensions.swift in Sources */,
