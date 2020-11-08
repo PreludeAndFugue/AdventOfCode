@@ -20,7 +20,9 @@ class State(Enum):
 
 
 def decompress(string):
-    result = []
+    if '(' not in string:
+        return len(string)
+    total_length = 0
     state = State.READ
     first_number = 0
     second_number = 0
@@ -30,7 +32,7 @@ def decompress(string):
             if c == '(':
                 state = State.MARKER_FIRST_NUMBER
             else:
-                result.append(c)
+                total_length += 1
         elif state == State.MARKER_FIRST_NUMBER:
             if c == 'x':
                 state = State.MARKER_SECOND_NUMBER
@@ -46,8 +48,8 @@ def decompress(string):
         elif state == State.MARKER_CONTENT:
             if first_number == 1:
                 marker_content.append(c)
-                for _ in range(second_number):
-                    result.append(''.join(marker_content))
+                # total_length += second_number * len(marker_content)
+                total_length += second_number * decompress(marker_content)
                 marker_content = []
                 state = State.READ
                 first_number = 0
@@ -57,13 +59,13 @@ def decompress(string):
                 marker_content.append(c)
         else:
             raise EnvironmentError
-    return ''.join(result)
+    return total_length
 
 
 def main1():
     s = open(SOURCE, 'r').read().strip()
     t = decompress(s)
-    print(len(t))
+    print(t)
 
 
 def test1():
@@ -82,5 +84,5 @@ def test1():
 
 
 if __name__ == '__main__':
-    test1()
+    # test1()
     main1()
