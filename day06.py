@@ -32,6 +32,16 @@ def main1():
     print(''.join(result))
 
 
+def main2():
+    result = []
+    lines = open(SOURCE, 'r').read().strip().split()
+    t = zip(*lines)
+    for x in t:
+        c = Counter(x)
+        result.append(c.most_common()[-1][0])
+    print(''.join(result))
+
+
 def test1():
     result = []
     lines = TEST1.split()
@@ -42,6 +52,18 @@ def test1():
     assert ''.join(result) == 'easter'
 
 
+def test2():
+    result = []
+    lines = TEST1.split()
+    t = zip(*lines)
+    for x in t:
+        c = Counter(x)
+        result.append(c.most_common()[-1][0])
+    assert ''.join(result) == 'advent'
+
+
 if __name__ == '__main__':
     test1()
+    test2()
     main1()
+    main2()
