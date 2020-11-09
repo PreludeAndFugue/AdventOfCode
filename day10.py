@@ -32,38 +32,33 @@ p1 = re.compile(PATTERN_VALUE)
 p2 = re.compile(PATTERN_BOT)
 
 
+def check_matches(m1, m2):
+    if m1 is None and m2 is None:
+        assert False
+    if m1 is not None and m2 is not None:
+        assert False
+
+
 def configure_bots(lines):
     bots = {}
     for line in lines:
         m1 = p1.match(line)
         m2 = p2.match(line)
-        assert (m1 is not None) or (m2 is not None)
+        check_matches(m1, m2)
+
         if m1:
             value, bot_id = m1.groups()
-            if bot_id in bots:
-                bots[bot_id]['values'].append(value)
-            else:
-                bot = {
-                    'id': bot_id,
-                    'values': [value],
-                    'low': None,
-                    'high': None
-                }
-                bots[bot_id] = bot
+            bots[bot_id]['values'].append(int(value))
 
         if m2:
             bot_id, low, low_id, high, high_id = m2.groups()
-            if bot_id in bots:
-                bots[bot_id]['low'] = (low, low_id)
-                bots[bot_id]['high'] = (high, high_id)
-            else:
-                bot = {
-                    'id': bot_id,
-                    'values': [],
-                    'low': (low, low_id),
-                    'high': (high, high_id)
-                }
-                bots[bot_id] = bot
+            bot = {
+                'id': bot_id,
+                'values': [],
+                'low': (low, low_id),
+                'high': (high, high_id)
+            }
+            bots[bot_id] = bot
     return bots
 
 
@@ -75,12 +70,13 @@ def get_bot(bots):
     return None
 
 
-def hand_over_type(type, id, value, bots, outputs):
-    if type == 'bot':
-        b = bots[id]
+def hand_over_type(type_name, bot_id, value, bots, outputs):
+    assert type_name == 'bot' or type_name == 'output'
+    if type_name == 'bot':
+        b = bots[bot_id]
         b['values'].append(value)
     else:
-        outputs[id].append(value)
+        outputs[bot_id].append(value)
 
 
 def hand_over(bot, bots, outputs):
@@ -99,7 +95,8 @@ def find_bot(values, bots):
     for bot in bots.values():
         if sorted(bot['old_values']) == values:
             found.append(bot)
-    return found
+    assert len(found) == 1
+    return found[0]['id']
 
 
 def run(bots, outputs):
@@ -111,23 +108,20 @@ def run(bots, outputs):
 
 
 def main():
-    lines = open(SOURCE, 'r').read().strip().split('\n')
+    lines = sorted(open(SOURCE, 'r').read().strip().split('\n'))
     bots = configure_bots(lines)
     outputs = defaultdict(list)
     run(bots, outputs)
-    # for b in bots.values():
-    #     print(b)
-    found = find_bot(['17', '61'], bots)
+    found = find_bot([17, 61], bots)
     print(found)
-    print(outputs)
 
 
 def test1():
-    lines = TEST1.strip().split('\n')
+    lines = sorted(TEST1.strip().split('\n'))
     bots = configure_bots(lines)
     outputs = defaultdict(list)
     run(bots, outputs)
-    found = find_bot(['2', '5'], bots)
+    found = find_bot([2, 5], bots)
     print(found)
 
 
