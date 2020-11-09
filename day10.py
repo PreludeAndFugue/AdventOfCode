@@ -115,6 +115,9 @@ def main():
     found = find_bot([17, 61], bots)
     print(found)
 
+    x, y, z = outputs['0'][0], outputs['1'][0], outputs['2'][0]
+    print(x * y * z)
+
 
 def test1():
     lines = sorted(TEST1.strip().split('\n'))
