@@ -113,7 +113,6 @@ def part2():
     results = defaultdict(list)
     min_length = 1_000_000
     for quarter in get_third([], items, total):
-        print(quarter)
         length = len(quarter)
         if length > min_length:
             continue
