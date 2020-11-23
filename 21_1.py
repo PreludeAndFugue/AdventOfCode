@@ -62,6 +62,7 @@ def get_rings():
 
 
 def get_items():
+    '''Iterate over all possible combinations of weapons, armour, and rings.'''
     w = get_weapon()
     a = get_armour()
     r = get_rings()
