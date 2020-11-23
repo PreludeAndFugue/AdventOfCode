@@ -39,7 +39,7 @@ def make_instructions():
 
 
 def part1():
-    registers = {'a': 0, 'b': 0}
+    registers = {'a': 1, 'b': 0}
     instructions = make_instructions()
     pointer = 0
     r = range(0, len(instructions))
