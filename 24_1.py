@@ -37,11 +37,13 @@ ITEMS = [
 ]
 
 THIRD = 512
+QUARTER = 384
 
 TEST_ITEMS = [
     1, 2, 3, 4, 5, 7, 8, 9, 10, 11
 ]
 TEST_THIRD = 20
+TEST_QUARTER = 15
 
 
 def get_third(selection, other_items, total):
@@ -68,6 +70,19 @@ def is_three_thirds(items, total):
         return False
 
 
+def is_four_quarters(items, total):
+    second_quarter = get_third([], items, total)
+    for s in second_quarter:
+        others = remove_third(items, s)
+        third_quarter = get_third([], others, total)
+        try:
+            next(third_quarter)
+            return True
+        except:
+            continue
+    return False
+
+
 def part1():
     items = list(reversed(ITEMS))
     total = THIRD
@@ -92,8 +107,33 @@ def part1():
     print(min(n))
 
 
+def part2():
+    items = list(reversed(ITEMS))
+    total = QUARTER
+    results = defaultdict(list)
+    min_length = 1_000_000
+    for quarter in get_third([], items, total):
+        print(quarter)
+        length = len(quarter)
+        if length > min_length:
+            continue
+
+        min_length = length
+        others = remove_third(items, quarter)
+
+        if is_four_quarters(others, total):
+            results[length].append(quarter)
+
+    m = min(results.keys())
+    n = results[m]
+    n = [reduce(mul, x, 1) for x in n]
+    print(min(n))
+
+
+
 def main():
-    part1()
+    # part1()
+    part2()
 
 
 if __name__ == '__main__':
