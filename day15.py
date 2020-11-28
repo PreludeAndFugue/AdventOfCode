@@ -54,6 +54,16 @@ DISCS = [
     (19, 17)
 ]
 
+DISCS2 = [
+    (13, 11),
+    (5, 0),
+    (17, 11),
+    (3, 0),
+    (7, 2),
+    (19, 17),
+    (11, 0)
+]
+
 TEST_DISCS = [
     (5, 4),
     (2, 1)
@@ -86,7 +96,7 @@ def offset_discs(discs, n):
 
 
 def part1():
-    discs = make_discs(DISCS)
+    discs = make_discs(DISCS2)
     n = shift_to_position_zero(discs)
     if all(d.is_open for d in discs):
         return discs[0].time - 1
