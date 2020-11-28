@@ -43,7 +43,7 @@ def draw_locations():
     print(rows)
 
 
-def main():
+def main1():
     goal = GOAL
     location = 1, 1
     seen = set([location])
@@ -60,6 +60,26 @@ def main():
                     queue.put((n, d + 1))
 
 
+def main2():
+    location = 1, 1
+    seen = set([location])
+    near = set([location])
+    queue = Queue()
+    queue.put((location, 0))
+    while not queue.empty():
+        v, d = queue.get()
+        if d <= 50:
+            near.add(v)
+        for n in neighbours(*v):
+            if n not in seen:
+                seen.add(n)
+                if is_open(*n):
+                    queue.put((n, d + 1))
+    return near
+
+
 if __name__ == '__main__':
-    x = main()
+    x = main1()
     print(x)
+    y = main2()
+    print(len(y))
