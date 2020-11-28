@@ -41,7 +41,7 @@ def parse(instruction_input):
 
 def compute(instructions):
     '''Run a program.'''
-    registers = {'a': 0, 'b': 0, 'c': 0, 'd': 0}
+    registers = {'a': 0, 'b': 0, 'c': 1, 'd': 0}
     pointer = 0
     while True:
         if pointer not in instructions:
