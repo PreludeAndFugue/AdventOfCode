@@ -23,7 +23,7 @@ def get_stretch_hexdigest(n):
         return CACHE[n]
     x = f'{salt}{n}'.encode('utf8')
     y = md5(x)
-    for j in range(2016):
+    for _ in range(2016):
         y = md5(y.hexdigest().encode('utf8'))
     CACHE[n] = y.hexdigest()
     return y.hexdigest()
