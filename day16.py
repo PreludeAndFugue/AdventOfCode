@@ -6,6 +6,7 @@ LENGTH = 272
 TEST_INPUT = '10000'
 TEST_LENGTH = 20
 
+LENGTH_2 = 35_651_584
 
 def lengthen(data, n):
     while len(data) < n:
@@ -36,7 +37,7 @@ def checksum(data):
 
 
 def main():
-    data = lengthen(INPUT, LENGTH)
+    data = lengthen(INPUT, LENGTH_2)
     x = checksum(data)
     print(x)
 
