@@ -5,16 +5,14 @@ INPUT = 3_014_387
 
 
 class Elf(object):
-    def __init__(self, position, presents=1):
+    def __init__(self, position):
         self.position = position
-        self.presents = presents
         self.next = None
 
 
     def steal(self):
         # print(self.position, 'stealing from', self.next.position)
         after_next = self.next.next
-        self.presents += self.next.presents
         if after_next.position == self.position:
             self.next = None
         else:
@@ -23,7 +21,7 @@ class Elf(object):
 
     def __repr__(self):
         n = '?' if self.next is None else self.next.position
-        return f'Elf({self.position}, {self.presents}, {n})'
+        return f'Elf({self.position}, next: {n})'
 
 
 def make_ring(n):
