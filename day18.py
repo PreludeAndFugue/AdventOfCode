@@ -75,8 +75,18 @@ def part1():
     print(t)
 
 
+def part2():
+    row = INPUT
+    t = row.count('.')
+    for _ in range(399_999):
+        row = update(row)
+        t += row.count('.')
+    print(t)
+
+
 def main():
     part1()
+    part2()
 
 
 if __name__ == '__main__':
