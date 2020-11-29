@@ -2,7 +2,7 @@
 
 
 from hashlib import md5
-from queue import Queue
+from queue import SimpleQueue
 
 
 INPUT = 'edjrjqaa'
@@ -59,18 +59,31 @@ def get_neighbours(location, path, passcode):
 
 def part1(passcode):
     start = 0, 0
-    queue = Queue()
+    queue = SimpleQueue()
     queue.put((start, ''))
     while not queue.empty():
         location, path = queue.get()
-
-        # print(location, path)
-        # input()
-
         if location == GOAL:
             return path
         for x in get_neighbours(location, path, passcode):
             queue.put(x)
+
+
+def part2(passcode):
+    longest_path = ''
+    start = 0, 0
+    queue = SimpleQueue()
+    queue.put((start, ''))
+    while not queue.empty():
+        location, path = queue.get()
+        if location == GOAL:
+            if len(path) > len(longest_path):
+                longest_path = path
+        else:
+            for x in get_neighbours(location, path, passcode):
+                queue.put(x)
+
+    return len(longest_path)
 
 
 def test1():
@@ -79,9 +92,19 @@ def test1():
     assert part1(TEST_INPUT3) == TEST_PATH3
 
 
+def test2():
+    assert part2(TEST_INPUT1) == 370
+    assert part2(TEST_INPUT2) == 492
+    assert part2(TEST_INPUT3) == 830
+
+
 def main():
     test1()
     p = part1(INPUT)
+    print(p)
+
+    test2()
+    p = part2(INPUT)
     print(p)
 
 
