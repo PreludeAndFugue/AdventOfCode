@@ -59,8 +59,32 @@ def viable_pair(n1, n2):
     return n1.used <= n2.free
 
 
-def part1():
-    nodes = make_nodes(INPUT)
+def print_nodes(nodes):
+    nodes = sorted(nodes, key=lambda n: (n.y, n.x))
+    goal_x = max(n.x for n in nodes)
+    print(goal_x)
+    rows = []
+    row = []
+    for n in nodes:
+        if n.is_empty:
+            print(n)
+            row.append('_')
+        elif n.x == goal_x and n.y == 0:
+            print(n)
+            row.append('G')
+        elif n.used > 200:
+            row.append('#')
+        else:
+            row.append('.')
+
+        if n.x == goal_x:
+            r = ' '.join(row)
+            rows.append(r)
+            row = []
+    print('\n'.join(rows))
+
+
+def part1(nodes):
     total = 0
     for n1, n2 in product(nodes, repeat=2):
         if viable_pair(n1, n2):
@@ -68,8 +92,16 @@ def part1():
     return total
 
 
+def part2(nodes):
+    print_nodes(nodes)
+
+
 def main():
-    p = part1()
+    nodes = make_nodes(INPUT)
+    p = part1(nodes)
+    print(p)
+
+    p = part2(nodes)
     print(p)
 
 
