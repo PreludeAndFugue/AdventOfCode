@@ -42,9 +42,22 @@ def part1():
     return elf.position
 
 
+def part2():
+    i = 3
+    while i < INPUT:
+        i *= 3
+    i = i // 3
+    for j in range(i):
+        n = i + j
+        if n == INPUT:
+            return j
+
 
 def main():
     p = part1()
+    print(p)
+
+    p = part2()
     print(p)
 
 
