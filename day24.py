@@ -93,11 +93,7 @@ def get_path_length(nodes, paths):
     return d
 
 
-def part1():
-    maze = create_maze(open(INPUT, 'r').read())
-    locations = get_locations(maze)
-    other_locations = [l for l in locations if l != 0]
-    paths = all_shortest_paths(maze, locations)
+def shortest_total_path(other_locations, paths):
     lengths = []
     for p in permutations(other_locations):
         l = get_path_length(p, paths)
@@ -105,8 +101,36 @@ def part1():
     return min(lengths)
 
 
+def shortest_total_path_back_home(other_locations, paths):
+    lengths = []
+    for p in permutations(other_locations):
+        last = p[-1]
+        l = get_path_length(p, paths) + paths[(last, 0)]
+        lengths.append(l)
+    return min(lengths)
+
+
+def part1(maze):
+    locations = get_locations(maze)
+    other_locations = [l for l in locations if l != 0]
+    paths = all_shortest_paths(maze, locations)
+    return shortest_total_path(other_locations, paths)
+
+
+def part2(maze):
+    locations = get_locations(maze)
+    other_locations = [l for l in locations if l != 0]
+    paths = all_shortest_paths(maze, locations)
+    return shortest_total_path_back_home(other_locations, paths)
+
+
+
 def main():
-    p = part1()
+    maze = create_maze(open(INPUT, 'r').read())
+    p = part1(maze)
+    print(p)
+
+    p = part2(maze)
     print(p)
 
 
