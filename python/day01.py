@@ -4,7 +4,7 @@ from itertools import combinations
 from math import prod
 
 
-INPUT = 'python/day01.txt'
+INPUT = 'day01.txt'
 
 
 def check(numbers, n):
