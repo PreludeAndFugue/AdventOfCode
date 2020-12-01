@@ -22,7 +22,7 @@ def part2(numbers):
 
 
 def main():
-    numbers = [int(line.strip()) for line in open(INPUT, 'r').readlines()]
+    numbers = list(map(int, open(INPUT, 'r').readlines()))
     p = part1(numbers)
     print(p)
 
