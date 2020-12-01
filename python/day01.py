@@ -1,7 +1,7 @@
 #!python3
 
-from functools import reduce
 from itertools import combinations
+from math import prod
 
 
 INPUT = 'python/day01.txt'
@@ -10,7 +10,7 @@ INPUT = 'python/day01.txt'
 def check(numbers, n):
     for m in combinations(numbers, n):
         if sum(m) == 2020:
-            return reduce(lambda x, y: x * y, m)
+            return prod(m)
 
 
 def part1(numbers):
