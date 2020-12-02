@@ -6,6 +6,7 @@ TEST_INPUT = '''1-3 a: abcde
 2-9 c: ccccccccc
 2-9 c: cccccccccc'''
 TEST_OUTPUT = [True, False, True, False]
+TEST_OUTPUT2 = [True, False, False, False]
 
 
 def get_input(input):
@@ -22,20 +23,37 @@ def is_valid(r, l, p):
     return l_count in r
 
 
-def test1():
-    test = get_input(TEST_INPUT.split('\n'))
-    for (r, l, p), result in zip(test, TEST_OUTPUT):
+def is_valid2(r, l, p):
+    p1 = p[r.start - 1] == l
+    p2 = p[r.stop - 2] == l
+    return p1 != p2
+
+
+def test1(input):
+    for (r, l, p), result in zip(input, TEST_OUTPUT):
         assert is_valid(r, l, p) == result
 
 
-def part1():
-    p = sum(is_valid(*data) for data in get_input(open(INPUT, 'r')))
+def test2(input):
+    for data, result in zip(input, TEST_OUTPUT2):
+        assert is_valid2(*data) == result
+
+
+def part(input, is_valid_func):
+    p = sum(is_valid_func(*data) for data in input)
     return p
 
 
 def main():
-    test1()
-    p = part1()
+    test_input = list(get_input(TEST_INPUT.split('\n')))
+    test1(test_input)
+
+    input = list(get_input(open(INPUT, 'r')))
+    p = part(input, is_valid)
+    print(p)
+
+    test2(test_input)
+    p = part(input, is_valid2)
     print(p)
 
 
