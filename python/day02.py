@@ -18,7 +18,7 @@ def get_input(input):
         yield r, l, p
 
 
-def is_valid(r, l, p):
+def is_valid1(r, l, p):
     l_count = p.count(l)
     return l_count in r
 
@@ -31,7 +31,7 @@ def is_valid2(r, l, p):
 
 def test1(input):
     for (r, l, p), result in zip(input, TEST_OUTPUT):
-        assert is_valid(r, l, p) == result
+        assert is_valid1(r, l, p) == result
 
 
 def test2(input):
@@ -39,8 +39,8 @@ def test2(input):
         assert is_valid2(*data) == result
 
 
-def part(input, is_valid_func):
-    p = sum(is_valid_func(*data) for data in input)
+def part(input, is_valid):
+    p = sum(is_valid(*data) for data in input)
     return p
 
 
@@ -49,7 +49,7 @@ def main():
     test1(test_input)
 
     input = list(get_input(open(INPUT, 'r')))
-    p = part(input, is_valid)
+    p = part(input, is_valid1)
     print(p)
 
     test2(test_input)
