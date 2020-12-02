@@ -88,11 +88,14 @@ def compute(instructions, registers):
 
             if position not in instructions:
                 pointer += 1
-                continue
+            else:
+                other_i = instructions[pointer + offset]
+                instructions[pointer + offset] = _toggle(other_i)
+                pointer += 1
 
-            other_i = instructions[pointer + offset]
-            instructions[pointer + offset] = _toggle(other_i)
-            pointer += 1
+            _print_instructions(instructions)
+            print(pointer)
+            print(registers)
         else:
             raise ComputeError(f'{i}, {registers}')
 
@@ -108,3 +111,9 @@ def _toggle(instruction):
         return Instruction('jnz', instruction.x1, instruction.x2)
     else:
         raise ComputeError('unfinished')
+
+
+def _print_instructions(instructions):
+    keys = sorted(instructions.keys())
+    for k in keys:
+        print(k, instructions[k])
