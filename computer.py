@@ -1,5 +1,14 @@
 #!python3
 
+'''
+Instructions:
+- inc
+- dec
+- cpy
+- jnz
+- tgl
+'''
+
 from collections import namedtuple
 
 
@@ -51,11 +60,11 @@ def compute(instructions, registers):
             registers[i.x1] -= 1
             pointer += 1
         elif i.name == 'cpy':
-            if i.x1.isnumeric():
+            if i.x1.isalpha():
+                registers[i.x2] = registers[i.x1]
+            else:
                 n = int(i.x1)
                 registers[i.x2] = n
-            else:
-                registers[i.x2] = registers[i.x1]
             pointer += 1
         elif i.name == 'jnz':
             if i.x2.isalpha():
@@ -75,12 +84,27 @@ def compute(instructions, registers):
                     pointer += 1
         elif i.name == 'tgl':
             offset = registers[i.x1]
+            position = pointer + offset
+
+            if position not in instructions:
+                pointer += 1
+                continue
+
             other_i = instructions[pointer + offset]
-
-            print(other_i)
-
+            instructions[pointer + offset] = _toggle(other_i)
             pointer += 1
-            
-            raise ComputeError('unfinished')
         else:
             raise ComputeError(f'{i}, {registers}')
+
+
+def _toggle(instruction):
+    if instruction.name == 'inc':
+        return Instruction('dec', instruction.x1, instruction.x2)
+    elif instruction.name == 'dec' or instruction.name == 'tgl':
+        return Instruction('inc', instruction.x1, instruction.x2)
+    elif instruction.name == 'jnz':
+        return Instruction('cpy', instruction.x1, instruction.x2)
+    elif instruction.name == 'cpy':
+        return Instruction('jnz', instruction.x1, instruction.x2)
+    else:
+        raise ComputeError('unfinished')
