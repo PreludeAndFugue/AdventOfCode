@@ -23,13 +23,6 @@ TEST_SLOPE_ANSWERS = [
 ]
 
 
-def make_map(input):
-    lines = []
-    for line in input:
-        lines.append(line.strip())
-    return lines
-
-
 def count_trees(map, dr, dc):
     width = len(map[0])
     count = 0
@@ -60,17 +53,18 @@ def part2(map, slopes):
 
 
 def main():
-    test_map = make_map(TEST_INPUT.strip().split('\n'))
+    test_map = TEST_INPUT.strip().split('\n')
+    full_map = open(INPUT, 'r').read().strip().split('\n')
+
     assert count_trees(test_map, 1, 3) == 7
 
-    map = make_map(open(INPUT, 'r').readlines())
-    p = count_trees(map, 1, 3)
+    p = count_trees(full_map, 1, 3)
     print(p)
 
     test2(test_map, SLOPES, TEST_SLOPE_ANSWERS)
     assert part2(test_map, SLOPES) == 336
 
-    p = part2(map, SLOPES)
+    p = part2(full_map, SLOPES)
     print(p)
 
 
