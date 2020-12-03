@@ -24,17 +24,14 @@ TEST_SLOPE_ANSWERS = [
 
 
 def count_trees(map, dr, dc):
-    width = len(map[0])
+    columns = len(map[0])
+    rows = len(map)
     count = 0
-    r = 0
     c = 0
-    for (row, line) in enumerate(map):
-        if row != r:
-            continue
-        if line[c] == '#':
+    for r in range(0, rows, dr):
+        if map[r][c] == '#':
             count += 1
-        r = r + dr
-        c = (c + dc) % width
+        c = (c + dc) % columns
     return count
 
 
