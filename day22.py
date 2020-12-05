@@ -51,22 +51,26 @@ class Map(object):
 
 
     def risk_level(self, x, y):
+        return self.get_erosion_level(x, y) % 3
+
+
+    def total_risk_level(self, x, y):
         total = 0
         for i in range(x + 1):
             for j in range(y + 1):
-                total += self.get_erosion_level(i, j) % 3
+                total += self.risk_level(i, j)
         return total
 
 
 def test1():
     map = Map(TEST_DEPTH, TEST_X, TEST_Y)
-    r = map.risk_level(TEST_X, TEST_Y)
+    r = map.total_risk_level(TEST_X, TEST_Y)
     assert r == 114
 
 
 def part1():
     map = Map(DEPTH, X, Y)
-    return map.risk_level(X, Y)
+    return map.total_risk_level(X, Y)
 
 
 def main():
