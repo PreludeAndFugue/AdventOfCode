@@ -37,23 +37,36 @@ def get_seat_id(seat):
     return 8 * row + col
 
 
-
 def test1():
     seats = get_seats(TEST_INPUT)
     for (seat, seat_id) in zip(seats, TEST_OUTPUT):
         assert get_seat_id(seat) == seat_id
 
 
-def part1():
-    seats = get_seats(open(INPUT, 'r').read())
-    max_seat_id = max(get_seat_id(s) for s in seats)
+def part1(seat_ids):
+    max_seat_id = max(seat_ids)
     return max_seat_id
 
 
+def part2(seat_ids):
+    min_id = min(seat_ids)
+    max_id = max(seat_ids)
+    seat_set = set(seat_ids)
+    all_seat_set = set(range(min_id, max_id))
+    empty_set_set = all_seat_set - seat_set
+    return empty_set_set.pop()
+
+
 def main():
+    seats = get_seats(open(INPUT, 'r').read())
+    seat_ids = [get_seat_id(s) for s in seats]
+
     test1()
 
-    p = part1()
+    p = part1(seat_ids)
+    print(p)
+
+    p = part2(seat_ids)
     print(p)
 
 
