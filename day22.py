@@ -3,6 +3,10 @@
 '''
 depth: 9171
 target: 7,721
+
+Use Djikstra's algorithm for part 2
+https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Practical_optimizations_and_infinite_graphs
+
 '''
 
 DEPTH = 9_171
@@ -13,6 +17,11 @@ Y = 721
 TEST_DEPTH = 510
 TEST_X = 10
 TEST_Y = 10
+
+# equipment
+CLIMBING_GEAR = 'climbing_gear'
+TORCH = 'torch'
+NEITHER = 'neither'
 
 
 class Map(object):
@@ -62,6 +71,42 @@ class Map(object):
         return total
 
 
+class Node(object):
+    def __init__(self, x, y, risk_level, equipment, time):
+        self.x = x
+        self.y = y
+        self.risk_level = risk_level
+        self.equipment = equipment
+        self.time = time
+
+
+class UniformCostSearch(object):
+    risk_level_equipment = {
+        0: [CLIMBING_GEAR, TORCH],
+        1: [CLIMBING_GEAR, NEITHER],
+        2: [TORCH, NEITHER]
+    }
+
+    def __init__(self, start, goal, map):
+        '''
+        start: a node
+        goal: a location (x, y)
+        nodes: dictionary of Nodes where the keys are tuples - (x, y, equipment).
+        '''
+        self.start = start
+        self.goal = goal
+        self.nodes = {}
+        self.map = map
+
+
+    def _get_neighbours(self, node):
+        pass
+
+
+    def _get_equipment(self, risk_level):
+        return UniformCostSearch.risk_level_equipment[risk_level]
+
+
 def test1():
     map = Map(TEST_DEPTH, TEST_X, TEST_Y)
     r = map.total_risk_level(TEST_X, TEST_Y)
@@ -71,6 +116,13 @@ def test1():
 def part1():
     map = Map(DEPTH, X, Y)
     return map.total_risk_level(X, Y)
+
+
+def test2():
+    map = Map(TEST_DEPTH, TEST_X, TEST_Y)
+    start = Node(0, 0, 0, TORCH, 0)
+    goal = (TEST_X, TEST_Y)
+    search = UniformCostSearch(start, goal, map)
 
 
 def main():
