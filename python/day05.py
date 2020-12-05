@@ -43,11 +43,6 @@ def test1():
         assert get_seat_id(seat) == seat_id
 
 
-def part1(seat_ids):
-    max_seat_id = max(seat_ids)
-    return max_seat_id
-
-
 def part2(seat_ids):
     min_id = min(seat_ids)
     max_id = max(seat_ids)
@@ -63,8 +58,7 @@ def main():
 
     test1()
 
-    p = part1(seat_ids)
-    print(p)
+    print(max(seat_ids))
 
     p = part2(seat_ids)
     print(p)
