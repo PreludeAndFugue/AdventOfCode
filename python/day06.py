@@ -1,5 +1,7 @@
 #!python3
 
+from string import ascii_lowercase
+
 INPUT = 'day06.txt'
 TEST_INPUT = '''abc
 
@@ -31,13 +33,10 @@ def part1(input):
 def part2(input):
     total = 0
     for group in input.split('\n\n'):
-        answers = None
+        answers = set(ascii_lowercase)
         for line in group.strip().split('\n'):
             partial_answers = set(list(line.strip()))
-            if answers is None:
-                answers = partial_answers
-            else:
-                answers.intersection_update(partial_answers)
+            answers.intersection_update(partial_answers)
         total += len(answers)
     return total
 
