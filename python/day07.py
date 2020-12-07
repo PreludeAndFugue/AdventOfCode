@@ -63,27 +63,34 @@ def get_reverse(bags):
 
 
 def is_contained_in_count(bag, reverse_bags):
+    '''Part 1 counter.
+
+    Just a simple search algorithm.
+    '''
     to_check = reverse_bags[bag]
     seen = set()
-    answer = set()
     while to_check:
         item = to_check.pop()
         if item in seen:
             continue
         seen.add(item)
-        answer.add(item)
         for b in reverse_bags[item]:
             to_check.append(b)
-    return len(answer)
+    return len(seen)
 
 
-def contains_count(bag, count, bags):
+def contains_count_helper(bag, count, bags):
     others = bags[bag]
     if not others:
         yield 0
     for b, c in others.items():
         yield count * c
-        yield from contains_count(b, count * c, bags)
+        yield from contains_count_helper(b, count * c, bags)
+
+
+def contains_count(bag, bags):
+    '''Part 2 counter.'''
+    return sum(contains_count_helper(bag, 1, bags))
 
 
 def test1(bags):
@@ -98,19 +105,15 @@ def part1(bags):
 
 
 def test2(bags1, bags2):
-    x = contains_count('shiny gold', 1, bags1)
-    n = sum(y for y in x)
+    n = contains_count('shiny gold', bags1)
     assert n == 32
 
-    x = contains_count('shiny gold', 1, bags2)
-    n = sum(y for y in x)
+    n = contains_count('shiny gold', bags2)
     assert n == 126
 
 
 def part2(bags):
-    x = contains_count('shiny gold', 1, bags)
-    n = sum(y for y in x)
-    return n
+    return contains_count('shiny gold', bags)
 
 
 def main():
