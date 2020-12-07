@@ -16,6 +16,15 @@ faded blue bags contain no other bags.
 dotted black bags contain no other bags.
 '''
 
+TEST_INPUT2 = '''shiny gold bags contain 2 dark red bags.
+dark red bags contain 2 dark orange bags.
+dark orange bags contain 2 dark yellow bags.
+dark yellow bags contain 2 dark green bags.
+dark green bags contain 2 dark blue bags.
+dark blue bags contain 2 dark violet bags.
+dark violet bags contain no other bags.
+'''
+
 PATTERN = r'(\d+)\s(\w+\s\w+)'
 BAG = re.compile(PATTERN)
 
@@ -68,23 +77,55 @@ def is_contained_in_count(bag, reverse_bags):
     return len(answer)
 
 
-def test1():
-    bags = get_input(TEST_INPUT)
+def contains_count(bag, count, bags):
+    others = bags[bag]
+    if not others:
+        yield 0
+    for b, c in others.items():
+        yield count * c
+        yield from contains_count(b, count * c, bags)
+
+
+def test1(bags):
     reverse_bags = get_reverse(bags)
     c = is_contained_in_count('shiny gold', reverse_bags)
     assert c == 4
 
 
-def part1():
-    bags = get_input(open(INPUT, 'r').read())
+def part1(bags):
     reverse_bags = get_reverse(bags)
     return is_contained_in_count('shiny gold', reverse_bags)
 
 
-def main():
-    test1()
+def test2(bags1, bags2):
+    x = contains_count('shiny gold', 1, bags1)
+    n = sum(y for y in x)
+    assert n == 32
 
-    p = part1()
+    x = contains_count('shiny gold', 1, bags2)
+    n = sum(y for y in x)
+    assert n == 126
+
+
+def part2(bags):
+    x = contains_count('shiny gold', 1, bags)
+    n = sum(y for y in x)
+    return n
+
+
+def main():
+    bags = get_input(open(INPUT, 'r').read())
+    test_bags_1 = get_input(TEST_INPUT)
+    test_bags_2 = get_input(TEST_INPUT2)
+
+    test1(test_bags_1)
+
+    p = part1(bags)
+    print(p)
+
+    test2(test_bags_1, test_bags_2)
+
+    p = part2(bags)
     print(p)
 
 
