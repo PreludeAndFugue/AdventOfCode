@@ -1,6 +1,7 @@
 #!python3
 
 from collections import namedtuple
+from copy import deepcopy
 
 
 INPUT = 'day08.txt'
@@ -40,10 +41,14 @@ class Computer(object):
 
     def run(self):
         while True:
+            if self.pointer == len(self.instructions):
+                return self.accumulator, True
+
             instruction = self.instructions[self.pointer]
             if self.pointer in self.pointer_history:
-                return self.accumulator
+                return self.accumulator, False
             self.pointer_history.add(self.pointer)
+
             if instruction.name == 'nop':
                 self._nop()
             elif instruction.name == 'acc':
@@ -69,24 +74,63 @@ class Computer(object):
         self.pointer += instruction.value
 
 
-def test1():
-    instructions = get_instructions(TEST_INPUT)
+def swap_instruction(instruction):
+    if instruction.name == 'nop':
+        return Instruction('jmp', instruction.value)
+    elif instruction.name == 'jmp':
+        return Instruction('nop', instruction.value)
+    else:
+        raise IOError('Invalid instruction')
+
+
+
+def test1(instructions):
     computer = Computer(instructions)
-    n = computer.run()
+    n, _ = computer.run()
     assert n == 5
 
 
-def part1():
-    instructions = get_instructions(open(INPUT, 'r').read())
+def part1(instructions):
     computer = Computer(instructions)
-    n = computer.run()
+    n, _ = computer.run()
+    return n
+
+
+def _part2(instructions):
+    for i, instruction in enumerate(instructions):
+        if instruction.name == 'acc':
+            continue
+        new_instruction = swap_instruction(instruction)
+        computer_instructions = deepcopy(instructions)
+        computer_instructions[i] = new_instruction
+        computer = Computer(computer_instructions)
+        n, result = computer.run()
+        if result:
+            return n
+
+
+def test2(instructions):
+    n = _part2(instructions)
+    assert n == 8
+
+
+def part2(instructions):
+    n = _part2(instructions)
     return n
 
 
 def main():
-    test1()
+    test_instructions = get_instructions(TEST_INPUT)
+    instructions = get_instructions(open(INPUT, 'r').read())
 
-    p = part1()
+    test1(test_instructions)
+
+    p = part1(instructions)
+    print(p)
+
+    test2(test_instructions)
+
+    p = part2(instructions)
     print(p)
 
 
