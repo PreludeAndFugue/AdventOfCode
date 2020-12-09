@@ -66,10 +66,38 @@ def part1():
     return _part1(numbers, PREAMBLE)
 
 
+def _part2(numbers, value):
+    for i, _ in enumerate(numbers):
+        for j, _ in enumerate(numbers[i + 1:], start=i + 1):
+            s = sum(numbers[i:j + 1])
+            if s == value:
+                sub = numbers[i: j + 1]
+                return min(sub) + max(sub)
+            if s > value:
+                break
+
+
+def test2():
+    k = test1()
+    numbers = list(get_numbers(TEST_INPUT))
+    return _part2(numbers, k)
+
+
+def part2():
+    k = part1()
+    numbers = list(get_numbers(open(INPUT, 'r').read()))
+    return _part2(numbers, k)
+
+
 def main():
     assert test1() == 127
 
     p = part1()
+    print(p)
+
+    assert test2() == 62
+
+    p = part2()
     print(p)
 
 
