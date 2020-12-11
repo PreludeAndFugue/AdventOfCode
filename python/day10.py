@@ -2,6 +2,7 @@
 
 
 from collections import Counter, deque
+from math import prod
 from time import perf_counter
 
 
@@ -55,10 +56,12 @@ TEST_INPUT_2 = '''
 '''
 
 def get_numbers(input):
-    results = []
+    results = [0]
     for line in input.strip().split('\n'):
         results.append(int(line))
-    return results
+    m = max(results) + 3
+    results.append(m)
+    return sorted(results)
 
 
 def get_diffs(path):
@@ -76,39 +79,78 @@ def diff_calculator(path):
 
 def test1():
     numbers = get_numbers(TEST_INPUT_1)
-    numbers.append(0)
-    m = max(numbers) + 3
-    numbers.append(m)
-    numbers.sort()
     n = diff_calculator(numbers)
-    return n
+    assert n == 35
 
 
 def test2():
     numbers = get_numbers(TEST_INPUT_2)
-    numbers.append(0)
-    m = max(numbers) + 3
-    numbers.append(m)
-    numbers.sort()
     n = diff_calculator(numbers)
-    return n
+    assert n == 220
 
 
 def part1():
     numbers = get_numbers(open(INPUT, 'r').read())
-    numbers.append(0)
-    m = max(numbers) + 3
-    numbers.append(m)
-    numbers.sort()
     n = diff_calculator(numbers)
     return n
 
 
+def test3():
+    n1 = sorted(get_numbers(TEST_INPUT_1))
+    connections1 = make_connections(n1)
+    r1 = recursive_count(connections1, 0, {})
+    assert r1 == 8
+
+    n2 = sorted(get_numbers(TEST_INPUT_2))
+    connections2 = make_connections(n2)
+    r2 = recursive_count(connections2, 0, {})
+    assert r2 == 19208
+
+
+def make_connections(numbers):
+    connections = {}
+    for i, n in enumerate(numbers):
+        connect = []
+        for k in numbers[i + 1:]:
+            if k - n <= 3:
+                connect.append(k)
+            else:
+                break
+        if not connect:
+            continue
+        connections[n] = connect
+    return connections
+
+
+def recursive_count(connections, n, cache):
+    if n not in connections:
+        return 1
+    elif n in cache:
+        return cache[n]
+    else:
+        values = connections[n]
+        x = sum(recursive_count(connections, v, cache) for v in values)
+        cache[n] = x
+        return x
+
+
+def part2():
+    numbers = get_numbers(open(INPUT, 'r').read())
+    connections = make_connections(numbers)
+    r = recursive_count(connections, 0, {})
+    return r
+
+
 def main():
-    assert test1() == 35
-    assert test2() == 220
+    test1()
+    test2()
 
     p = part1()
+    print(p)
+
+    test3()
+
+    p = part2()
     print(p)
 
 
