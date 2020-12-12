@@ -10,6 +10,12 @@ F11
 '''
 
 DIRECTIONS = 'NESW'
+DIRECTION_NUMBERS = {
+    'N': complex(0, 1),
+    'E': complex(1, 0),
+    'S': complex(0, -1),
+    'W': complex(-1, 0)
+}
 
 
 def get_input(input):
@@ -19,74 +25,64 @@ def get_input(input):
         yield action, distance
 
 
-def move(position, facing, distance):
-    if facing == 'E':
-        return position[0] + distance, position[1]
-    elif facing == 'S':
-        return position[0], position[1] - distance
-    elif facing == 'W':
-        return position[0] - distance, position[1]
-    elif facing == 'N':
-        return position[0], position[1] + distance
-    else:
-        raise IOError
-
-
 def rotate(facing, number, direction):
     assert number in (90, 180, 270)
-    steps = number // 90
-    i = DIRECTIONS.index(facing)
-    new_i = (i + direction * steps) % len(DIRECTIONS)
-    return DIRECTIONS[new_i]
+    if number == 180:
+        direction = -1
+    power = number // 90
+    power_j = 1j ** power
+    x = -direction * power_j * facing
+    return x
 
 
 def test_rotate():
-    assert rotate('N', 90, 1) == 'E'
-    assert rotate('E', 90, 1) == 'S'
-    assert rotate('S', 90, 1) == 'W'
-    assert rotate('W', 90, 1) == 'N'
+    assert rotate(DIRECTION_NUMBERS['N'], 90, 1) == DIRECTION_NUMBERS['E']
+    assert rotate(DIRECTION_NUMBERS['E'], 90, 1) == DIRECTION_NUMBERS['S']
+    assert rotate(DIRECTION_NUMBERS['S'], 90, 1) == DIRECTION_NUMBERS['W']
+    assert rotate(DIRECTION_NUMBERS['W'], 90, 1) == DIRECTION_NUMBERS['N']
 
-    assert rotate('N', 180, 1) == 'S'
-    assert rotate('E', 180, 1) == 'W'
-    assert rotate('S', 180, 1) == 'N'
-    assert rotate('W', 180, 1) == 'E'
+    assert rotate(DIRECTION_NUMBERS['N'], 180, 1) == DIRECTION_NUMBERS['S']
+    assert rotate(DIRECTION_NUMBERS['E'], 180, 1) == DIRECTION_NUMBERS['W']
+    assert rotate(DIRECTION_NUMBERS['S'], 180, 1) == DIRECTION_NUMBERS['N']
+    assert rotate(DIRECTION_NUMBERS['W'], 180, 1) == DIRECTION_NUMBERS['E']
 
-    assert rotate('N', 270, 1) == 'W'
-    assert rotate('E', 270, 1) == 'N'
-    assert rotate('S', 270, 1) == 'E'
-    assert rotate('W', 270, 1) == 'S'
+    assert rotate(DIRECTION_NUMBERS['N'], 270, 1) == DIRECTION_NUMBERS['W']
+    assert rotate(DIRECTION_NUMBERS['E'], 270, 1) == DIRECTION_NUMBERS['N']
+    assert rotate(DIRECTION_NUMBERS['S'], 270, 1) == DIRECTION_NUMBERS['E']
+    assert rotate(DIRECTION_NUMBERS['W'], 270, 1) == DIRECTION_NUMBERS['S']
 
-    assert rotate('N', 90, -1) == 'W'
-    assert rotate('E', 90, -1) == 'N'
-    assert rotate('W', 90, -1) == 'S'
-    assert rotate('S', 90, -1) == 'E'
+    assert rotate(DIRECTION_NUMBERS['N'], 90, -1) == DIRECTION_NUMBERS['W']
+    assert rotate(DIRECTION_NUMBERS['E'], 90, -1) == DIRECTION_NUMBERS['N']
+    assert rotate(DIRECTION_NUMBERS['S'], 90, -1) == DIRECTION_NUMBERS['E']
+    assert rotate(DIRECTION_NUMBERS['W'], 90, -1) == DIRECTION_NUMBERS['S']
 
-    assert rotate('N', 180, -1) == 'S'
-    assert rotate('E', 180, -1) == 'W'
-    assert rotate('W', 180, -1) == 'E'
-    assert rotate('S', 180, -1) == 'N'
+    assert rotate(DIRECTION_NUMBERS['N'], 180, -1) == DIRECTION_NUMBERS['S']
+    assert rotate(DIRECTION_NUMBERS['E'], 180, -1) == DIRECTION_NUMBERS['W']
+    assert rotate(DIRECTION_NUMBERS['S'], 180, -1) == DIRECTION_NUMBERS['N']
+    assert rotate(DIRECTION_NUMBERS['W'], 180, -1) == DIRECTION_NUMBERS['E']
 
-    assert rotate('N', 270, -1) == 'E'
-    assert rotate('E', 270, -1) == 'S'
-    assert rotate('W', 270, -1) == 'N'
-    assert rotate('S', 270, -1) == 'W'
+    assert rotate(DIRECTION_NUMBERS['N'], 270, -1) == DIRECTION_NUMBERS['E']
+    assert rotate(DIRECTION_NUMBERS['E'], 270, -1) == DIRECTION_NUMBERS['S']
+    assert rotate(DIRECTION_NUMBERS['S'], 270, -1) == DIRECTION_NUMBERS['W']
+    assert rotate(DIRECTION_NUMBERS['W'], 270, -1) == DIRECTION_NUMBERS['N']
 
 
 def _part1(instructions):
-    position = 0, 0
-    facing = 'E'
+    position = complex(0, 0)
+    facing = complex(1, 0)
     for action, number in instructions:
         if action == 'F':
-            position = move(position, facing, number)
+            position += number * facing
         elif action == 'R':
             facing = rotate(facing, number, 1)
         elif action == 'L':
             facing = rotate(facing, number, -1)
         elif action in DIRECTIONS:
-            position = move(position, action, number)
+            d = DIRECTION_NUMBERS[action]
+            position += number * d
         else:
             raise IOError
-    return sum(map(abs, position))
+    return abs(position.real) + abs(position.imag)
 
 
 def test1(instructions):
@@ -97,35 +93,22 @@ def part1(instructions):
     return _part1(instructions)
 
 
-def rotate_waypoint(waypoint, number, direction):
-    x, y = waypoint
-    if number == 90:
-        return direction * y, -direction * x
-    elif number == 180:
-        return -x, -y
-    elif number == 270:
-        return -direction * y, direction * x
-    else:
-        raise IOError
-
-
 def _part2(instructions):
-    position = 0, 0
-    waypoint = 10, 1
+    position = complex(0, 0)
+    waypoint = complex(10, 1)
     for action, number in instructions:
         if action in DIRECTIONS:
-            waypoint = move(waypoint, action, number)
+            d = DIRECTION_NUMBERS[action]
+            waypoint += number * d
         elif action == 'F':
-            x, y = position
-            a, b = waypoint
-            position = x + number * a, y + number * b
+            position += number * waypoint
         elif action == 'R':
-            waypoint = rotate_waypoint(waypoint, number, 1)
+            waypoint = rotate(waypoint, number, 1)
         elif action == 'L':
-            waypoint = rotate_waypoint(waypoint, number, -1)
+            waypoint = rotate(waypoint, number, -1)
         else:
             raise IOError
-    return sum(map(abs, position))
+    return abs(position.real) + abs(position.imag)
 
 
 def test2(instructions):
