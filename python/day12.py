@@ -32,52 +32,44 @@ def move(position, facing, distance):
         raise IOError
 
 
-def rotate_right(facing, number):
+def rotate(facing, number, direction):
     assert number in (90, 180, 270)
     steps = number // 90
     i = DIRECTIONS.index(facing)
-    new_i = (i + steps) % len(DIRECTIONS)
-    return DIRECTIONS[new_i]
-
-
-def rotate_left(facing, number):
-    assert number in (90, 180, 270)
-    steps = number // 90
-    i = DIRECTIONS.index(facing)
-    new_i = (i - steps) % len(DIRECTIONS)
+    new_i = (i + direction * steps) % len(DIRECTIONS)
     return DIRECTIONS[new_i]
 
 
 def test_rotate():
-    assert rotate_right('N', 90) == 'E'
-    assert rotate_right('E', 90) == 'S'
-    assert rotate_right('S', 90) == 'W'
-    assert rotate_right('W', 90) == 'N'
+    assert rotate('N', 90, 1) == 'E'
+    assert rotate('E', 90, 1) == 'S'
+    assert rotate('S', 90, 1) == 'W'
+    assert rotate('W', 90, 1) == 'N'
 
-    assert rotate_right('N', 180) == 'S'
-    assert rotate_right('E', 180) == 'W'
-    assert rotate_right('S', 180) == 'N'
-    assert rotate_right('W', 180) == 'E'
+    assert rotate('N', 180, 1) == 'S'
+    assert rotate('E', 180, 1) == 'W'
+    assert rotate('S', 180, 1) == 'N'
+    assert rotate('W', 180, 1) == 'E'
 
-    assert rotate_right('N', 270) == 'W'
-    assert rotate_right('E', 270) == 'N'
-    assert rotate_right('S', 270) == 'E'
-    assert rotate_right('W', 270) == 'S'
+    assert rotate('N', 270, 1) == 'W'
+    assert rotate('E', 270, 1) == 'N'
+    assert rotate('S', 270, 1) == 'E'
+    assert rotate('W', 270, 1) == 'S'
 
-    assert rotate_left('N', 90) == 'W'
-    assert rotate_left('E', 90) == 'N'
-    assert rotate_left('W', 90) == 'S'
-    assert rotate_left('S', 90) == 'E'
+    assert rotate('N', 90, -1) == 'W'
+    assert rotate('E', 90, -1) == 'N'
+    assert rotate('W', 90, -1) == 'S'
+    assert rotate('S', 90, -1) == 'E'
 
-    assert rotate_left('N', 180) == 'S'
-    assert rotate_left('E', 180) == 'W'
-    assert rotate_left('W', 180) == 'E'
-    assert rotate_left('S', 180) == 'N'
+    assert rotate('N', 180, -1) == 'S'
+    assert rotate('E', 180, -1) == 'W'
+    assert rotate('W', 180, -1) == 'E'
+    assert rotate('S', 180, -1) == 'N'
 
-    assert rotate_left('N', 270) == 'E'
-    assert rotate_left('E', 270) == 'S'
-    assert rotate_left('W', 270) == 'N'
-    assert rotate_left('S', 270) == 'W'
+    assert rotate('N', 270, -1) == 'E'
+    assert rotate('E', 270, -1) == 'S'
+    assert rotate('W', 270, -1) == 'N'
+    assert rotate('S', 270, -1) == 'W'
 
 
 def _part1(instructions):
@@ -87,9 +79,9 @@ def _part1(instructions):
         if action == 'F':
             position = move(position, facing, number)
         elif action == 'R':
-            facing = rotate_right(facing, number)
+            facing = rotate(facing, number, 1)
         elif action == 'L':
-            facing = rotate_left(facing, number)
+            facing = rotate(facing, number, -1)
         elif action in DIRECTIONS:
             position = move(position, action, number)
         else:
@@ -97,21 +89,66 @@ def _part1(instructions):
     return sum(map(abs, position))
 
 
-def test1():
-    instructions = get_input(TEST_INPUT)
+def test1(instructions):
     return _part1(instructions)
 
 
-def part1():
-    instructions = get_input(open(INPUT, 'r').read())
+def part1(instructions):
     return _part1(instructions)
+
+
+def rotate_waypoint(waypoint, number, direction):
+    x, y = waypoint
+    if number == 90:
+        return direction * y, -direction * x
+    elif number == 180:
+        return -x, -y
+    elif number == 270:
+        return -direction * y, direction * x
+    else:
+        raise IOError
+
+
+def _part2(instructions):
+    position = 0, 0
+    waypoint = 10, 1
+    for action, number in instructions:
+        if action in DIRECTIONS:
+            waypoint = move(waypoint, action, number)
+        elif action == 'F':
+            x, y = position
+            a, b = waypoint
+            position = x + number * a, y + number * b
+        elif action == 'R':
+            waypoint = rotate_waypoint(waypoint, number, 1)
+        elif action == 'L':
+            waypoint = rotate_waypoint(waypoint, number, -1)
+        else:
+            raise IOError
+    return sum(map(abs, position))
+
+
+def test2(instructions):
+    return _part2(instructions)
+
+
+def part2(instructions):
+    return _part2(instructions)
 
 
 def main():
-    test_rotate()
-    assert test1() == 25
+    instructions = list(get_input(open(INPUT, 'r').read()))
+    test_instructions = list(get_input(TEST_INPUT))
 
-    p = part1()
+    test_rotate()
+    assert test1(test_instructions) == 25
+
+    p = part1(instructions)
+    print(p)
+
+    assert test2(test_instructions) == 286
+
+    p = part2(instructions)
     print(p)
 
 
