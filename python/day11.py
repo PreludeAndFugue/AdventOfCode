@@ -16,6 +16,11 @@ L.LLLLL.LL
 '''
 
 
+DIRECTIONS = [
+    (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)
+]
+
+
 def get_input(input):
     grid = {}
     for r, line in enumerate(input.strip().split('\n')):
@@ -36,17 +41,33 @@ def print_grid(grid):
     print(result)
 
 
-def get_neighbour(row, col, grid):
-    for r in (-1, 0, 1):
-        for c in (-1, 0, 1):
-            if r == c == 0:
+def get_neighbour1(row, col, grid):
+    for r, c in DIRECTIONS:
+        if r == c == 0:
+            continue
+        new_row = row + r
+        new_col = col + c
+        yield grid.get((new_row, new_col), '.')
+
+
+def get_neighbour2(row, col, grid):
+    def get(grid, row, col, dr, dc):
+        while True:
+            row += dr
+            col += dc
+            el = grid.get((row, col), 'x')
+            if el == '.':
                 continue
-            new_row = row + r
-            new_col = col + c
-            yield grid.get((new_row, new_col), '.')
+            elif el == 'x':
+                return '.'
+            else:
+                return el
+    for r, c in DIRECTIONS:
+        x = get(grid, row, col, r, c)
+        yield x
 
 
-def update_seats(grid):
+def update_seats(grid, limit, get_neighbour):
     new_grid = {}
     for coord, el in grid.items():
         if el == '.':
@@ -60,7 +81,7 @@ def update_seats(grid):
                 else:
                     new_grid[coord] = el
             elif el == '#':
-                if c['#'] >= 4:
+                if c['#'] >= limit:
                     new_grid[coord] = 'L'
                 else:
                     new_grid[coord] = '#'
@@ -69,29 +90,36 @@ def update_seats(grid):
     return new_grid
 
 
-def _part1(grid):
+def part1(grid):
     while True:
-        new_grid = update_seats(grid)
+        new_grid = update_seats(grid, 4, get_neighbour1)
         if new_grid == grid:
             c = Counter(v for v in grid.values())
             return c['#']
         grid = new_grid
 
 
-def test1():
-    grid = get_input(TEST_INPUT)
-    return _part1(grid)
-
-
-def part1():
-    grid = get_input(open(INPUT, 'r').read())
-    return _part1(grid)
+def part2(grid):
+    while True:
+        new_grid = update_seats(grid, 5, get_neighbour2)
+        if new_grid == grid:
+            c = Counter(v for v in grid.values())
+            return c['#']
+        grid = new_grid
 
 
 def main():
-    assert test1() == 37
+    grid = get_input(open(INPUT, 'r').read())
+    test_grid = get_input(TEST_INPUT)
 
-    p = part1()
+    assert part1(test_grid) == 37
+
+    p = part1(grid)
+    print(p)
+
+    assert part2(test_grid) == 26
+
+    p = part2(grid)
     print(p)
 
 
