@@ -9,7 +9,7 @@ import Algorithms
 import Foundation
 
 func day01() -> (Int, Int) {
-    let input = try! String.numbers(forDay: 1)
+    let input = String.numbers(forDay: 1)
     let p1 = input.combinations(ofCount: 2)
         .first(where: { $0.sum() == 2020 })
         .map({ $0.product() })!
