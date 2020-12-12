@@ -7,6 +7,6 @@
 
 import Foundation
 
-let (d1_1, d1_2) = day01()
-print(d1_1)
-print(d1_2)
+let (d1, d2) = day02()
+print(d1)
+print(d2)
