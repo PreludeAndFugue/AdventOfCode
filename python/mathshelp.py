@@ -12,6 +12,9 @@ def modular_inverse(x, m):
     The value of y mod m can be calculated exactly when x and m are coprime.
 
     If m is prime, the formula becomes y = x ** (m - 2)
+
+    https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
+    https://en.wikipedia.org/wiki/Modular_multiplicative_inverse#Using_Euler's_theorem
     '''
     return (x ** (m - 2)) % m
 
@@ -29,6 +32,8 @@ def chinese_remainder(pairs):
         x = an mod mn
 
     where all pairs of m1, m2, ..., mn are coprime.
+
+    https://en.wikipedia.org/wiki/Chinese_remainder_theorem
 
     pairs: [(a1, m1), (a2, m2), ..., (an, mn)]
     '''
