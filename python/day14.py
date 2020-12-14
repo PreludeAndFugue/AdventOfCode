@@ -76,49 +76,45 @@ def get_input(input):
             raise IOError(line)
 
 
-def _part1(instructions):
+def work(instructions, helper):
+    '''Main algorithm for parts 1 and 2.'''
     memory = defaultdict(int)
     mask = None
     for instruction in instructions:
         if isinstance(instruction, Mask):
             mask = instruction
         elif isinstance(instruction, Memory):
-            value = mask.apply(instruction.value)
-            memory[instruction.address] = value
+            helper(instruction, mask, memory)
         else:
             raise IOError
     return sum(v for v in memory.values())
+
+
+def _part1_helper(instruction, mask, memory):
+    value = mask.apply(instruction.value)
+    memory[instruction.address] = value
 
 
 def test1(instructions):
-    assert _part1(instructions) == 165
+    assert work(instructions, _part1_helper) == 165
 
 
 def part1(instructions):
-    return _part1(instructions)
+    return work(instructions, _part1_helper)
 
 
-def _part2(instructions):
-    memory = defaultdict(int)
-    mask = None
-    for instruction in instructions:
-        if isinstance(instruction, Mask):
-            mask = instruction
-        elif isinstance(instruction, Memory):
-            addresses = mask.addresses(instruction.address)
-            for address in addresses:
-                memory[address] = instruction.value
-        else:
-            raise IOError
-    return sum(v for v in memory.values())
+def _part2_helper(instruction, mask, memory):
+    addresses = mask.addresses(instruction.address)
+    for address in addresses:
+        memory[address] = instruction.value
 
 
 def test2(instructions):
-    assert _part2(instructions) == 208
+    assert work(instructions, _part2_helper) == 208
 
 
 def part2(instructions):
-    return _part2(instructions)
+    return work(instructions, _part2_helper)
 
 
 def main():
