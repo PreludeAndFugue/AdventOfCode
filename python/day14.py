@@ -37,13 +37,11 @@ class Mask(object):
 
         x_count = self.mask.count('X')
         temp_mask = ''.join(m if m == 'X' else a for (m, a) in zip(self.mask, address))
-        mask_parts = temp_mask.split('X')
+        temp_mask = temp_mask.replace('X', '{}')
+
         addresses = []
         for z in product('01', repeat=x_count):
-            new_address = [mask_parts[0]]
-            for digit, mask_part in zip(z, mask_parts[1:]):
-                new_address.append(digit)
-                new_address.append(mask_part)
+            new_address = temp_mask.format(*z)
             addresses.append(''.join(new_address))
         return [int(a, 2) for a in addresses]
 
