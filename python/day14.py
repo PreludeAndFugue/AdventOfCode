@@ -58,7 +58,7 @@ class Mask(object):
 
 Memory = namedtuple('Memory', ['address', 'value'])
 
-MEM = re.compile(r'^mem\[(\d+)\] = (\d+)')
+MEM = re.compile(r'^mem\[(\d+)\] = (\d+)$')
 
 
 def get_input(input):
