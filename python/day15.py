@@ -7,6 +7,8 @@ INPUT = '1,2,16,19,18,0'
 
 TEST_INPUT_1 = '0,3,6'
 
+TURNS_1 = 2020
+TURNS_2 = 30_000_000
 
 def get_input(input):
     for x in input.strip().split(','):
@@ -51,34 +53,54 @@ def test1():
 
 def test2():
     starting_numbers = [1, 3, 2]
-    numbers = _part1(starting_numbers, 2020)
-    assert numbers[2020] == 1
+    numbers = _part1(starting_numbers, TURNS_1)
+    assert numbers[TURNS_1] == 1
 
     starting_numbers = [2, 1, 3]
-    numbers = _part1(starting_numbers, 2020)
-    assert numbers[2020] == 10
+    numbers = _part1(starting_numbers, TURNS_1)
+    assert numbers[TURNS_1] == 10
 
     starting_numbers = [1, 2, 3]
-    numbers = _part1(starting_numbers, 2020)
-    assert numbers[2020] == 27
+    numbers = _part1(starting_numbers, TURNS_1)
+    assert numbers[TURNS_1] == 27
 
     starting_numbers = [2, 3, 1]
-    numbers = _part1(starting_numbers, 2020)
-    assert numbers[2020] == 78
+    numbers = _part1(starting_numbers, TURNS_1)
+    assert numbers[TURNS_1] == 78
 
     starting_numbers = [3, 2, 1]
-    numbers = _part1(starting_numbers, 2020)
-    assert numbers[2020] == 438
+    numbers = _part1(starting_numbers, TURNS_1)
+    assert numbers[TURNS_1] == 438
 
     starting_numbers = [3, 1, 2]
-    numbers = _part1(starting_numbers, 2020)
-    assert numbers[2020] == 1836
+    numbers = _part1(starting_numbers, TURNS_1)
+    assert numbers[TURNS_1] == 1836
 
 
 def part1():
     starting_numbers = list(get_input(INPUT))
-    numbers = _part1(starting_numbers, 2020)
-    return numbers[2020]
+    numbers = _part1(starting_numbers, TURNS_1)
+    return numbers[TURNS_1]
+
+
+def test3():
+    starting_numbers = [1, 2, 3]
+    numbers = _part1(starting_numbers, TURNS_2)
+    assert numbers[TURNS_2] == 261_214
+
+    starting_numbers = [3, 2, 1]
+    numbers = _part1(starting_numbers, TURNS_2)
+    assert numbers[TURNS_2] == 18
+
+    starting_numbers = [2, 3, 1]
+    numbers = _part1(starting_numbers, TURNS_2)
+    assert numbers[TURNS_2] == 6_895_259
+
+
+def part2():
+    starting_numbers = list(get_input(INPUT))
+    numbers = _part1(starting_numbers, TURNS_2)
+    return numbers[TURNS_2]
 
 
 def main():
@@ -86,6 +108,11 @@ def main():
     test2()
 
     p = part1()
+    print(p)
+
+    # test3()
+
+    p = part2()
     print(p)
 
 
