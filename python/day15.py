@@ -15,17 +15,29 @@ def get_input(input):
         yield int(x)
 
 
+def update_seen(seen, n, i):
+    if len(seen[n]) <= 1:
+        seen[n].append(i)
+    else:
+        seen[n] = [seen[n][-1], i]
+
+
+def update_seen1(seen, n, i):
+    seen[n].append(i)
+
+
 def do_turn(i, numbers, seen):
     last_n = numbers[i - 1]
     if len(seen[last_n]) == 1:
         numbers[i] = 0
-        seen[0].append(i)
+        update_seen(seen, 0, i)
         return 0
     else:
-        i1, i2 = seen[last_n][-2:]
+        i1, i2 = seen[last_n]
+        # i1, i2 = seen[last_n][-2:]
         n = i2 - i1
         numbers[i] = n
-        seen[n].append(i)
+        update_seen(seen, n, i)
         return n
 
 
@@ -39,7 +51,6 @@ def _part1(starting_numbers, last_turn):
     while turn <= last_turn:
         n = do_turn(turn, numbers, seen)
         turn += 1
-
     return numbers
 
 
