@@ -19,11 +19,12 @@ TEST_INPUT_1 = '''6 * ((4 * 3) * 6 * (5 * 5 * 6 + 6) + (3 * 2) * 5 * 3)
 TEST_OUTPUT_1 = [1011420]
 # 1010970
 
+TEST_OUTPUT_PART_2 = [231, 51, 46, 1445, 669060, 23340]
+
 
 def get_input(input):
     for line in input.strip().split('\n'):
         yield line
-
 
 
 def test1():
@@ -49,9 +50,18 @@ def part1():
     return total
 
 
+def test3():
+    for answer, line in zip(TEST_OUTPUT_PART_2, get_input(TEST_INPUT)):
+        lexer = Lexer(line)
+        i = Interpreter(lexer)
+        assert i.expr() == answer
+
+
 def main():
-    test1()
-    test2()
+    # test1()
+    # test2()
+
+    test3()
 
     p = part1()
     print(p)

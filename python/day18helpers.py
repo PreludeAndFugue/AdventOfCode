@@ -13,7 +13,8 @@ from operator import __add__, __mul__
 
 OPEN_PAREN = 'OPEN_PAREN'
 CLOSE_PAREN = 'CLOSE_PAREN'
-OPERATOR = 'OPERATOR'
+MUL = 'MUL'
+ADD = 'ADD'
 INT = 'INT'
 EOF = 'EOF'
 
@@ -43,10 +44,10 @@ class Lexer(object):
             return Token(INT, int(char))
         elif char == '+':
             self.position += 1
-            return Token(OPERATOR, __add__)
+            return Token(ADD, __add__)
         elif char == '*':
             self.position += 1
-            return Token(OPERATOR, __mul__)
+            return Token(MUL, __mul__)
         elif char == '(':
             self.position += 1
             return Token(OPEN_PAREN, None)
@@ -72,12 +73,28 @@ class Interpreter(object):
 
 
     def expr(self):
-        '''expr: factor (OPERATOR factor)*
+        '''
+        expr: term (MUL term)*
+        term: factor (ADD factor)*
+        factor: INT | OPEN_PAREN expr CLOSE_PAREN
+        '''
+        result = self.term()
+        while self.current_token.type == MUL:
+            token = self.current_token
+            self.eat(MUL)
+            operator = token.value
+            result = operator(result, self.term())
+        return result
+
+
+    def term(self):
+        '''
+        term: factor (ADD factor)*
         '''
         result = self.factor()
-        while self.current_token.type == OPERATOR:
+        while self.current_token.type == ADD:
             token = self.current_token
-            self.eat(OPERATOR)
+            self.eat(ADD)
             operator = token.value
             result = operator(result, self.factor())
         return result
@@ -104,8 +121,17 @@ class Interpreter(object):
             raise Exception(f'Eat error: {self.current_token}, type: {token_type}')
 
 
-def main():
+
+def test():
     l = Lexer('((3 + 2) * 4) + (3 + 1)')
+    tokens = [l.get_next_token() for _ in range(10)]
+    print(tokens)
+
+
+def main():
+    # test()
+
+    l = Lexer('1 + 2 * 3')
     i = Interpreter(l)
     n = i.expr()
     print(n)
