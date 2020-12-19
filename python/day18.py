@@ -29,14 +29,14 @@ def get_input(input):
 def test1():
     for answer, line in zip(TEST_OUTPUT, get_input(TEST_INPUT)):
         lexer = Lexer(line)
-        i = Interpreter(lexer.get_tokens())
+        i = Interpreter(lexer)
         assert i.expr() == answer
 
 
 def test2():
     for answer, line in zip(TEST_OUTPUT_1, get_input(TEST_INPUT_1)):
         lexer = Lexer(line)
-        i = Interpreter(lexer.get_tokens())
+        i = Interpreter(lexer)
         assert i.expr() == answer
 
 
@@ -44,7 +44,7 @@ def part1():
     total = 0
     for line in get_input(open(INPUT, 'r').read()):
         lexer = Lexer(line)
-        i = Interpreter(lexer.get_tokens())
+        i = Interpreter(lexer)
         total += i.expr()
     return total
 

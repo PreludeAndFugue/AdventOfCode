@@ -34,17 +34,7 @@ class Lexer(object):
         self.position = 0
 
 
-    def get_tokens(self):
-        tokens = []
-        while True:
-            token = self._get_next_token()
-            tokens.append(token)
-            if token.type == EOF:
-                break
-        return tokens
-
-
-    def _get_next_token(self):
+    def get_next_token(self):
         if self._at_end:
             return Token(EOF, None)
         char = self.text[self.position]
@@ -65,7 +55,7 @@ class Lexer(object):
             return Token(CLOSE_PAREN, None)
         elif char == ' ':
             self.position += 1
-            return self._get_next_token()
+            return self.get_next_token()
         else:
             raise Exception(f'Invalid token: {repr(char)}')
 
@@ -76,10 +66,9 @@ class Lexer(object):
 
 
 class Interpreter(object):
-    def __init__(self, tokens):
-        self.tokens = tokens
-        self.position = 0
-        self.current_token = tokens[0]
+    def __init__(self, lexer):
+        self.lexer = lexer
+        self.current_token = lexer.get_next_token()
 
 
     def expr(self):
@@ -110,21 +99,14 @@ class Interpreter(object):
 
     def eat(self, token_type):
         if self.current_token.type == token_type:
-            self.current_token = self._get_next_token()
+            self.current_token = self.lexer.get_next_token()
         else:
             raise Exception(f'Eat error: {self.current_token}, type: {token_type}')
 
 
-    def _get_next_token(self):
-        self.position += 1
-        return self.tokens[self.position]
-
-
 def main():
     l = Lexer('((3 + 2) * 4) + (3 + 1)')
-    tokens = l.get_tokens()
-    print(tokens)
-    i = Interpreter(tokens)
+    i = Interpreter(l)
     n = i.expr()
     print(n)
 
