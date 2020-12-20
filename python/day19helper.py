@@ -31,6 +31,7 @@ NUM = 'NUM'
 OR = 'OR'
 OPEN_PAREN = 'OPEN_PAREN'
 CLOSE_PAREN = 'CLOSE_PAREN'
+ONE_OR_MORE = 'ONE_OR_MORE'
 EOF = 'EOF'
 
 
@@ -38,6 +39,16 @@ class Token(object):
     def __init__(self, token_type, value):
         self.type = token_type
         self.value = value
+
+
+    @classmethod
+    def one_or_more(cls):
+        return cls(ONE_OR_MORE, '+')
+
+
+    @classmethod
+    def eof(cls):
+        return cls(EOF, None)
 
 
     @property
@@ -59,7 +70,7 @@ class Lexer(object):
 
     def get_next_token(self):
         if self.is_at_end:
-            return Token(EOF, None)
+            return Token.eof()
         while self.text[self.position] == ' ':
             self.position += 1
         ch = self.text[self.position]
@@ -109,11 +120,6 @@ class Parser(object):
 
 
     def parse(self, n):
-        '''
-        atom: CHAR
-        expr: NUM (NUM)*
-        or: [ expr | expr ]
-        '''
         all_tokens = [t for t in self.rules[n]]
         more_parsing = True
         while more_parsing:
@@ -130,26 +136,40 @@ class Parser(object):
         return all_tokens
 
 
-def make_rule(text):
+def make_rule(text, part2=False):
     number, rule = text.split(': ')
     number = int(number)
+    part2_i = 7
+    if part2 and number == 8:
+        rule = ' | '.join('42 '*i for i in range(1, part2_i))
+    if part2 and number == 11:
+        rule = ' | '.join('42 '*i + '31 '*i for i in range(1, part2_i))
     l = Lexer(rule)
-    return number, l.get_all_tokens()
+    tokens = l.get_all_tokens()
+    return number, tokens
 
 
-def make_rules(text):
+def make_rules(text, part2=False):
     rules = {}
     for line in text.strip().split('\n'):
-        n, r = make_rule(line)
+        n, r = make_rule(line, part2=part2)
         rules[n] = r
     return rules
 
 
-def make_re(text, n):
-    '''n is rule number.'''
-    rules = make_rules(text)
+def make_partial_re(text, n, part2=False):
+    rules = make_rules(text, part2=part2)
     p = Parser(rules)
     r = p.parse(n)
+    return ''.join(a.value for a in r)
+
+
+def make_re(text, n, part2=False):
+    '''n is rule number.'''
+    rules = make_rules(text, part2=part2)
+    p = Parser(rules)
+    r = p.parse(n)
+
     x = ''.join(a.value for a in r)
     prog = re.compile('^' + x + '$')
     return prog
