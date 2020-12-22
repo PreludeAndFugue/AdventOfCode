@@ -50,17 +50,6 @@ def move(p1, p2):
         raise Exception('Same values')
 
 
-def get_winner(p1, p2):
-    if p1 and p2:
-        raise Exception
-    if p1:
-        return p1
-    elif p2:
-        return p2
-    else:
-        raise Exception
-
-
 def score(p):
     p.reverse()
     total = 0
@@ -72,15 +61,13 @@ def score(p):
 def game1(p1, p2):
     while p1 and p2:
         move(p1, p2)
-    w = get_winner(p1, p2)
-    s = score(w)
+    s = score(p1) + score(p2)
     return s
 
 
 def game_state(p1, p2):
-    p1 = ','.join(map(str, p1))
-    p2 = ','.join(map(str, p2))
-    return '|'.join([p1, p2])
+    return '|'.join([str(p1), str(p2)])
+
 
 GAME_NO = 1
 
@@ -148,33 +135,22 @@ def game2(n, p1, p2):
         return 2
 
 
-def test1():
-    p1, p2 = get_input(TEST_INPUT_1)
+def test1(p1, p2):
     p1 = deque(p1)
     p2 = deque(p2)
     g = game1(p1, p2)
     assert g == 306
 
 
-def part1():
-    p1, p2 = get_input(open(INPUT, 'r').read())
+def part1(p1, p2):
     p1 = deque(p1)
     p2 = deque(p2)
     g = game1(p1, p2)
     return g
 
 
-def test2():
-    p1, p2 = get_input(TEST_INPUT_2)
-    p1 = deque(p1)
-    p2 = deque(p2)
-    games = 1
-    game2(games, p1, p2)
-
-
-def test3():
+def test2(p1, p2):
     GAME_NO = 1
-    p1, p2 = get_input(TEST_INPUT_1)
     p1 = deque(p1)
     p2 = deque(p2)
     game2(GAME_NO, p1, p2)
@@ -182,9 +158,8 @@ def test3():
     assert s2 == 291
 
 
-def part2():
+def part2(p1, p2):
     GAME_NO = 1
-    p1, p2 = get_input(open(INPUT, 'r').read())
     p1 = deque(p1)
     p2 = deque(p2)
     game2(GAME_NO, p1, p2)
@@ -194,15 +169,17 @@ def part2():
 
 
 def main():
-    test1()
+    p1_test, p2_test = get_input(TEST_INPUT_1)
+    p1, p2 = get_input(open(INPUT, 'r').read())
 
-    p = part1()
+    test1(p1_test, p2_test)
+
+    p = part1(p1, p2)
     print(p)
 
-    # test2()
-    test3()
+    test2(p1_test, p2_test)
 
-    p = part2()
+    p = part2(p1, p2)
     print(p)
 
 
