@@ -128,6 +128,32 @@ class Edge(Enum):
         return [Edge.TOP, Edge.RIGHT, Edge.BOTTOM, Edge.LEFT]
 
 
+    @staticmethod
+    def are_pair(edge1, edge2):
+        if edge1 == Edge.TOP and edge2 == Edge.BOTTOM:
+            return True
+        if edge1 == Edge.BOTTOM and edge2 == Edge.TOP:
+            return True
+        if edge1 == Edge.LEFT and edge2 == Edge.RIGHT:
+            return True
+        if edge1 == Edge.RIGHT and edge2 == Edge.LEFT:
+            return True
+        return False
+
+
+    @staticmethod
+    def direction(from_edge, to_edge):
+        if from_edge == Edge.TOP and to_edge == Edge.BOTTOM:
+            return (0, -1)
+        if from_edge == Edge.BOTTOM and to_edge == Edge.TOP:
+            return (0, 1)
+        if from_edge == Edge.LEFT and to_edge == Edge.RIGHT:
+            return (-1, 0)
+        if from_edge == Edge.RIGHT and to_edge == Edge.LEFT:
+            return (1, 0)
+        raise Exception('Invalid direction')
+
+
 class Rotation(Enum):
     R0 = 0
     R90 = 1
@@ -155,6 +181,24 @@ def flip_vertical(matrix):
     return [row[::-1] for row in matrix]
 
 
+class TileEdge(object):
+    def __init__(self, edge, text):
+        self.edge = edge
+        self.text = text
+
+
+    def matches(self, other):
+        if self.text != other.text:
+            return False
+        return Edge.are_pair(self.edge, other.edge)
+
+
+    def __repr__(self):
+        e = Edge(self.edge).name
+        return f'TileEdge({e}, {self.text})'
+
+
+
 class Tile(object):
     def __init__(self, n, text, rotation=Rotation.R0, flip=Flip.NONE):
         self.n = n
@@ -163,17 +207,48 @@ class Tile(object):
         self.flip = flip
 
 
+    @property
+    def trimmed_text(self):
+        '''The text content without the border.'''
+        return [t[1:-1] for t in self.text[1:-1]]
+
+
     def get_edge(self, n):
         if n == Edge.TOP:
-            return self.text[0]
+            return TileEdge(n, self.text[0])
         elif n == Edge.BOTTOM:
-            return self.text[-1]
+            return TileEdge(n, self.text[-1])
         elif n == Edge.LEFT:
-            return ''.join(t[0] for t in self.text)
+            text = ''.join(t[0] for t in self.text)
+            return TileEdge(n, text)
         elif n == Edge.RIGHT:
-            return ''.join(t[-1] for t in self.text)
+            text = ''.join(t[-1] for t in self.text)
+            return TileEdge(n, text)
         else:
             raise Exception(f'Invalid edge number: {n}')
+
+
+    def get_opposite_edge(self, n):
+        if n == Edge.TOP:
+            return self.get_edge(Edge.BOTTOM)
+        if n == Edge.BOTTOM:
+            return self.get_edge(Edge.TOP)
+        if n == Edge.LEFT:
+            return self.get_edge(Edge.RIGHT)
+        if n == Edge.RIGHT:
+            return self.get_edge(Edge.LEFT)
+
+
+    def get_matching_edges(self, other):
+        '''Get's the edge of this Tile and the edge of the other
+        tile that have matching patterns.'''
+        for edge in self.get_all_edges():
+            other_edge = other.get_opposite_edge(edge.edge)
+            if edge.matches(other_edge):
+                # print(self.n, other.n)
+                # print(edge, other_edge)
+                return edge, other_edge
+        raise Exception("Shouldn't be here")
 
 
     def get_all_edges(self):
@@ -214,10 +289,9 @@ class Tile(object):
             self.rotated(Rotation.R90),
             self.rotated(Rotation.R180),
             self.rotated(Rotation.R270),
-            self.flipped(Flip.VERTICAL),
             vertical,
-            horizontal,
             vertical.rotated(Rotation.R90),
+            horizontal,
             horizontal.rotated(Rotation.R90)
         ]
 
@@ -227,7 +301,8 @@ class Tile(object):
 
 
     def __repr__(self):
-        return f'{self.n}\n----\n{self.text}'
+        text = '\n'.join(self.text)
+        return f'\n{self.n}\n----\n{text}'
 
 
 def get_tile(text):
