@@ -117,7 +117,7 @@ def main():
     p = part1()
     print(p)
 
-    p = part2()
+    part2()
     print(p)
 
 

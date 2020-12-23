@@ -135,7 +135,7 @@ def print_window_around(node):
 
 
 def _part1(node, n):
-    for i in range(n):
+    for _ in range(n):
         # print(f'-- move {i + 1} --')
         move(node, 9)
         print_nodes(node)
@@ -178,7 +178,7 @@ def test3():
 
 
 def _part2(node, moves, max_value):
-    for i in range(moves):
+    for _ in range(moves):
         # print(f'-- move {i + 1} --')
         move(node, max_value)
         node = node.right
