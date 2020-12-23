@@ -16,8 +16,8 @@ private let base = "/Users/gary/Documents/computing/python/AdventOfCode/2020/swi
 extension String {
     static func input(forDay: Int) -> String {
         let dayString = String(format: "%02d", forDay)
-        let file = "day\(dayString)"
-        let path = Bundle.main.path(forResource: file, ofType: ".txt")!
+        let file = "day\(dayString).txt"
+        let path = base + file
         return try! String(contentsOfFile: path, encoding: .utf8)
     }
 
