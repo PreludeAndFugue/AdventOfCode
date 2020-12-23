@@ -1,137 +1,151 @@
 #!python
 
+'''
+Trying a list where the number at index i is the number that comes
+next in the ring
+
+Ring: 389125467
+
+List: [0, 2, 5, 8, 6, 4, 7, 3, 8, 9, 1]
+(Ignore zero index.)
+'''
 
 INPUT = '792845136'
 TEST_INPUT = '389125467'
 
 
-class Node(object):
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
+def make_list(input):
+    l = [0] * (len(input) + 1)
+    ns = list(map(int, list(input)))
+    for m, n in zip(ns, ns[1:] + [ns[0]]):
+        # print(m, n)
+        l[m] = n
+    # print(ns[-1], ns[0])
+    # l[ns[-1]] = l[ns[0]]
+    return l
 
 
-    def __repr__(self):
-        l = self.left.value if self.left is not None else '?'
-        r = self.right.value if self.right is not None else '?'
-        return f'Node({self.value}, l: {l}, r: {r})'
+def make_list2(input):
+    l = [i + 1 for i in range(1_000_001)]
+    ns = list(map(int, list(input)))
+    for m, n in zip(ns, ns[1:]):
+        l[m] = n
+    l[-1] = ns[0]
+    l[ns[-1]] = 10
+    return l
 
 
-def get_input(input):
-    nodes = list(map(Node, (map(int, list(input.strip())))))
-    nodes1 = nodes[1:] + [nodes[0]]
-    for n1, n2 in zip(nodes, nodes1):
-        n1.right = n2
-        n2.left = n1
-    return nodes[0]
-
-
-def remove_after(node):
-    removed = node.right
-    removed_end = removed.right.right
-    new_right = removed_end.right
-    node.right = new_right
-    new_right.left = node
-    removed.left = None
-    removed_end.right = None
-    return removed
-
-
-def get_removed_values(node):
-    values = []
-    while node is not None:
-        values.append(node.value)
-        node = node.right
-    print('pick up:', values)
-    return values
-
-
-def get_insertion_value(current_value, removed_values):
-    i = (current_value - 2) % 9
+def get_destination(current_value, removed_values, size):
+    i = (current_value - 2) % size
     while (i + 1) in removed_values:
-        i  = (i - 1) % 9
-    print('destination:', i + 1)
+        i  = (i - 1) % size
+    # print('destination:', i + 1)
     return i + 1
 
 
-def find_node_with_value(value, node):
-    while node.value != value:
-        node = node.right
-    print('find node with value', value, node)
-    return node
+def move_list(l, n, size):
+    remove_start = l[n]
+    remove_middle = l[remove_start]
+    remove_end = l[remove_middle]
+    remove_all = [remove_start, remove_middle, remove_end]
+    # print(remove_all)
+
+    after_remove_end = l[remove_end]
+    # print('after end', after_remove_end)
+    destination = get_destination(n, remove_all, size)
+    # print('destination', destination)
+
+    destination_end = l[destination]
+    # print('destination_end', destination_end)
+    l[n] = after_remove_end
+    l[destination] = remove_start
+    l[remove_end] = destination_end
 
 
-def insert_after(node, new_right):
-    old_right = node.right
-
-    node.right = new_right
-    new_right.left = node
-
-    new_right_end = new_right.right.right
-    new_right_end.right = old_right
-    old_right.left = new_right_end
-
-
-def print_nodes(node):
-    values = []
-    while node.value not in values:
-        values.append(node.value)
-        node = node.right
+def print_list(l, start):
+    values = [start]
+    n = start
+    while l[n] != start:
+        values.append(l[n])
+        n = l[n]
+    print(l)
     print(values)
-    print()
 
 
-def move(current_node):
-    removed = remove_after(current_node)
-    removed_values = get_removed_values(removed)
-    insertion_value = get_insertion_value(current_node.value, removed_values)
-    insertion_node = find_node_with_value(insertion_value, current_node)
-    insert_after(insertion_node, removed)
-
-
-def answer(node):
-    n1 = find_node_with_value(1, node)
-    n = n1.right
+def answer1(l):
     values = []
-    while n.value != 1:
-        values.append(n.value)
-        n = n.right
-    return ''.join(str(i) for i in values)
-
-
-def _part1(node, n):
-    for i in range(n):
-        print(f'-- move {i + 1} --')
-        move(node)
-        print_nodes(node)
-        node = node.right
-    return answer(node)
+    n = 1
+    while l[n] != 1:
+        values.append(l[n])
+        n = l[n]
+    return ''.join(map(str, values))
 
 
 def test1():
-    current_node = get_input(TEST_INPUT)
-    x = _part1(current_node, 10)
-    assert x == '92658374'
+    l = make_list(TEST_INPUT)
+    size = 9
+    n = 3
+    for _ in range(10):
+        move_list(l, n, size)
+        n = l[n]
+    assert answer1(l) == '92658374'
 
 
 def test2():
-    current_node = get_input(TEST_INPUT)
-    x = _part1(current_node, 100)
-    assert x == '67384529'
+    l = make_list(TEST_INPUT)
+    size = 9
+    n = 3
+    for _ in range(100):
+        move_list(l, n, size)
+        n = l[n]
+    assert answer1(l) == '67384529'
 
 
 def part1():
-    current_node = get_input(INPUT)
-    x = _part1(current_node, 100)
-    return x
+    l = make_list(INPUT)
+    size = 9
+    n = 7
+    for _ in range(100):
+        move_list(l, n, size)
+        n = l[n]
+    return answer1(l)
 
+
+def test3():
+    l = make_list2(TEST_INPUT)
+    size = 1_000_000
+    n = 3
+    for _ in range(10_000_000):
+        move_list(l, n, size)
+        n = l[n]
+
+    x = l[1]
+    y = l[x]
+    assert x * y == 149245887792
+
+
+def part2():
+    l = make_list2(INPUT)
+    size = 1_000_000
+    n = 7
+    for _ in range(10_000_000):
+        move_list(l, n, size)
+        n = l[n]
+
+    x = l[1]
+    y = l[x]
+    return x * y
 
 def main():
     test1()
     test2()
 
     p = part1()
+    print(p)
+
+    # test3()
+
+    p = part2()
     print(p)
 
 
