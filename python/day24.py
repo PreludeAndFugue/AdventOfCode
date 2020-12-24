@@ -1,5 +1,14 @@
 #!python3
 
+'''
+Hexagonal grids
+https://www.redblobgames.com/grids/hexagons/
+
+Neighbours
+https://www.redblobgames.com/grids/hexagons/#neighbors-doubled
+
+'''
+
 from collections import Counter, defaultdict
 
 INPUT = 'day24.txt'
@@ -35,6 +44,8 @@ DIRECTIONS = {
     'sw': (-1, 1)
 }
 
+OFFSETS = list(DIRECTIONS.values())
+
 
 def parse_line(line):
     part = ''
@@ -64,13 +75,44 @@ def follow_path(path):
     return x, y
 
 
-def _part1(paths):
+def get_neighbours(c):
+    x, y = c
+    for dx, dy in OFFSETS:
+        yield x + dx, y + dy
+
+
+def is_black_update(tile, tiles):
+    black = sum(tiles.get(n, False) for n in get_neighbours(tile))
+    if tiles.get(tile, False):
+        return black == 1 or black == 2
+    else:
+        return black == 2
+
+
+def change_day(tiles):
+    new_tiles = {}
+    for c in tiles.keys():
+        new_tiles[c] = is_black_update(c, tiles)
+        for n in get_neighbours(c):
+            new_tiles[n] = is_black_update(n, tiles)
+    return {k: v for k, v in new_tiles.items() if v}
+
+
+def make_tiles(paths):
     tiles = defaultdict(bool)
     for path in paths:
         c = follow_path(path)
-        tiles[c] = not tiles[c]
-    count = Counter(tiles.values())
-    return count[True]
+        tiles[c] = not tiles.get(c, False)
+    return tiles
+
+
+def count_black(tiles):
+    return Counter(tiles.values())[True]
+
+
+def _part1(paths):
+    tiles = make_tiles(paths)
+    return count_black(tiles)
 
 
 def test1():
@@ -83,10 +125,33 @@ def part1():
     return _part1(paths)
 
 
+def _part2(paths):
+    tiles = make_tiles(paths)
+    for _ in range(100):
+        tiles = change_day(tiles)
+    return count_black(tiles)
+
+
+def test2():
+    paths = get_input(TEST_INPUT)
+    c = _part2(paths)
+    assert c == 2208
+
+
+def part2():
+    paths = get_input(open(INPUT, 'r').read())
+    return _part2(paths)
+
+
 def main():
     test1()
 
     p = part1()
+    print(p)
+
+    test2()
+
+    p = part2()
     print(p)
 
 
