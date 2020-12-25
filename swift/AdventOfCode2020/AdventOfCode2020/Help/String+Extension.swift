@@ -46,7 +46,9 @@ extension String {
     func match(pattern: String) -> [String] {
         let re = try! NSRegularExpression(pattern: pattern, options: [])
         let range = NSRange(location: 0, length: count)
-        let match = re.firstMatch(in: self, options: [], range: range)!
+        guard let match = re.firstMatch(in: self, options: [], range: range) else {
+            return []
+        }
         var parts: [String] = []
         for i in 1..<match.numberOfRanges {
             let r = match.range(at: i)

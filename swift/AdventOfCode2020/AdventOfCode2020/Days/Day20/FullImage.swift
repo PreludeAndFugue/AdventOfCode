@@ -28,7 +28,7 @@ final class FullImage {
     }
 
 
-    func trimmedImage() -> String {
+    func trimmedImage(separator: String = "\n") -> String {
         var rows: [String] = []
         for row in tiles {
             let height = row[0].image.count
@@ -37,9 +37,54 @@ final class FullImage {
                 let part = row.map({ trimmed(row: i, image: $0.image) }).joined()
                 parts.append(part)
             }
-            rows.append(parts.joined(separator: "\n"))
+            rows.append(parts.joined(separator: separator))
         }
-        return rows.joined(separator: "\n")
+        return rows.joined(separator: separator)
+    }
+
+
+    func countMonsters() -> Int {
+        
+
+        return 0
+    }
+
+
+    func trimmedImageAllOrientations(separator: String = "\n") -> [String] {
+        let original = trimmedImage(separator: separator)
+        let elements = trimmedImage(separator: "\n")
+            .components(separatedBy: "\n")
+            .map({ Array($0) })
+        let flippedElements = elements.reversed()
+
+        let r90 = elements.reversed().transposed()
+            .map({ $0.map({ String($0) }).joined(separator: "") })
+            .joined(separator: separator)
+        let r180 = elements.reversed().transposed().reversed().transposed()
+            .map({ $0.map({ String($0) }).joined(separator: "") })
+            .joined(separator: separator)
+        let r270 = elements.transposed().reversed()
+            .map({ $0.map({ String($0) }).joined(separator: "") })
+            .joined(separator: separator)
+        let flipped = flippedElements
+            .map({ $0.map({ String($0) }).joined(separator: "") })
+            .joined(separator: separator)
+        let flippedR90 = flippedElements.reversed().transposed()
+            .map({ $0.map({ String($0) }).joined(separator: "") })
+            .joined(separator: separator)
+        let flippedR180 = flippedElements.reversed().transposed().reversed().transposed()
+            .map({ $0.map({ String($0) }).joined(separator: "") })
+            .joined(separator: separator)
+        let flipped270 = flippedElements.transposed().reversed()
+            .map({ $0.map({ String($0) }).joined(separator: "") })
+            .joined(separator: separator)
+
+        return [
+            original,
+            r90, r180, r270,
+            flipped,
+            flippedR90, flippedR180, flipped270
+        ]
     }
 }
 

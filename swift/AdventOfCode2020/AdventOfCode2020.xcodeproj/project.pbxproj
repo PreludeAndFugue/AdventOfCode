@@ -31,6 +31,7 @@
 		4E4428162595573B0001FB3D /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4428152595573B0001FB3D /* Coordinate.swift */; };
 		4E44281B25956CB50001FB3D /* FullImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44281A25956CB50001FB3D /* FullImage.swift */; };
 		4EC9BC17259519CB00AEE407 /* TileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9BC16259519CB00AEE407 /* TileTests.swift */; };
+		4EEBAE152596113F00C11F4C /* MonsterRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEBAE142596113F00C11F4C /* MonsterRegex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		4E4428152595573B0001FB3D /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		4E44281A25956CB50001FB3D /* FullImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImage.swift; sourceTree = "<group>"; };
 		4EC9BC16259519CB00AEE407 /* TileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTests.swift; sourceTree = "<group>"; };
+		4EEBAE142596113F00C11F4C /* MonsterRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterRegex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 				4E1331F02592C05600535B35 /* Image.swift */,
 				4E1331F22592C05600535B35 /* Tile.swift */,
 				4E44281A25956CB50001FB3D /* FullImage.swift */,
+				4EEBAE142596113F00C11F4C /* MonsterRegex.swift */,
 			);
 			path = Day20;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EEBAE152596113F00C11F4C /* MonsterRegex.swift in Sources */,
 				4E1331D62592C03800535B35 /* String+Extension.swift in Sources */,
 				4E1331F32592C05600535B35 /* Image.swift in Sources */,
 				4E1331F42592C05600535B35 /* Day20.swift in Sources */,

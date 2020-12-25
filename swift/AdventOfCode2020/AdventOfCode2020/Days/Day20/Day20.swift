@@ -33,7 +33,18 @@ private func part1() -> Int {
 
 
 private func part2() -> Int {
-    0
+    let tiles = parseInput(string: String.input(forDay: 20))
+    let neighbourMap = makeNeighourMap(tiles: tiles)
+    let fullImage = FullImage(neighbourMap: neighbourMap)
+    let monster = MonsterRegex()
+    for test in fullImage.trimmedImageAllOrientations(separator: "") {
+        let c = monster.count(in: test)
+        print(c)
+        let waveCount = test.filter({ $0 == "#" }).count
+        print(waveCount - c * monster.size)
+    }
+
+    return 0
 }
 
 
@@ -49,9 +60,20 @@ private func test2() {
     let tiles = parseInput(string: testInput1)
     let neighbourMap = makeNeighourMap(tiles: tiles)
     let fullImage = FullImage(neighbourMap: neighbourMap)
-    print(fullImage.image())
-    print()
-    print(fullImage.trimmedImage())
+//    print(fullImage.image())
+//    print()
+//    print(fullImage.trimmedImage())
+//    print()
+    let monster = MonsterRegex()
+    for test in fullImage.trimmedImageAllOrientations(separator: "") {
+//        print(test)
+//        print(test.count)
+//        print()
+        let c = monster.count(in: test)
+        print(c)
+        let waveCount = test.filter({ $0 == "#" }).count
+        print(waveCount - c * monster.size)
+    }
 }
 
 
