@@ -8,10 +8,14 @@
 import Foundation
 
 func day20() -> (Int, Int) {
+    let tiles = parseInput(string: String.input(forDay: 20))
+    let neighbourMap = makeNeighourMap(tiles: tiles)
+
     test1()
-    let p1 = part1()
+    let p1 = part1(neighbourMap: neighbourMap)
+
     test2()
-    let p2 = part2()
+    let p2 = part2(neighbourMap: neighbourMap)
     return (p1, p2)
 }
 
@@ -23,25 +27,20 @@ private func parseInput(string: String) -> [Tile] {
 }
 
 
-private func part1() -> Int {
-//    let tiles = parseInput(string: String.input(forDay: 20))
-//    let neighbourMap = makeNeighourMap(tiles: tiles)
-//    let cornerNumbers = neighbourMap.filter({ $0.value.count == 2}).keys
-//    return cornerNumbers.product()
-    return 0
+private func part1(neighbourMap: [Int: [Tile]]) -> Int {
+    let cornerNumbers = neighbourMap.filter({ $0.value.count == 2}).keys
+    return cornerNumbers.product()
 }
 
 
-private func part2() -> Int {
-    let tiles = parseInput(string: String.input(forDay: 20))
-    let neighbourMap = makeNeighourMap(tiles: tiles)
+private func part2(neighbourMap: [Int: [Tile]]) -> Int {
     let fullImage = FullImage(neighbourMap: neighbourMap)
     let monster = MonsterRegex()
     var waveCount = 0
-    for test in fullImage.trimmedImageAllOrientations(separator: "") {
-        let c = monster.count(in: test)
+    for image in fullImage.trimmedImageAllOrientations(separator: "") {
+        let c = monster.count(in: image)
         if c == 0 { continue }
-        let hashCount = test.filter({ $0 == "#" }).count
+        let hashCount = image.filter({ $0 == "#" }).count
         waveCount = hashCount - c * monster.size
     }
     return waveCount
@@ -49,7 +48,7 @@ private func part2() -> Int {
 
 
 private func test1() {
-    let tiles = parseInput(string: testInput1)
+    let tiles = parseInput(string: Day20.testInput)
     let neighbourMap = makeNeighourMap(tiles: tiles)
     let cornerNumbers = neighbourMap.filter({ $0.value.count == 2 }).keys
     assert(cornerNumbers.product() == 20_899_048_083_289)
@@ -57,15 +56,15 @@ private func test1() {
 
 
 private func test2() {
-    let tiles = parseInput(string: testInput1)
+    let tiles = parseInput(string: Day20.testInput)
     let neighbourMap = makeNeighourMap(tiles: tiles)
     let fullImage = FullImage(neighbourMap: neighbourMap)
     let monster = MonsterRegex()
     var waveCount = 0
-    for test in fullImage.trimmedImageAllOrientations(separator: "") {
-        let c = monster.count(in: test)
+    for image in fullImage.trimmedImageAllOrientations(separator: "") {
+        let c = monster.count(in: image)
         if c == 0 { continue }
-        let hashCount = test.filter({ $0 == "#" }).count
+        let hashCount = image.filter({ $0 == "#" }).count
         waveCount = hashCount - c * monster.size
     }
     assert(waveCount == 273)
@@ -104,114 +103,3 @@ private func getNeighbours(tile: Tile, tiles: [Tile]) -> [Tile] {
     }
     return neighbours
 }
-
-
-private let testInput1 = """
-Tile 2311:
-..##.#..#.
-##..#.....
-#...##..#.
-####.#...#
-##.##.###.
-##...#.###
-.#.#.#..##
-..#....#..
-###...#.#.
-..###..###
-
-Tile 1951:
-#.##...##.
-#.####...#
-.....#..##
-#...######
-.##.#....#
-.###.#####
-###.##.##.
-.###....#.
-..#.#..#.#
-#...##.#..
-
-Tile 1171:
-####...##.
-#..##.#..#
-##.#..#.#.
-.###.####.
-..###.####
-.##....##.
-.#...####.
-#.##.####.
-####..#...
-.....##...
-
-Tile 1427:
-###.##.#..
-.#..#.##..
-.#.##.#..#
-#.#.#.##.#
-....#...##
-...##..##.
-...#.#####
-.#.####.#.
-..#..###.#
-..##.#..#.
-
-Tile 1489:
-##.#.#....
-..##...#..
-.##..##...
-..#...#...
-#####...#.
-#..#.#.#.#
-...#.#.#..
-##.#...##.
-..##.##.##
-###.##.#..
-
-Tile 2473:
-#....####.
-#..#.##...
-#.##..#...
-######.#.#
-.#...#.#.#
-.#########
-.###.#..#.
-########.#
-##...##.#.
-..###.#.#.
-
-Tile 2971:
-..#.#....#
-#...###...
-#.#.###...
-##.##..#..
-.#####..##
-.#..####.#
-#..#.#..#.
-..####.###
-..#.#.###.
-...#.#.#.#
-
-Tile 2729:
-...#.#.#.#
-####.#....
-..#.#.....
-....#..#.#
-.##..##.#.
-.#.####...
-####.#.#..
-##.####...
-##..#.##..
-#.##...##.
-
-Tile 3079:
-#.#.#####.
-.#..######
-..#.......
-######....
-####.#..#.
-.#...#.##.
-#.#####.##
-..#.###...
-..#.......
-..#.###...
-"""

@@ -32,6 +32,7 @@
 		4E44281B25956CB50001FB3D /* FullImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44281A25956CB50001FB3D /* FullImage.swift */; };
 		4EC9BC17259519CB00AEE407 /* TileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9BC16259519CB00AEE407 /* TileTests.swift */; };
 		4EEBAE152596113F00C11F4C /* MonsterRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEBAE142596113F00C11F4C /* MonsterRegex.swift */; };
+		4EF759BE2596455800CB1CDE /* Day20TestInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF759BD2596455800CB1CDE /* Day20TestInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		4E44281A25956CB50001FB3D /* FullImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImage.swift; sourceTree = "<group>"; };
 		4EC9BC16259519CB00AEE407 /* TileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTests.swift; sourceTree = "<group>"; };
 		4EEBAE142596113F00C11F4C /* MonsterRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterRegex.swift; sourceTree = "<group>"; };
+		4EF759BD2596455800CB1CDE /* Day20TestInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day20TestInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				4E1331F22592C05600535B35 /* Tile.swift */,
 				4E44281A25956CB50001FB3D /* FullImage.swift */,
 				4EEBAE142596113F00C11F4C /* MonsterRegex.swift */,
+				4EF759BD2596455800CB1CDE /* Day20TestInput.swift */,
 			);
 			path = Day20;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				4E1331E92592C05000535B35 /* Day03.swift in Sources */,
 				4E44281B25956CB50001FB3D /* FullImage.swift in Sources */,
 				4E1331F52592C05600535B35 /* Tile.swift in Sources */,
+				4EF759BE2596455800CB1CDE /* Day20TestInput.swift in Sources */,
 				4E13319F2592C00000535B35 /* AppDelegate.swift in Sources */,
 				4E1331EA2592C05000535B35 /* Day01.swift in Sources */,
 			);

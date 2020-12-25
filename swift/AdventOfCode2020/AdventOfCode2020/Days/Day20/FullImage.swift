@@ -43,13 +43,6 @@ final class FullImage {
     }
 
 
-    func countMonsters() -> Int {
-        
-
-        return 0
-    }
-
-
     func trimmedImageAllOrientations(separator: String = "\n") -> [String] {
         let original = trimmedImage(separator: separator)
         let elements = trimmedImage(separator: "\n")
