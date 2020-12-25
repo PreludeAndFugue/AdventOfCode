@@ -28,6 +28,9 @@
 		4E1331F52592C05600535B35 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1331F22592C05600535B35 /* Tile.swift */; };
 		4E1331FB2592C0CC00535B35 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 4E1331FA2592C0CC00535B35 /* Algorithms */; };
 		4E1332022592C1FA00535B35 /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1332012592C1FA00535B35 /* ImageTests.swift */; };
+		4E4428162595573B0001FB3D /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4428152595573B0001FB3D /* Coordinate.swift */; };
+		4E44281B25956CB50001FB3D /* FullImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44281A25956CB50001FB3D /* FullImage.swift */; };
+		4EC9BC17259519CB00AEE407 /* TileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9BC16259519CB00AEE407 /* TileTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,9 @@
 		4E1331F12592C05600535B35 /* Day20.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day20.swift; sourceTree = "<group>"; };
 		4E1331F22592C05600535B35 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		4E1332012592C1FA00535B35 /* ImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
+		4E4428152595573B0001FB3D /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		4E44281A25956CB50001FB3D /* FullImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImage.swift; sourceTree = "<group>"; };
+		4EC9BC16259519CB00AEE407 /* TileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +197,7 @@
 			children = (
 				4E1331D32592C03800535B35 /* Collection+Extension.swift */,
 				4E1331D42592C03800535B35 /* String+Extension.swift */,
+				4E4428152595573B0001FB3D /* Coordinate.swift */,
 			);
 			path = Help;
 			sourceTree = "<group>";
@@ -209,9 +216,10 @@
 		4E1331EF2592C05600535B35 /* Day20 */ = {
 			isa = PBXGroup;
 			children = (
-				4E1331F02592C05600535B35 /* Image.swift */,
 				4E1331F12592C05600535B35 /* Day20.swift */,
+				4E1331F02592C05600535B35 /* Image.swift */,
 				4E1331F22592C05600535B35 /* Tile.swift */,
+				4E44281A25956CB50001FB3D /* FullImage.swift */,
 			);
 			path = Day20;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				4E1332012592C1FA00535B35 /* ImageTests.swift */,
+				4EC9BC16259519CB00AEE407 /* TileTests.swift */,
 			);
 			path = Day20;
 			sourceTree = "<group>";
@@ -377,8 +386,10 @@
 				4E1331F42592C05600535B35 /* Day20.swift in Sources */,
 				4E1331EB2592C05000535B35 /* Day02.swift in Sources */,
 				4E1331A12592C00000535B35 /* ContentView.swift in Sources */,
+				4E4428162595573B0001FB3D /* Coordinate.swift in Sources */,
 				4E1331D52592C03800535B35 /* Collection+Extension.swift in Sources */,
 				4E1331E92592C05000535B35 /* Day03.swift in Sources */,
+				4E44281B25956CB50001FB3D /* FullImage.swift in Sources */,
 				4E1331F52592C05600535B35 /* Tile.swift in Sources */,
 				4E13319F2592C00000535B35 /* AppDelegate.swift in Sources */,
 				4E1331EA2592C05000535B35 /* Day01.swift in Sources */,
@@ -390,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E1331B52592C00100535B35 /* AdventOfCode2020Tests.swift in Sources */,
+				4EC9BC17259519CB00AEE407 /* TileTests.swift in Sources */,
 				4E1332022592C1FA00535B35 /* ImageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

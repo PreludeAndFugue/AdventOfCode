@@ -95,6 +95,10 @@ def build_map(tiles, all_neighbours):
 
 
 def fix_map_origin(tile_map):
+    '''
+    Original map creation started with an arbitrary tile at (0, 0). Update the
+    coords so that the top-left tile is at (0, 0).
+    '''
     values = list(tile_map.values())
     min_x = min(v[0] for v in values)
     min_y = min(v[1] for v in values)

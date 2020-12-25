@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
 
-        let (p1, p2) = day02()
+        let (p1, p2) = day20()
         print(p1)
         print(p2)
     }
