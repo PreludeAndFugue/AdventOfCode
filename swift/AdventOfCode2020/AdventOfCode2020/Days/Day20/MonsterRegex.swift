@@ -25,25 +25,17 @@ final class MonsterRegex {
         let spacerWidth = imageWidth - parts[0].count
         let spacer = Array(repeating: ".", count: spacerWidth).joined()
         let pattern = parts.joined(separator: spacer)
-        print(pattern)
-        print(pattern.count)
         let re = try! NSRegularExpression(pattern: pattern, options: [])
         var rangeStart = 0
         var matchCount = 0
         while true {
-//            print("range start", rangeStart)
             let range = NSRange(location: rangeStart, length: string.count - rangeStart)
-//            print(range)
-//            print("string.count", string.count)
             guard let m = re.firstMatch(in: string, options: [], range: range) else {
-                print("no more matches")
                 break
             }
             matchCount += 1
-//            print("match range", m.range)
             rangeStart = m.range.lowerBound + 1
         }
-
         return matchCount
     }
 }

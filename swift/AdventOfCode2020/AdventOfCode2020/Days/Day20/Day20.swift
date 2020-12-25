@@ -37,14 +37,14 @@ private func part2() -> Int {
     let neighbourMap = makeNeighourMap(tiles: tiles)
     let fullImage = FullImage(neighbourMap: neighbourMap)
     let monster = MonsterRegex()
+    var waveCount = 0
     for test in fullImage.trimmedImageAllOrientations(separator: "") {
         let c = monster.count(in: test)
-        print(c)
-        let waveCount = test.filter({ $0 == "#" }).count
-        print(waveCount - c * monster.size)
+        if c == 0 { continue }
+        let hashCount = test.filter({ $0 == "#" }).count
+        waveCount = hashCount - c * monster.size
     }
-
-    return 0
+    return waveCount
 }
 
 
@@ -60,20 +60,15 @@ private func test2() {
     let tiles = parseInput(string: testInput1)
     let neighbourMap = makeNeighourMap(tiles: tiles)
     let fullImage = FullImage(neighbourMap: neighbourMap)
-//    print(fullImage.image())
-//    print()
-//    print(fullImage.trimmedImage())
-//    print()
     let monster = MonsterRegex()
+    var waveCount = 0
     for test in fullImage.trimmedImageAllOrientations(separator: "") {
-//        print(test)
-//        print(test.count)
-//        print()
         let c = monster.count(in: test)
-        print(c)
-        let waveCount = test.filter({ $0 == "#" }).count
-        print(waveCount - c * monster.size)
+        if c == 0 { continue }
+        let hashCount = test.filter({ $0 == "#" }).count
+        waveCount = hashCount - c * monster.size
     }
+    assert(waveCount == 273)
 }
 
 

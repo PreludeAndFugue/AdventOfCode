@@ -40,6 +40,7 @@ class ImageTests: XCTestCase {
         let image = Image(content: ["AB", "DC"])
         let sut1 = image.rotated(.R180).rotated(.R180)
         XCTAssertEqual(image.content, ["AB", "DC"])
+        XCTAssertEqual(sut1.content, ["AB", "DC"])
     }
 
 
