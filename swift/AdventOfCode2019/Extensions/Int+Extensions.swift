@@ -30,3 +30,22 @@ extension Int {
         self = result
     }
 }
+
+
+func modularPower(base: UInt, exponent: UInt, modulus: UInt) -> UInt {
+    if modulus == 1 {
+        return 0
+    }
+    let _ = (modulus - 1) * (modulus - 1)
+    var result: UInt = 1
+    var base = base % modulus
+    var exponent = exponent
+    while exponent > 0 {
+        if (exponent % 2 == 1) {
+            result = (result * base) % modulus
+        }
+        exponent = exponent >> 1
+        base = (base * base) % modulus
+    }
+    return result
+}

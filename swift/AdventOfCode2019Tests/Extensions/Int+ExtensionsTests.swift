@@ -67,4 +67,10 @@ class Int_ExtensionsTests: XCTestCase {
         let digits = [1, 0, 0, 3, 0]
         XCTAssertEqual(Int(fromDigits: digits), 10030)
     }
+
+
+    func testModularPower1() {
+        XCTAssertEqual(modularPower(base: 4, exponent: 13, modulus: 497), 445)
+        XCTAssertEqual(modularPower(base: 2, exponent: 5, modulus: 13), 6)
+    }
 }

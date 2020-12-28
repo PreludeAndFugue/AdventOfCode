@@ -50,7 +50,7 @@ final class Problem22: Problem {
 
     func run() {
         let r1 = part1()
-        let r2 = 0
+        let r2 = part2()
         printResults(number: 22, r1, r2)
     }
 }
@@ -119,6 +119,23 @@ private extension Problem22 {
             position = doShuffle(shuffle, toPosition: position, count: count)
         }
         return position
+    }
+
+
+    private func part2() -> Int {
+        let shuffles = parseInput(input)
+        let x = 119315717514047
+        let y = 101741582076661
+        var position = 0
+        for shuffle in shuffles {
+            position = doShuffle(shuffle, toPosition: position, count: x)
+        }
+        
+        let z = modularPower(base: UInt(position), exponent: UInt(y), modulus: UInt(x))
+        print(position)
+        print(x)
+        print(z)
+        return 0
     }
 
 
