@@ -21,12 +21,12 @@ int part1(vector<int> ns) {
     unordered_set<int> inverses;
     int s = ns.size();
     for (int i = 0; i < s; i++) {
-        int n_i = ns.at(i);
-        auto f = inverses.find(n_i);
+        int n = ns.at(i);
+        auto f = inverses.find(n);
         if (f != inverses.end()) {
-            return n_i * (2020 - n_i);
+            return n * (2020 - n);
         } else {
-            inverses.insert(2020 - n_i);
+            inverses.insert(2020 - n);
         }
     }
     return 0;
