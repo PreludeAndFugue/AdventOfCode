@@ -43,12 +43,8 @@ vector<Password> make_passwords() {
     regex password_regex = regex(R"(^(\d+)-(\d+) (\w): (\w+)$)");
     smatch m;
     vector<Password> passwords;
-    while (f) {
-        string line;
-        getline(f, line);
-        if (line.size() == 0) {
-            break;
-        }
+    string line;
+    while (getline(f, line)) {
         Password p = make_password(line, password_regex);
         passwords.push_back(p);
     }
