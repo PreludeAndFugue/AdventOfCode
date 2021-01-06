@@ -51,7 +51,7 @@ int tree_count(vector<string> map, int offset) {
 
 
 vector<string> make_map() {
-    ifstream f { base_path + "day03.txt" };
+    ifstream f{ base_path + "day03.txt" };
     string line;
     vector<string> map;
     while (getline(f, line)) {
