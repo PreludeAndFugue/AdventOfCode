@@ -13,7 +13,7 @@ typedef basic_istream<char> TextInput;
 
 int part1(vector<Passport>);
 void test1();
-vector<Passport> get_passport_records(TextInput&);
+vector<Passport> get_passports(TextInput&);
 vector<string> make_records(TextInput&);
 Passport make_map(string);
 bool is_valid(Passport);
@@ -39,7 +39,7 @@ int main() {
     test1();
 
     ifstream f { base_path + "day04.txt" };
-    vector<Passport> passports = get_passport_records(f);
+    vector<Passport> passports = get_passports(f);
 
     int p1 = part1(passports);
     cout << p1 << endl;
@@ -61,12 +61,12 @@ int part1(vector<Passport> passports) {
 
 void test1() {
     stringstream os(TEST_INPUT);
-    vector<Passport> parts = get_passport_records(os);
+    vector<Passport> parts = get_passports(os);
     assert(parts.size() == 4);
 }
 
 
-vector<Passport> get_passport_records(TextInput &s) {
+vector<Passport> get_passports(TextInput &s) {
     vector<string> records = make_records(s);
     vector<Passport> result;
     for (string record : records) {
