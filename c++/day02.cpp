@@ -44,7 +44,6 @@ Password make_password(string line, regex password_regex) {
 vector<Password> make_passwords() {
     ifstream f { base_path + "day02.txt" };
     regex password_regex = regex(R"(^(\d+)-(\d+) (\w): (\w+)$)");
-    smatch m;
     vector<Password> passwords;
     string line;
     while (getline(f, line)) {
