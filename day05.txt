@@ -1,8 +1,4 @@
-#!pyhon3
-
-'''Data for day 5.'''
-
-INPUT = '''zgsnvdmlfuplrubt
+zgsnvdmlfuplrubt
 vlhagaovgqjmgvwq
 ffumlmqwfcsyqpss
 zztdcqzqddaazdjp
@@ -1001,6 +997,4 @@ hjsrvkdibdjarxxb
 sztzziuqroeidcus
 pxdfvcpvwaddrzwv
 phdqqxleqdjfgfbg
-cqfikbgxvjmnfncy'''
-
-strings = INPUT.split('\n')
+cqfikbgxvjmnfncy
