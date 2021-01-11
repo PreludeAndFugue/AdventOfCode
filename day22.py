@@ -102,10 +102,6 @@ class Wizard(Player):
         return f'W(h: {self.hit_points}, m: {self.mana})'
 
 
-    # def __deepcopy__(self, memo):
-    #     return Wizard(self.hit_points, self.mana)
-
-
 class Boss(Player):
     def __init__(self, hit_points, damage):
         self.hit_points = hit_points
@@ -124,12 +120,13 @@ class Boss(Player):
 
 
 class Game(object):
-    def __init__(self, wizard, boss):
+    def __init__(self, wizard, boss, part2=False):
         self.cost = 0
         self.is_player_turn = True
         self.wizard = wizard
         self.boss = boss
         self.spells = []
+        self.part2 = part2
 
 
     def make_turn(self):
@@ -137,8 +134,10 @@ class Game(object):
             return [self]
         if self.is_player_turn:
             self.is_player_turn = not self.is_player_turn
+
             # part 2
-            self.wizard.hit_points -=1
+            if self.part2:
+                self.wizard.hit_points -=1
 
             new_games = self._player_turn()
             return new_games
@@ -194,7 +193,6 @@ class Game(object):
     def _buy_spell(self, spell):
         self.cost += spell.cost
         self.wizard.mana -= spell.cost
-        # print('wizard mana', self.wizard.mana)
         if spell.is_instant():
             spell.apply(self.wizard, self.boss)
         else:
@@ -208,7 +206,7 @@ class Game(object):
 class MetaGame(object):
     def __init__(self, game):
         self.games = [game]
-        self.min_cost = 1_000_000_000_000
+        self.min_cost = 100_000
 
 
     def make_turn(self):
@@ -218,7 +216,7 @@ class MetaGame(object):
                 if g.is_over():
                     if g.cost < self.min_cost and g.is_win():
                         self.min_cost = g.cost
-                        print(g)
+                        # print(g)
                 else:
                     if g.cost < self.min_cost:
                         new_games.append(g)
@@ -257,10 +255,10 @@ def test2():
     assert m.min_cost == 641
 
 
-def part1():
+def _part(is_part2=False):
     w = Wizard(50, 500)
     b = Boss(55, 8)
-    g = Game(w, b)
+    g = Game(w, b, is_part2)
     m = MetaGame(g)
     while not m.are_all_done():
         m.make_turn()
@@ -268,11 +266,14 @@ def part1():
 
 
 def main():
-    # test1()
-    # test2()
+    test1()
+    test2()
 
-    p = part1()
-    print(p)
+    p1 = _part()
+    print(p1)
+
+    p2 = _part(True)
+    print(p2)
 
 
 if __name__ == '__main__':
