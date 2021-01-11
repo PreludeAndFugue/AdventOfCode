@@ -1,8 +1,4 @@
-#!python3
-
-'''Data for day 6.'''
-
-INPUT = '''turn on 489,959 through 759,964
+turn on 489,959 through 759,964
 turn off 820,516 through 871,914
 turn off 427,423 through 929,502
 turn on 774,14 through 977,877
@@ -301,21 +297,4 @@ turn off 41,447 through 932,737
 turn off 820,663 through 832,982
 turn on 550,460 through 964,782
 turn on 31,760 through 655,892
-toggle 628,958 through 811,992'''
-
-def parse_input(input):
-    rows = (row.strip().split(' ') for row in input.split('\n'))
-    commands = []
-    for row in rows:
-        if len(row) == 4:
-            from_ = tuple(map(int, row[1].split(',')))
-            to = tuple(map(int, row[3].split(',')))
-            commands.append((row[0], from_, to))
-        else:
-            from_ = tuple(map(int, row[2].split(',')))
-            to = tuple(map(int, row[4].split(',')))
-            commands.append((row[1], from_, to))
-    return commands
-
-
-data = parse_input(INPUT)
+toggle 628,958 through 811,992
