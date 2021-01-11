@@ -1,5 +1,13 @@
 #!python3
 
+'''
+Part 2
+209: too high
+
+205: 49 + 155 + 1
+
+'''
+
 from itertools import product
 import re
 
@@ -93,7 +101,14 @@ def part1(nodes):
 
 
 def part2(nodes):
-    print_nodes(nodes)
+    # print_nodes(nodes)
+
+    min_size = min(n.size for n in nodes)
+    # print('min size', min_size)
+    max_used = max(n.used for n in nodes if n.used < 490)
+    # print('max used', max_used)
+
+    return 205
 
 
 def main():
