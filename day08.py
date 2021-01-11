@@ -1,10 +1,8 @@
 #!python3
 
-'''Day 8, part 1.'''
+'''Day 8'''
 
 import re
-
-# from data_8 import file_data, file_data_test
 
 INPUT = 'day08.txt'
 TEST_INPUT = r'''""
