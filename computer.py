@@ -7,6 +7,7 @@ Instructions:
 - cpy
 - jnz
 - tgl
+- out
 '''
 
 from collections import namedtuple
@@ -22,10 +23,14 @@ Instruction = namedtuple('Instruction', ['name', 'x1', 'x2'])
 def parse_instructions(instruction_input):
     '''Create a program from input.'''
     instructions = {}
-    for n, line in enumerate(instruction_input.strip().split('\n')):
+    n = 0
+    for line in instruction_input.strip().split('\n'):
         parts = line.strip().split()
         print(line, parts)
-        if line.startswith('cpy'):
+        if line.startswith('#'):
+            print('ignore comment')
+            continue
+        elif line.startswith('cpy'):
             i = Instruction(parts[0], parts[1], parts[2])
             instructions[n] = i
         elif line.startswith('inc'):
@@ -40,15 +45,21 @@ def parse_instructions(instruction_input):
         elif line.startswith('tgl'):
             i = Instruction(parts[0], parts[1], None)
             instructions[n] = i
+        elif line.startswith('out'):
+            i = Instruction(parts[0], parts[1], None)
+            instructions[n] = i
         else:
-            raise IOError
+            raise ComputeError(line)
+        n += 1
     return instructions
 
 
 def compute(instructions, registers):
     '''Run a program.'''
+    out_values = []
     pointer = 0
-    while True:
+    while len(out_values) < 10:
+    # while True:
         if pointer not in instructions:
             return registers['a']
         i = instructions[pointer]
@@ -92,12 +103,15 @@ def compute(instructions, registers):
                 other_i = instructions[pointer + offset]
                 instructions[pointer + offset] = _toggle(other_i)
                 pointer += 1
+        elif i.name == 'out':
+            # print(i)
+            # print('out', registers[i.x1])
+            out_values.append(registers[i.x1])
 
-            _print_instructions(instructions)
-            print(pointer)
-            print(registers)
         else:
             raise ComputeError(f'{i}, {registers}')
+
+    return out_values
 
 
 def _toggle(instruction):
