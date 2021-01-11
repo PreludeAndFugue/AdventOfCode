@@ -2,7 +2,13 @@
 
 '''Day 2'''
 
-import data_2
+INPUT = 'day02.txt'
+
+def parse_input(input):
+    '''Parse the input string.'''
+    lines = open(input, 'r').read().strip()
+    rows = (row.strip() for row in lines.split('\n'))
+    return [sorted(map(int, row.split('x'))) for row in rows]
 
 
 def area(box):
@@ -17,9 +23,8 @@ def extra(box):
     return a*b
 
 
-def part1():
-    data = data_2.data
-    return sum(area(box) + extra(box) for box in data)
+def part1(boxes):
+    return sum(area(box) + extra(box) for box in boxes)
 
 
 def ribbon(box):
@@ -34,17 +39,17 @@ def bow(box):
     return a*b*c
 
 
-def part2():
-    data = data_2.data
-    return sum(ribbon(box) + bow(box) for box in data)
+def part2(boxes):
+    return sum(ribbon(box) + bow(box) for box in boxes)
 
 
 def main():
-    '''Main entry point.'''
-    p1 = part1()
+    boxes = parse_input(INPUT)
+
+    p1 = part1(boxes)
     print(p1)
 
-    p2 = part2()
+    p2 = part2(boxes)
     print(p2)
 
 
