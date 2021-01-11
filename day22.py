@@ -137,6 +137,9 @@ class Game(object):
             return [self]
         if self.is_player_turn:
             self.is_player_turn = not self.is_player_turn
+            # part 2
+            self.wizard.hit_points -=1
+
             new_games = self._player_turn()
             return new_games
         else:
@@ -265,8 +268,8 @@ def part1():
 
 
 def main():
-    test1()
-    test2()
+    # test1()
+    # test2()
 
     p = part1()
     print(p)
