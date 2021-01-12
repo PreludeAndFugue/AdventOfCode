@@ -131,9 +131,10 @@ def make_key_map(key_locations, base_map):
 
 
 def get_key_neighbours(location, current_keys, key_map):
+    # print('get key neighbours', location, current_keys)
     for k, (d, required_keys) in key_map[location].items():
         # print(k, d, required_keys)
-        c = set(current_keys)
+        c = set(current_keys + location)
         # print(c)
         # print()
         if k == '@':
@@ -146,8 +147,8 @@ def get_key_neighbours(location, current_keys, key_map):
 
 
 def bfs_keys(key_map):
-    print(key_map)
-    print(key_map['i'])
+    # print(key_map)
+    # print(key_map['i'])
     all_key_count = len(key_map)
     to_check = PriorityQueue()
     to_check.put((0, '@'))
@@ -155,8 +156,8 @@ def bfs_keys(key_map):
     while to_check:
         d, path = to_check.get()
 
-        # print(d, path)
-        # input()
+        print(d, path)
+        input()
 
         if len(path) == all_key_count:
             return path
@@ -166,6 +167,7 @@ def bfs_keys(key_map):
         for n, d_n in get_key_neighbours(l, path, key_map):
             new_path = path + n
             if new_path not in seen:
+                # to_check.put((d + d_n - len(new_path), new_path))
                 to_check.put((d + d_n, new_path))
     raise Exception('Goal not found')
 
@@ -251,6 +253,23 @@ def test4a():
     assert key_map['a']['p'][1] == set('eh')
 
 
+def test4b():
+    base_map, key_locations = parse_map(TEST_INPUT_4)
+    key_map = make_key_map(key_locations, base_map)
+
+    a = list(get_key_neighbours('a', '', key_map))
+    assert len(a) == 7
+    assert set([x[0] for x in a]) == set('bcdefgh')
+
+    b_with_a = list(get_key_neighbours('b', 'a', key_map))
+    assert len(b_with_a) == 7
+    assert set([x[0] for x in b_with_a]) == set('jcefghd')
+
+    a_with_b = list(get_key_neighbours('a', 'b', key_map))
+    assert len(a_with_b) == 7
+    assert set([x[0] for x in a_with_b]) == set('jcdefgh')
+
+
 def test5():
     base_map, key_locations = parse_map(TEST_INPUT_5)
     key_map = make_key_map(key_locations, base_map)
@@ -265,8 +284,9 @@ def main():
     # test2()
     # test3()
     # test5()
-    # test4()
+    test4()
     test4a()
+    test4b()
 
 
 if __name__ == "__main__":
