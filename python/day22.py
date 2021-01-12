@@ -2,7 +2,7 @@
 
 import re
 
-data = "data22.txt"
+data = "day22.txt"
 p1 = re.compile('deal into new stack')
 p2 = re.compile('cut (-?\\d+)')
 p3 = re.compile('deal with increment (\\d+)')
