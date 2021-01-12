@@ -7,6 +7,7 @@ p1 = re.compile('deal into new stack')
 p2 = re.compile('cut (-?\\d+)')
 p3 = re.compile('deal with increment (\\d+)')
 
+
 def parse():
     with open(data, 'r') as f:
         for line in f:
@@ -15,9 +16,9 @@ def parse():
             print(p3.match(line))
 
 
-
 def main():
     parse()
 
 
-main()
+if __name__ == '__main__':
+    main()
