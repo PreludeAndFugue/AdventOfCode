@@ -1,0 +1,1021 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E081E1723B41E98001B4A53 /* Problem21.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E1623B41E98001B4A53 /* Problem21.swift */; };
+		4E081E1923B41F06001B4A53 /* data21.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E081E1823B41F06001B4A53 /* data21.txt */; };
+		4E081E1C23B43BDB001B4A53 /* SpringDroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */; };
+		4E081E1D23B43BDB001B4A53 /* SpringDroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */; };
+		4E081E2123B43CA3001B4A53 /* SpringDroidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E081E2023B43CA3001B4A53 /* SpringDroidTests.swift */; };
+		4E081E2223B43E8F001B4A53 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB15239743E10058EB46 /* Direction.swift */; };
+		4E081E2323B43E9A001B4A53 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB132397432F0058EB46 /* Coordinate.swift */; };
+		4E081E2423B43EAA001B4A53 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFF23A533E3003D3C0E /* GameScreen.swift */; };
+		4E081E2523B43EC3001B4A53 /* Problem18Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34D6DF23AFFCC6005B0179 /* Problem18Helper.swift */; };
+		4E081E2623B43EF2001B4A53 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E77AA0023AD753C000DBF2D /* Array+Extensions.swift */; };
+		4E085D12239861F400E8F402 /* Problem04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D11239861F400E8F402 /* Problem04.swift */; };
+		4E085D142398644400E8F402 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D132398644400E8F402 /* Int+Extensions.swift */; };
+		4E085D18239864B100E8F402 /* Int+ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D17239864B100E8F402 /* Int+ExtensionsTests.swift */; };
+		4E085D1A23986E0900E8F402 /* Problem04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D11239861F400E8F402 /* Problem04.swift */; };
+		4E085D1C23986F4700E8F402 /* AscendingNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D1B23986F4700E8F402 /* AscendingNumbers.swift */; };
+		4E085D1D239870D500E8F402 /* AscendingNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D1B23986F4700E8F402 /* AscendingNumbers.swift */; };
+		4E085D1F239870E500E8F402 /* AscendingNumbersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D1E239870E500E8F402 /* AscendingNumbersTests.swift */; };
+		4E085D202398717B00E8F402 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E085D132398644400E8F402 /* Int+Extensions.swift */; };
+		4E12AF1D23A1CC870039705B /* Problem11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E12AF1C23A1CC870039705B /* Problem11.swift */; };
+		4E12AF1F23A1CD0C0039705B /* data11.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E12AF1E23A1CD0C0039705B /* data11.txt */; };
+		4E12AF2123A1CEC40039705B /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E12AF2023A1CEC40039705B /* Robot.swift */; };
+		4E12AF2223A1CEC40039705B /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E12AF2023A1CEC40039705B /* Robot.swift */; };
+		4E19EBFE23A52655003D3C0E /* GameConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFD23A52655003D3C0E /* GameConsole.swift */; };
+		4E19EC0023A533E3003D3C0E /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFF23A533E3003D3C0E /* GameScreen.swift */; };
+		4E33893F23A5552E00CE4673 /* Problem14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E33893E23A5552E00CE4673 /* Problem14.swift */; };
+		4E33894123A555A700CE4673 /* data14.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E33894023A555A700CE4673 /* data14.txt */; };
+		4E34D6E023AFFCC6005B0179 /* Problem18Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34D6DF23AFFCC6005B0179 /* Problem18Helper.swift */; };
+		4E3E8E69239B2886008645C6 /* Computer+OpcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */; };
+		4E3E8E6D239B2FCC008645C6 /* Problem06.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E8E6C239B2FCC008645C6 /* Problem06.swift */; };
+		4E3E968E23AAEC7A008719E7 /* MazeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3E968D23AAEC7A008719E7 /* MazeScreen.swift */; };
+		4E45B8EE239C878900524149 /* Problem07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE89732239BF1330076D8B9 /* Problem07.swift */; };
+		4E45B8F0239C879800524149 /* Problem07Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E45B8EF239C879800524149 /* Problem07Tests.swift */; };
+		4E45B8F1239C8C4D00524149 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAB4074239C5FAF00CE3270 /* Problem.swift */; };
+		4E490D0A23A0455000B686E1 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E490D0923A0455000B686E1 /* Memory.swift */; };
+		4E490D0B23A0473400B686E1 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E490D0923A0455000B686E1 /* Memory.swift */; };
+		4E490D0D23A048CC00B686E1 /* data09.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E490D0C23A048CC00B686E1 /* data09.txt */; };
+		4E490D1223A07FFB00B686E1 /* Problem10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E490D1123A07FFB00B686E1 /* Problem10.swift */; };
+		4E490D1323A07FFB00B686E1 /* Problem10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E490D1123A07FFB00B686E1 /* Problem10.swift */; };
+		4E490D1823A088A300B686E1 /* data10.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E490D1723A088A300B686E1 /* data10.txt */; };
+		4E50F04E23A6E1DC00971EBA /* Problem15.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E50F04D23A6E1DC00971EBA /* Problem15.swift */; };
+		4E50F05023A6E20500971EBA /* data15.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E50F04F23A6E20500971EBA /* data15.txt */; };
+		4E50F05223A6E27200971EBA /* GameConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19EBFD23A52655003D3C0E /* GameConsole.swift */; };
+		4E50F05523A6E29200971EBA /* RepairDroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E50F05423A6E29200971EBA /* RepairDroid.swift */; };
+		4E50F05623A6E29200971EBA /* RepairDroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E50F05423A6E29200971EBA /* RepairDroid.swift */; };
+		4E50F05823A6E63000971EBA /* DroidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E50F05723A6E63000971EBA /* DroidController.swift */; };
+		4E50F05923A6E63000971EBA /* DroidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E50F05723A6E63000971EBA /* DroidController.swift */; };
+		4E50F05B23A7026000971EBA /* BreadthFirstSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E50F05A23A7026000971EBA /* BreadthFirstSearch.swift */; };
+		4E50F05C23A7026000971EBA /* BreadthFirstSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E50F05A23A7026000971EBA /* BreadthFirstSearch.swift */; };
+		4E7224B023B635CA004B7945 /* Problem22.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7224AF23B635CA004B7945 /* Problem22.swift */; };
+		4E7224B323B6387E004B7945 /* Problem22Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7224B223B6387E004B7945 /* Problem22Tests.swift */; };
+		4E7224B423B63881004B7945 /* Problem22.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7224AF23B635CA004B7945 /* Problem22.swift */; };
+		4E7224B623B63C66004B7945 /* data22.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E7224B523B63C66004B7945 /* data22.txt */; };
+		4E77AA0123AD753C000DBF2D /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E77AA0023AD753C000DBF2D /* Array+Extensions.swift */; };
+		4E77AA0423AD7D11000DBF2D /* Problem17.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E77AA0323AD7D11000DBF2D /* Problem17.swift */; };
+		4E77AA0623AD7D71000DBF2D /* data17.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E77AA0523AD7D71000DBF2D /* data17.txt */; };
+		4E77AA0923ADA47B000DBF2D /* Problem18.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E77AA0823ADA47B000DBF2D /* Problem18.swift */; };
+		4E77AA0A23ADA47B000DBF2D /* Problem18.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E77AA0823ADA47B000DBF2D /* Problem18.swift */; };
+		4E77AA0C23ADA492000DBF2D /* data18.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E77AA0B23ADA492000DBF2D /* data18.txt */; };
+		4E7A0600239E75CB00B78183 /* Problem09.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A05FF239E75CB00B78183 /* Problem09.swift */; };
+		4E7A0601239E778700B78183 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFD2B4B239D5DB600E8905E /* String+Extensions.swift */; };
+		4E7A0604239E77CF00B78183 /* Problem09Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A0603239E77CF00B78183 /* Problem09Tests.swift */; };
+		4E7A0605239E787E00B78183 /* Problem09.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A05FF239E75CB00B78183 /* Problem09.swift */; };
+		4E919B2123A2E7EB00DA8B30 /* Problem12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2023A2E7EB00DA8B30 /* Problem12.swift */; };
+		4E919B2323A2E89100DA8B30 /* Coordinate3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2223A2E89100DA8B30 /* Coordinate3.swift */; };
+		4E919B2523A2E92E00DA8B30 /* Moon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2423A2E92E00DA8B30 /* Moon.swift */; };
+		4E919B2723A2FA9D00DA8B30 /* data12.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E919B2623A2FA9D00DA8B30 /* data12.txt */; };
+		4E919B2923A31E7F00DA8B30 /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2823A31E7F00DA8B30 /* Maths.swift */; };
+		4E919B2A23A31E7F00DA8B30 /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E919B2823A31E7F00DA8B30 /* Maths.swift */; };
+		4EA3F2D423A4605500EF10A7 /* Problem13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3F2D323A4605500EF10A7 /* Problem13.swift */; };
+		4EA3F2D623A4608800EF10A7 /* data13.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4EA3F2D523A4608800EF10A7 /* data13.txt */; };
+		4EA3F2D823A4631D00EF10A7 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3F2D723A4631D00EF10A7 /* Game.swift */; };
+		4EA3F2D923A4631D00EF10A7 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3F2D723A4631D00EF10A7 /* Game.swift */; };
+		4EA807092399B6D80034F6EA /* Problem05.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA807082399B6D80034F6EA /* Problem05.swift */; };
+		4EA8070B2399D4EC0034F6EA /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA8070A2399D4EC0034F6EA /* Console.swift */; };
+		4EA8070C2399D66B0034F6EA /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA8070A2399D4EC0034F6EA /* Console.swift */; };
+		4EAB4075239C5FAF00CE3270 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAB4074239C5FAF00CE3270 /* Problem.swift */; };
+		4EADC31D23B12E2F00B5E9BA /* Problem19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EADC31C23B12E2F00B5E9BA /* Problem19.swift */; };
+		4EADC31F23B12E6300B5E9BA /* data19.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4EADC31E23B12E6300B5E9BA /* data19.txt */; };
+		4EADC32523B17AD500B5E9BA /* Problem20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EADC32423B17AD500B5E9BA /* Problem20.swift */; };
+		4EADC32723B17B3300B5E9BA /* data20.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4EADC32623B17B3300B5E9BA /* data20.txt */; };
+		4EC0DAF823972A920058EB46 /* Problem02.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DAF723972A920058EB46 /* Problem02.swift */; };
+		4EC0DB0823972E960058EB46 /* Computer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB0723972E960058EB46 /* Computer.swift */; };
+		4EC0DB0A23972EB40058EB46 /* ComputerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB0923972EB40058EB46 /* ComputerTests.swift */; };
+		4EC0DB1023973ED40058EB46 /* Problem03.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB0F23973ED40058EB46 /* Problem03.swift */; };
+		4EC0DB142397432F0058EB46 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB132397432F0058EB46 /* Coordinate.swift */; };
+		4EC0DB16239743E10058EB46 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB15239743E10058EB46 /* Direction.swift */; };
+		4EC0DB19239749470058EB46 /* Computer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0DB0723972E960058EB46 /* Computer.swift */; };
+		4EE6E7A42394778F00672729 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE6E7A32394778F00672729 /* main.swift */; };
+		4EE6E7AC239477AD00672729 /* Problem01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE6E7AB239477AD00672729 /* Problem01.swift */; };
+		4EE6E7B023947B4200672729 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE6E7AF23947B4200672729 /* Sequence+Extensions.swift */; };
+		4EE89733239BF1330076D8B9 /* Problem07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE89732239BF1330076D8B9 /* Problem07.swift */; };
+		4EE89735239BF1970076D8B9 /* data07.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4EE89734239BF1970076D8B9 /* data07.txt */; };
+		4EE89736239C00700076D8B9 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE6E7AF23947B4200672729 /* Sequence+Extensions.swift */; };
+		4EE89738239C00810076D8B9 /* Array+ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE89737239C00810076D8B9 /* Array+ExtensionsTests.swift */; };
+		4EED8ABB23AC2F62002E4E88 /* Problem16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EED8ABA23AC2F62002E4E88 /* Problem16.swift */; };
+		4EFD2B4C239D5DB600E8905E /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFD2B4B239D5DB600E8905E /* String+Extensions.swift */; };
+		4EFD2B4E239D5F2400E8905E /* Problem08.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFD2B4D239D5F2400E8905E /* Problem08.swift */; };
+		4EFD2B50239D5F5000E8905E /* data08.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4EFD2B4F239D5F5000E8905E /* data08.txt */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4EE6E79E2394778F00672729 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4E081E1623B41E98001B4A53 /* Problem21.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem21.swift; sourceTree = "<group>"; };
+		4E081E1823B41F06001B4A53 /* data21.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data21.txt; sourceTree = "<group>"; };
+		4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDroid.swift; sourceTree = "<group>"; };
+		4E081E2023B43CA3001B4A53 /* SpringDroidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDroidTests.swift; sourceTree = "<group>"; };
+		4E085D11239861F400E8F402 /* Problem04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem04.swift; sourceTree = "<group>"; };
+		4E085D132398644400E8F402 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		4E085D17239864B100E8F402 /* Int+ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+ExtensionsTests.swift"; sourceTree = "<group>"; };
+		4E085D1B23986F4700E8F402 /* AscendingNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscendingNumbers.swift; sourceTree = "<group>"; };
+		4E085D1E239870E500E8F402 /* AscendingNumbersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscendingNumbersTests.swift; sourceTree = "<group>"; };
+		4E12AF1C23A1CC870039705B /* Problem11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem11.swift; sourceTree = "<group>"; };
+		4E12AF1E23A1CD0C0039705B /* data11.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data11.txt; sourceTree = "<group>"; };
+		4E12AF2023A1CEC40039705B /* Robot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Robot.swift; sourceTree = "<group>"; };
+		4E19EBFD23A52655003D3C0E /* GameConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConsole.swift; sourceTree = "<group>"; };
+		4E19EBFF23A533E3003D3C0E /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
+		4E33893E23A5552E00CE4673 /* Problem14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem14.swift; sourceTree = "<group>"; };
+		4E33894023A555A700CE4673 /* data14.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data14.txt; sourceTree = "<group>"; };
+		4E34D6DF23AFFCC6005B0179 /* Problem18Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem18Helper.swift; sourceTree = "<group>"; };
+		4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Computer+OpcodeTests.swift"; sourceTree = "<group>"; };
+		4E3E8E6B239B2FC2008645C6 /* data06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data06.txt; sourceTree = "<group>"; };
+		4E3E8E6C239B2FCC008645C6 /* Problem06.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem06.swift; sourceTree = "<group>"; };
+		4E3E968D23AAEC7A008719E7 /* MazeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeScreen.swift; sourceTree = "<group>"; };
+		4E45B8EF239C879800524149 /* Problem07Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem07Tests.swift; sourceTree = "<group>"; };
+		4E490D0923A0455000B686E1 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		4E490D0C23A048CC00B686E1 /* data09.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data09.txt; sourceTree = "<group>"; };
+		4E490D0F23A0584D00B686E1 /* SpeedTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = SpeedTestPlan.xctestplan; sourceTree = "<group>"; };
+		4E490D1123A07FFB00B686E1 /* Problem10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem10.swift; sourceTree = "<group>"; };
+		4E490D1723A088A300B686E1 /* data10.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data10.txt; sourceTree = "<group>"; };
+		4E50F04D23A6E1DC00971EBA /* Problem15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem15.swift; sourceTree = "<group>"; };
+		4E50F04F23A6E20500971EBA /* data15.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data15.txt; sourceTree = "<group>"; };
+		4E50F05423A6E29200971EBA /* RepairDroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepairDroid.swift; sourceTree = "<group>"; };
+		4E50F05723A6E63000971EBA /* DroidController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroidController.swift; sourceTree = "<group>"; };
+		4E50F05A23A7026000971EBA /* BreadthFirstSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreadthFirstSearch.swift; sourceTree = "<group>"; };
+		4E7224AF23B635CA004B7945 /* Problem22.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem22.swift; sourceTree = "<group>"; };
+		4E7224B223B6387E004B7945 /* Problem22Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem22Tests.swift; sourceTree = "<group>"; };
+		4E7224B523B63C66004B7945 /* data22.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data22.txt; sourceTree = "<group>"; };
+		4E77AA0023AD753C000DBF2D /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		4E77AA0323AD7D11000DBF2D /* Problem17.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem17.swift; sourceTree = "<group>"; };
+		4E77AA0523AD7D71000DBF2D /* data17.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data17.txt; sourceTree = "<group>"; };
+		4E77AA0823ADA47B000DBF2D /* Problem18.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem18.swift; sourceTree = "<group>"; };
+		4E77AA0B23ADA492000DBF2D /* data18.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data18.txt; sourceTree = "<group>"; };
+		4E7A05FF239E75CB00B78183 /* Problem09.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem09.swift; sourceTree = "<group>"; };
+		4E7A0603239E77CF00B78183 /* Problem09Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem09Tests.swift; sourceTree = "<group>"; };
+		4E919B2023A2E7EB00DA8B30 /* Problem12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem12.swift; sourceTree = "<group>"; };
+		4E919B2223A2E89100DA8B30 /* Coordinate3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate3.swift; sourceTree = "<group>"; };
+		4E919B2423A2E92E00DA8B30 /* Moon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moon.swift; sourceTree = "<group>"; };
+		4E919B2623A2FA9D00DA8B30 /* data12.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data12.txt; sourceTree = "<group>"; };
+		4E919B2823A31E7F00DA8B30 /* Maths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maths.swift; sourceTree = "<group>"; };
+		4EA3F2D323A4605500EF10A7 /* Problem13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem13.swift; sourceTree = "<group>"; };
+		4EA3F2D523A4608800EF10A7 /* data13.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data13.txt; sourceTree = "<group>"; };
+		4EA3F2D723A4631D00EF10A7 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		4EA807072399B6CE0034F6EA /* data05.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data05.txt; sourceTree = "<group>"; };
+		4EA807082399B6D80034F6EA /* Problem05.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem05.swift; sourceTree = "<group>"; };
+		4EA8070A2399D4EC0034F6EA /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
+		4EAB4074239C5FAF00CE3270 /* Problem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem.swift; sourceTree = "<group>"; };
+		4EADC31C23B12E2F00B5E9BA /* Problem19.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem19.swift; sourceTree = "<group>"; };
+		4EADC31E23B12E6300B5E9BA /* data19.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data19.txt; sourceTree = "<group>"; };
+		4EADC32423B17AD500B5E9BA /* Problem20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem20.swift; sourceTree = "<group>"; };
+		4EADC32623B17B3300B5E9BA /* data20.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data20.txt; sourceTree = "<group>"; };
+		4EC0DAF723972A920058EB46 /* Problem02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem02.swift; sourceTree = "<group>"; };
+		4EC0DAF923972C120058EB46 /* data02.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data02.txt; sourceTree = "<group>"; };
+		4EC0DAFE23972E760058EB46 /* AdventOfCode2019Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdventOfCode2019Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EC0DB0223972E760058EB46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4EC0DB0723972E960058EB46 /* Computer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Computer.swift; sourceTree = "<group>"; };
+		4EC0DB0923972EB40058EB46 /* ComputerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerTests.swift; sourceTree = "<group>"; };
+		4EC0DB0B23972FA90058EB46 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		4EC0DB0F23973ED40058EB46 /* Problem03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem03.swift; sourceTree = "<group>"; };
+		4EC0DB1123973EF20058EB46 /* data03.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data03.txt; sourceTree = "<group>"; };
+		4EC0DB132397432F0058EB46 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		4EC0DB15239743E10058EB46 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
+		4EE6E7A02394778F00672729 /* AdventOfCode2019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2019; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EE6E7A32394778F00672729 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4EE6E7AB239477AD00672729 /* Problem01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem01.swift; sourceTree = "<group>"; };
+		4EE6E7AD2394780F00672729 /* data01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data01.txt; sourceTree = "<group>"; };
+		4EE6E7AF23947B4200672729 /* Sequence+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extensions.swift"; sourceTree = "<group>"; };
+		4EE89732239BF1330076D8B9 /* Problem07.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem07.swift; sourceTree = "<group>"; };
+		4EE89734239BF1970076D8B9 /* data07.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data07.txt; sourceTree = "<group>"; };
+		4EE89737239C00810076D8B9 /* Array+ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ExtensionsTests.swift"; sourceTree = "<group>"; };
+		4EED8ABA23AC2F62002E4E88 /* Problem16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem16.swift; sourceTree = "<group>"; };
+		4EFD2B4B239D5DB600E8905E /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		4EFD2B4D239D5F2400E8905E /* Problem08.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem08.swift; sourceTree = "<group>"; };
+		4EFD2B4F239D5F5000E8905E /* data08.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data08.txt; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4EC0DAFB23972E760058EB46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EE6E79D2394778F00672729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4E081E1523B41E8C001B4A53 /* 21 */ = {
+			isa = PBXGroup;
+			children = (
+				4E081E1823B41F06001B4A53 /* data21.txt */,
+				4E081E1623B41E98001B4A53 /* Problem21.swift */,
+			);
+			path = 21;
+			sourceTree = "<group>";
+		};
+		4E081E1A23B43BCD001B4A53 /* SpringDroid */ = {
+			isa = PBXGroup;
+			children = (
+				4E081E1B23B43BDB001B4A53 /* SpringDroid.swift */,
+			);
+			path = SpringDroid;
+			sourceTree = "<group>";
+		};
+		4E081E1E23B43C89001B4A53 /* 21 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = 21;
+			sourceTree = "<group>";
+		};
+		4E081E1F23B43C95001B4A53 /* SpringDroid */ = {
+			isa = PBXGroup;
+			children = (
+				4E081E2023B43CA3001B4A53 /* SpringDroidTests.swift */,
+			);
+			path = SpringDroid;
+			sourceTree = "<group>";
+		};
+		4E085D10239861E200E8F402 /* 4 */ = {
+			isa = PBXGroup;
+			children = (
+				4E085D11239861F400E8F402 /* Problem04.swift */,
+			);
+			path = 4;
+			sourceTree = "<group>";
+		};
+		4E085D152398649300E8F402 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4EE6E7AF23947B4200672729 /* Sequence+Extensions.swift */,
+				4E085D132398644400E8F402 /* Int+Extensions.swift */,
+				4EFD2B4B239D5DB600E8905E /* String+Extensions.swift */,
+				4E77AA0023AD753C000DBF2D /* Array+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4E085D162398649C00E8F402 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4E085D17239864B100E8F402 /* Int+ExtensionsTests.swift */,
+				4EE89737239C00810076D8B9 /* Array+ExtensionsTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4E12AF1B23A1CC7A0039705B /* 11 */ = {
+			isa = PBXGroup;
+			children = (
+				4E12AF1E23A1CD0C0039705B /* data11.txt */,
+				4E12AF1C23A1CC870039705B /* Problem11.swift */,
+			);
+			path = 11;
+			sourceTree = "<group>";
+		};
+		4E33893D23A5552100CE4673 /* 14 */ = {
+			isa = PBXGroup;
+			children = (
+				4E33894023A555A700CE4673 /* data14.txt */,
+				4E33893E23A5552E00CE4673 /* Problem14.swift */,
+			);
+			path = 14;
+			sourceTree = "<group>";
+		};
+		4E3E8E6A239B2FA5008645C6 /* 6 */ = {
+			isa = PBXGroup;
+			children = (
+				4E3E8E6B239B2FC2008645C6 /* data06.txt */,
+				4E3E8E6C239B2FCC008645C6 /* Problem06.swift */,
+			);
+			path = 6;
+			sourceTree = "<group>";
+		};
+		4E45B8ED239C877E00524149 /* 7 */ = {
+			isa = PBXGroup;
+			children = (
+				4E45B8EF239C879800524149 /* Problem07Tests.swift */,
+			);
+			path = 7;
+			sourceTree = "<group>";
+		};
+		4E490D1023A07FE700B686E1 /* 10 */ = {
+			isa = PBXGroup;
+			children = (
+				4E490D1723A088A300B686E1 /* data10.txt */,
+				4E490D1123A07FFB00B686E1 /* Problem10.swift */,
+			);
+			path = 10;
+			sourceTree = "<group>";
+		};
+		4E50F04C23A6E1CE00971EBA /* 15 */ = {
+			isa = PBXGroup;
+			children = (
+				4E50F04F23A6E20500971EBA /* data15.txt */,
+				4E50F04D23A6E1DC00971EBA /* Problem15.swift */,
+			);
+			path = 15;
+			sourceTree = "<group>";
+		};
+		4E50F05123A6E26C00971EBA /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				4EA3F2D723A4631D00EF10A7 /* Game.swift */,
+				4E19EBFD23A52655003D3C0E /* GameConsole.swift */,
+				4E19EBFF23A533E3003D3C0E /* GameScreen.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		4E50F05323A6E27E00971EBA /* RepairDroid */ = {
+			isa = PBXGroup;
+			children = (
+				4E50F05423A6E29200971EBA /* RepairDroid.swift */,
+				4E50F05723A6E63000971EBA /* DroidController.swift */,
+				4E3E968D23AAEC7A008719E7 /* MazeScreen.swift */,
+			);
+			path = RepairDroid;
+			sourceTree = "<group>";
+		};
+		4E7224AE23B635B6004B7945 /* 22 */ = {
+			isa = PBXGroup;
+			children = (
+				4E7224B523B63C66004B7945 /* data22.txt */,
+				4E7224AF23B635CA004B7945 /* Problem22.swift */,
+			);
+			path = 22;
+			sourceTree = "<group>";
+		};
+		4E7224B123B63863004B7945 /* 22 */ = {
+			isa = PBXGroup;
+			children = (
+				4E7224B223B6387E004B7945 /* Problem22Tests.swift */,
+			);
+			path = 22;
+			sourceTree = "<group>";
+		};
+		4E77AA0223AD7D01000DBF2D /* 17 */ = {
+			isa = PBXGroup;
+			children = (
+				4E77AA0523AD7D71000DBF2D /* data17.txt */,
+				4E77AA0323AD7D11000DBF2D /* Problem17.swift */,
+			);
+			path = 17;
+			sourceTree = "<group>";
+		};
+		4E77AA0723ADA465000DBF2D /* 18 */ = {
+			isa = PBXGroup;
+			children = (
+				4E77AA0B23ADA492000DBF2D /* data18.txt */,
+				4E77AA0823ADA47B000DBF2D /* Problem18.swift */,
+				4E34D6DF23AFFCC6005B0179 /* Problem18Helper.swift */,
+			);
+			path = 18;
+			sourceTree = "<group>";
+		};
+		4E7A05FE239E75BD00B78183 /* 9 */ = {
+			isa = PBXGroup;
+			children = (
+				4E490D0C23A048CC00B686E1 /* data09.txt */,
+				4E7A05FF239E75CB00B78183 /* Problem09.swift */,
+			);
+			path = 9;
+			sourceTree = "<group>";
+		};
+		4E7A0602239E77BF00B78183 /* 9 */ = {
+			isa = PBXGroup;
+			children = (
+				4E7A0603239E77CF00B78183 /* Problem09Tests.swift */,
+			);
+			path = 9;
+			sourceTree = "<group>";
+		};
+		4E919B1F23A2E7D900DA8B30 /* 12 */ = {
+			isa = PBXGroup;
+			children = (
+				4E919B2623A2FA9D00DA8B30 /* data12.txt */,
+				4E919B2023A2E7EB00DA8B30 /* Problem12.swift */,
+			);
+			path = 12;
+			sourceTree = "<group>";
+		};
+		4EA3F2D223A4604800EF10A7 /* 13 */ = {
+			isa = PBXGroup;
+			children = (
+				4EA3F2D523A4608800EF10A7 /* data13.txt */,
+				4EA3F2D323A4605500EF10A7 /* Problem13.swift */,
+			);
+			path = 13;
+			sourceTree = "<group>";
+		};
+		4EA74A8C239C69EA005A8B39 /* Problem */ = {
+			isa = PBXGroup;
+			children = (
+				4EAB4074239C5FAF00CE3270 /* Problem.swift */,
+			);
+			path = Problem;
+			sourceTree = "<group>";
+		};
+		4EA807062399B6C20034F6EA /* 5 */ = {
+			isa = PBXGroup;
+			children = (
+				4EA807072399B6CE0034F6EA /* data05.txt */,
+				4EA807082399B6D80034F6EA /* Problem05.swift */,
+			);
+			path = 5;
+			sourceTree = "<group>";
+		};
+		4EADC31B23B12E1D00B5E9BA /* 19 */ = {
+			isa = PBXGroup;
+			children = (
+				4EADC31E23B12E6300B5E9BA /* data19.txt */,
+				4EADC31C23B12E2F00B5E9BA /* Problem19.swift */,
+			);
+			path = 19;
+			sourceTree = "<group>";
+		};
+		4EADC32323B17AC900B5E9BA /* 20 */ = {
+			isa = PBXGroup;
+			children = (
+				4EADC32623B17B3300B5E9BA /* data20.txt */,
+				4EADC32423B17AD500B5E9BA /* Problem20.swift */,
+			);
+			path = 20;
+			sourceTree = "<group>";
+		};
+		4EC0DAF623972A7F0058EB46 /* 2 */ = {
+			isa = PBXGroup;
+			children = (
+				4EC0DAF923972C120058EB46 /* data02.txt */,
+				4EC0DAF723972A920058EB46 /* Problem02.swift */,
+			);
+			path = 2;
+			sourceTree = "<group>";
+		};
+		4EC0DAFF23972E760058EB46 /* AdventOfCode2019Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4E085D162398649C00E8F402 /* Extensions */,
+				4EC0DB17239749270058EB46 /* Helpers */,
+				4E45B8ED239C877E00524149 /* 7 */,
+				4E7A0602239E77BF00B78183 /* 9 */,
+				4E081E1E23B43C89001B4A53 /* 21 */,
+				4E7224B123B63863004B7945 /* 22 */,
+				4EC0DB0223972E760058EB46 /* Info.plist */,
+			);
+			path = AdventOfCode2019Tests;
+			sourceTree = "<group>";
+		};
+		4EC0DB0E23973EC30058EB46 /* 3 */ = {
+			isa = PBXGroup;
+			children = (
+				4EC0DB1123973EF20058EB46 /* data03.txt */,
+				4EC0DB0F23973ED40058EB46 /* Problem03.swift */,
+			);
+			path = 3;
+			sourceTree = "<group>";
+		};
+		4EC0DB17239749270058EB46 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4E081E1F23B43C95001B4A53 /* SpringDroid */,
+				4EC0DB0923972EB40058EB46 /* ComputerTests.swift */,
+				4E085D1E239870E500E8F402 /* AscendingNumbersTests.swift */,
+				4E3E8E68239B2886008645C6 /* Computer+OpcodeTests.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4EE6E7972394778F00672729 = {
+			isa = PBXGroup;
+			children = (
+				4EC0DB0B23972FA90058EB46 /* TestPlan.xctestplan */,
+				4E490D0F23A0584D00B686E1 /* SpeedTestPlan.xctestplan */,
+				4EE6E7A22394778F00672729 /* AdventOfCode2019 */,
+				4EC0DAFF23972E760058EB46 /* AdventOfCode2019Tests */,
+				4EE6E7A12394778F00672729 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4EE6E7A12394778F00672729 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4EE6E7A02394778F00672729 /* AdventOfCode2019 */,
+				4EC0DAFE23972E760058EB46 /* AdventOfCode2019Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4EE6E7A22394778F00672729 /* AdventOfCode2019 */ = {
+			isa = PBXGroup;
+			children = (
+				4E085D152398649300E8F402 /* Extensions */,
+				4EE6E7AE23947B3200672729 /* Helpers */,
+				4EA74A8C239C69EA005A8B39 /* Problem */,
+				4EE6E7AA2394779A00672729 /* 1 */,
+				4EC0DAF623972A7F0058EB46 /* 2 */,
+				4EC0DB0E23973EC30058EB46 /* 3 */,
+				4E085D10239861E200E8F402 /* 4 */,
+				4EA807062399B6C20034F6EA /* 5 */,
+				4E3E8E6A239B2FA5008645C6 /* 6 */,
+				4EE89731239BF1180076D8B9 /* 7 */,
+				4EFD2B4A239D5D8200E8905E /* 8 */,
+				4E7A05FE239E75BD00B78183 /* 9 */,
+				4E490D1023A07FE700B686E1 /* 10 */,
+				4E12AF1B23A1CC7A0039705B /* 11 */,
+				4E919B1F23A2E7D900DA8B30 /* 12 */,
+				4EA3F2D223A4604800EF10A7 /* 13 */,
+				4E33893D23A5552100CE4673 /* 14 */,
+				4E50F04C23A6E1CE00971EBA /* 15 */,
+				4EED8AB923AC2F51002E4E88 /* 16 */,
+				4E77AA0223AD7D01000DBF2D /* 17 */,
+				4E77AA0723ADA465000DBF2D /* 18 */,
+				4EADC31B23B12E1D00B5E9BA /* 19 */,
+				4EADC32323B17AC900B5E9BA /* 20 */,
+				4E081E1523B41E8C001B4A53 /* 21 */,
+				4E7224AE23B635B6004B7945 /* 22 */,
+				4EE6E7A32394778F00672729 /* main.swift */,
+			);
+			path = AdventOfCode2019;
+			sourceTree = "<group>";
+		};
+		4EE6E7AA2394779A00672729 /* 1 */ = {
+			isa = PBXGroup;
+			children = (
+				4EE6E7AD2394780F00672729 /* data01.txt */,
+				4EE6E7AB239477AD00672729 /* Problem01.swift */,
+			);
+			path = 1;
+			sourceTree = "<group>";
+		};
+		4EE6E7AE23947B3200672729 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4E50F05123A6E26C00971EBA /* Game */,
+				4E50F05323A6E27E00971EBA /* RepairDroid */,
+				4E081E1A23B43BCD001B4A53 /* SpringDroid */,
+				4E085D1B23986F4700E8F402 /* AscendingNumbers.swift */,
+				4E50F05A23A7026000971EBA /* BreadthFirstSearch.swift */,
+				4EC0DB0723972E960058EB46 /* Computer.swift */,
+				4EA8070A2399D4EC0034F6EA /* Console.swift */,
+				4EC0DB132397432F0058EB46 /* Coordinate.swift */,
+				4E919B2223A2E89100DA8B30 /* Coordinate3.swift */,
+				4EC0DB15239743E10058EB46 /* Direction.swift */,
+				4E490D0923A0455000B686E1 /* Memory.swift */,
+				4E919B2423A2E92E00DA8B30 /* Moon.swift */,
+				4E12AF2023A1CEC40039705B /* Robot.swift */,
+				4E919B2823A31E7F00DA8B30 /* Maths.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4EE89731239BF1180076D8B9 /* 7 */ = {
+			isa = PBXGroup;
+			children = (
+				4EE89734239BF1970076D8B9 /* data07.txt */,
+				4EE89732239BF1330076D8B9 /* Problem07.swift */,
+			);
+			path = 7;
+			sourceTree = "<group>";
+		};
+		4EED8AB923AC2F51002E4E88 /* 16 */ = {
+			isa = PBXGroup;
+			children = (
+				4EED8ABA23AC2F62002E4E88 /* Problem16.swift */,
+			);
+			path = 16;
+			sourceTree = "<group>";
+		};
+		4EFD2B4A239D5D8200E8905E /* 8 */ = {
+			isa = PBXGroup;
+			children = (
+				4EFD2B4F239D5F5000E8905E /* data08.txt */,
+				4EFD2B4D239D5F2400E8905E /* Problem08.swift */,
+			);
+			path = 8;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4EC0DAFD23972E760058EB46 /* AdventOfCode2019Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EC0DB0323972E760058EB46 /* Build configuration list for PBXNativeTarget "AdventOfCode2019Tests" */;
+			buildPhases = (
+				4EC0DAFA23972E760058EB46 /* Sources */,
+				4EC0DAFB23972E760058EB46 /* Frameworks */,
+				4EC0DAFC23972E760058EB46 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdventOfCode2019Tests;
+			productName = AdventOfCode2019Tests;
+			productReference = 4EC0DAFE23972E760058EB46 /* AdventOfCode2019Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4EE6E79F2394778F00672729 /* AdventOfCode2019 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EE6E7A72394778F00672729 /* Build configuration list for PBXNativeTarget "AdventOfCode2019" */;
+			buildPhases = (
+				4EE6E79C2394778F00672729 /* Sources */,
+				4EE6E79D2394778F00672729 /* Frameworks */,
+				4EE6E79E2394778F00672729 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdventOfCode2019;
+			productName = AdventOfCode2019;
+			productReference = 4EE6E7A02394778F00672729 /* AdventOfCode2019 */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4EE6E7982394778F00672729 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Gary Kerr";
+				TargetAttributes = {
+					4EC0DAFD23972E760058EB46 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					4EE6E79F2394778F00672729 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 4EE6E79B2394778F00672729 /* Build configuration list for PBXProject "AdventOfCode2019" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4EE6E7972394778F00672729;
+			productRefGroup = 4EE6E7A12394778F00672729 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4EE6E79F2394778F00672729 /* AdventOfCode2019 */,
+				4EC0DAFD23972E760058EB46 /* AdventOfCode2019Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4EC0DAFC23972E760058EB46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E50F05023A6E20500971EBA /* data15.txt in Resources */,
+				4EFD2B50239D5F5000E8905E /* data08.txt in Resources */,
+				4E490D0D23A048CC00B686E1 /* data09.txt in Resources */,
+				4E77AA0C23ADA492000DBF2D /* data18.txt in Resources */,
+				4EE89735239BF1970076D8B9 /* data07.txt in Resources */,
+				4EA3F2D623A4608800EF10A7 /* data13.txt in Resources */,
+				4E919B2723A2FA9D00DA8B30 /* data12.txt in Resources */,
+				4E081E1923B41F06001B4A53 /* data21.txt in Resources */,
+				4E12AF1F23A1CD0C0039705B /* data11.txt in Resources */,
+				4EADC31F23B12E6300B5E9BA /* data19.txt in Resources */,
+				4E490D1823A088A300B686E1 /* data10.txt in Resources */,
+				4E77AA0623AD7D71000DBF2D /* data17.txt in Resources */,
+				4E33894123A555A700CE4673 /* data14.txt in Resources */,
+				4E7224B623B63C66004B7945 /* data22.txt in Resources */,
+				4EADC32723B17B3300B5E9BA /* data20.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4EC0DAFA23972E760058EB46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E12AF2223A1CEC40039705B /* Robot.swift in Sources */,
+				4E50F05C23A7026000971EBA /* BreadthFirstSearch.swift in Sources */,
+				4E081E2323B43E9A001B4A53 /* Coordinate.swift in Sources */,
+				4E50F05623A6E29200971EBA /* RepairDroid.swift in Sources */,
+				4E490D0B23A0473400B686E1 /* Memory.swift in Sources */,
+				4E081E2423B43EAA001B4A53 /* GameScreen.swift in Sources */,
+				4E085D18239864B100E8F402 /* Int+ExtensionsTests.swift in Sources */,
+				4EE89738239C00810076D8B9 /* Array+ExtensionsTests.swift in Sources */,
+				4E919B2A23A31E7F00DA8B30 /* Maths.swift in Sources */,
+				4EE89736239C00700076D8B9 /* Sequence+Extensions.swift in Sources */,
+				4E50F05923A6E63000971EBA /* DroidController.swift in Sources */,
+				4E081E1D23B43BDB001B4A53 /* SpringDroid.swift in Sources */,
+				4E085D1D239870D500E8F402 /* AscendingNumbers.swift in Sources */,
+				4E490D1323A07FFB00B686E1 /* Problem10.swift in Sources */,
+				4E081E2123B43CA3001B4A53 /* SpringDroidTests.swift in Sources */,
+				4EC0DB19239749470058EB46 /* Computer.swift in Sources */,
+				4EA8070C2399D66B0034F6EA /* Console.swift in Sources */,
+				4E45B8EE239C878900524149 /* Problem07.swift in Sources */,
+				4E7A0605239E787E00B78183 /* Problem09.swift in Sources */,
+				4E77AA0A23ADA47B000DBF2D /* Problem18.swift in Sources */,
+				4E45B8F1239C8C4D00524149 /* Problem.swift in Sources */,
+				4EC0DB0A23972EB40058EB46 /* ComputerTests.swift in Sources */,
+				4E45B8F0239C879800524149 /* Problem07Tests.swift in Sources */,
+				4E7A0601239E778700B78183 /* String+Extensions.swift in Sources */,
+				4E3E8E69239B2886008645C6 /* Computer+OpcodeTests.swift in Sources */,
+				4E081E2623B43EF2001B4A53 /* Array+Extensions.swift in Sources */,
+				4E081E2223B43E8F001B4A53 /* Direction.swift in Sources */,
+				4E081E2523B43EC3001B4A53 /* Problem18Helper.swift in Sources */,
+				4E50F05223A6E27200971EBA /* GameConsole.swift in Sources */,
+				4EA3F2D923A4631D00EF10A7 /* Game.swift in Sources */,
+				4E7224B323B6387E004B7945 /* Problem22Tests.swift in Sources */,
+				4E7224B423B63881004B7945 /* Problem22.swift in Sources */,
+				4E7A0604239E77CF00B78183 /* Problem09Tests.swift in Sources */,
+				4E085D202398717B00E8F402 /* Int+Extensions.swift in Sources */,
+				4E085D1A23986E0900E8F402 /* Problem04.swift in Sources */,
+				4E085D1F239870E500E8F402 /* AscendingNumbersTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EE6E79C2394778F00672729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E33893F23A5552E00CE4673 /* Problem14.swift in Sources */,
+				4EA807092399B6D80034F6EA /* Problem05.swift in Sources */,
+				4E19EBFE23A52655003D3C0E /* GameConsole.swift in Sources */,
+				4EC0DB142397432F0058EB46 /* Coordinate.swift in Sources */,
+				4EC0DB1023973ED40058EB46 /* Problem03.swift in Sources */,
+				4EE89733239BF1330076D8B9 /* Problem07.swift in Sources */,
+				4E7A0600239E75CB00B78183 /* Problem09.swift in Sources */,
+				4EE6E7AC239477AD00672729 /* Problem01.swift in Sources */,
+				4E919B2523A2E92E00DA8B30 /* Moon.swift in Sources */,
+				4E919B2923A31E7F00DA8B30 /* Maths.swift in Sources */,
+				4E919B2123A2E7EB00DA8B30 /* Problem12.swift in Sources */,
+				4E081E1723B41E98001B4A53 /* Problem21.swift in Sources */,
+				4E77AA0423AD7D11000DBF2D /* Problem17.swift in Sources */,
+				4E50F05B23A7026000971EBA /* BreadthFirstSearch.swift in Sources */,
+				4EAB4075239C5FAF00CE3270 /* Problem.swift in Sources */,
+				4E50F05823A6E63000971EBA /* DroidController.swift in Sources */,
+				4EED8ABB23AC2F62002E4E88 /* Problem16.swift in Sources */,
+				4E12AF2123A1CEC40039705B /* Robot.swift in Sources */,
+				4EC0DB16239743E10058EB46 /* Direction.swift in Sources */,
+				4E490D0A23A0455000B686E1 /* Memory.swift in Sources */,
+				4E919B2323A2E89100DA8B30 /* Coordinate3.swift in Sources */,
+				4E12AF1D23A1CC870039705B /* Problem11.swift in Sources */,
+				4EADC32523B17AD500B5E9BA /* Problem20.swift in Sources */,
+				4E3E8E6D239B2FCC008645C6 /* Problem06.swift in Sources */,
+				4EA3F2D823A4631D00EF10A7 /* Game.swift in Sources */,
+				4E77AA0123AD753C000DBF2D /* Array+Extensions.swift in Sources */,
+				4E77AA0923ADA47B000DBF2D /* Problem18.swift in Sources */,
+				4EC0DAF823972A920058EB46 /* Problem02.swift in Sources */,
+				4E34D6E023AFFCC6005B0179 /* Problem18Helper.swift in Sources */,
+				4EA8070B2399D4EC0034F6EA /* Console.swift in Sources */,
+				4EC0DB0823972E960058EB46 /* Computer.swift in Sources */,
+				4EFD2B4E239D5F2400E8905E /* Problem08.swift in Sources */,
+				4E085D12239861F400E8F402 /* Problem04.swift in Sources */,
+				4E081E1C23B43BDB001B4A53 /* SpringDroid.swift in Sources */,
+				4E7224B023B635CA004B7945 /* Problem22.swift in Sources */,
+				4EFD2B4C239D5DB600E8905E /* String+Extensions.swift in Sources */,
+				4E490D1223A07FFB00B686E1 /* Problem10.swift in Sources */,
+				4EE6E7B023947B4200672729 /* Sequence+Extensions.swift in Sources */,
+				4EE6E7A42394778F00672729 /* main.swift in Sources */,
+				4E19EC0023A533E3003D3C0E /* GameScreen.swift in Sources */,
+				4E3E968E23AAEC7A008719E7 /* MazeScreen.swift in Sources */,
+				4E085D1C23986F4700E8F402 /* AscendingNumbers.swift in Sources */,
+				4EADC31D23B12E2F00B5E9BA /* Problem19.swift in Sources */,
+				4E085D142398644400E8F402 /* Int+Extensions.swift in Sources */,
+				4E50F05523A6E29200971EBA /* RepairDroid.swift in Sources */,
+				4EA3F2D423A4605500EF10A7 /* Problem13.swift in Sources */,
+				4E50F04E23A6E1DC00971EBA /* Problem15.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4EC0DB0423972E760058EB46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T59AZ797LW;
+				INFOPLIST_FILE = AdventOfCode2019Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.preduleandfugue.AdventOfCode2019Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4EC0DB0523972E760058EB46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T59AZ797LW;
+				INFOPLIST_FILE = AdventOfCode2019Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.preduleandfugue.AdventOfCode2019Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4EE6E7A52394778F00672729 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4EE6E7A62394778F00672729 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		4EE6E7A82394778F00672729 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = T59AZ797LW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4EE6E7A92394778F00672729 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = T59AZ797LW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4EC0DB0323972E760058EB46 /* Build configuration list for PBXNativeTarget "AdventOfCode2019Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EC0DB0423972E760058EB46 /* Debug */,
+				4EC0DB0523972E760058EB46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4EE6E79B2394778F00672729 /* Build configuration list for PBXProject "AdventOfCode2019" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EE6E7A52394778F00672729 /* Debug */,
+				4EE6E7A62394778F00672729 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4EE6E7A72394778F00672729 /* Build configuration list for PBXNativeTarget "AdventOfCode2019" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EE6E7A82394778F00672729 /* Debug */,
+				4EE6E7A92394778F00672729 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4EE6E7982394778F00672729 /* Project object */;
+}
