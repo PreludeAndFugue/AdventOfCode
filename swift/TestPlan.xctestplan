@@ -1,0 +1,27 @@
+{
+  "configurations" : [
+    {
+      "id" : "9B588EE9-4229-4307-9065-211351E83D1A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "AscendingNumbersTests\/testIncrementSpeed()"
+      ],
+      "target" : {
+        "containerPath" : "container:AdventOfCode2019.xcodeproj",
+        "identifier" : "4EC0DAFD23972E760058EB46",
+        "name" : "AdventOfCode2019Tests"
+      }
+    }
+  ],
+  "version" : 1
+}
