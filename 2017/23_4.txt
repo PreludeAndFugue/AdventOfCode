@@ -1,0 +1,29 @@
+b = 106,500
+c = 123,500
+
+while True:
+    f = 1
+    d = 2
+
+    do:
+        e = 2
+
+        do:
+            if d*e == b:
+                f = 0
+
+            e += 1
+
+        while e != b
+
+        d += 1
+
+    while d != b
+
+    if f == 0:
+        h += 1
+
+    if b == c:
+        end
+
+    b += 17

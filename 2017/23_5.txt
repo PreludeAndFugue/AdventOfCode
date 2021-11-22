@@ -1,0 +1,20 @@
+B = 106,500
+C = 123,500
+STEP = 17
+h = 0
+
+for b in range(B, C, STEP):
+    f = 1
+    d = 2
+
+    for d in range(2, b + 1):
+        for e in range(2, b + 1):
+            if d*e == b:
+                f = 0
+
+    if f == 0:
+        h += 1
+
+
+How many of the numbers 106,500, 106,517, 106,534, ..., 123,500 are not prime?
+
