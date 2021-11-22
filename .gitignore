@@ -1,6 +1,15 @@
 __pycache__
 ./search/__pycache__/*
 numbertheory/__pycache__
+# C++
+
+c++/basepath.cpp
+
+# Python
+
+__pycache__
+
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
