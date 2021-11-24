@@ -1,13 +1,23 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
-void test1();
-const int get_seat_id(std::string);
-const int get_row(std::string);
-const int get_column(std::string);
+#include "basepath.cpp"
+#include "inputhelpers.cpp"
 
-const std::vector<std::string> TESTS {
+typedef std::string Pass;
+typedef std::vector<std::string> Passes;
+typedef int SeatId;
+
+void part1();
+void test1();
+Passes get_passes();
+const SeatId get_seat_id(Pass);
+const int get_row(Pass);
+const int get_column(Pass);
+
+const Passes TESTS {
     "FBFBBFFRLR",
     "BFFFBBFRRR",
     "FFFBBBFRRR",
@@ -15,20 +25,38 @@ const std::vector<std::string> TESTS {
 };
 
 int main() {
-    test1();
+    // test1();
+    part1();
 
     return 0;
 }
 
 
+void part1() {
+    Passes passes = get_passes();
+    std::vector<SeatId> seat_ids;
+    for (Pass pass : passes) {
+        SeatId seat_id = get_seat_id(pass);
+        seat_ids.push_back(seat_id);
+    }
+    int max = *std::max_element(seat_ids.begin(), seat_ids.end());
+    std::cout << "Part 1 " << max << std::endl;
+}
+
+
+Passes get_passes() {
+    return get_lines(base_path + "day05.txt");
+}
+
+
 void test1() {
-    for (auto t : TESTS) {
+    for (string t : TESTS) {
         std::cout << t << ' ' << get_seat_id(t) << std::endl;
     }
 }
 
 
-const int get_seat_id(std::string code) {
+const SeatId get_seat_id(std::string code) {
     const int row = get_row(code);
     const int column = get_column(code);
     return 8 * row + column;
