@@ -21,7 +21,6 @@ std::vector<int> TEST01 = {
 
 int window_sum(std::vector<int> values, int index, int window_size) {
     int sum;
-    std::vector<int> window;
     for (int i = 0; i < window_size; i++) {
         int n = values.at(index + i);
         sum = sum + n;
