@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include <vector>
 
 #include "basepath.cpp"
@@ -19,39 +20,33 @@ std::vector<int> TEST01 = {
 };
 
 
-int window_sum(std::vector<int> values, int index, int window_size) {
-    int sum;
-    for (int i = 0; i < window_size; i++) {
-        int n = values.at(index + i);
-        sum = sum + n;
-    }
-    return sum;
-}
-
-
 int part1(std::vector<int> depths) {
     int count = 0;
-    int size = depths.size();
-    for (int i = 0; i < size - 1; i++) {
-        int m = depths.at(i);
-        int n = depths.at(i + 1);
-        if (n > m) {
+    int previous = std::numeric_limits<int>::max();
+    for (int n : depths) {
+        if (n > previous) {
             count++;
         }
+        previous = n;
     }
     return count;
 }
 
-
+// When comparing the window sum, only need to compare the first and last values.
+// w1 = a1 + a2 + a3
+// w2 = a2 + a3 + a4
+// w2 - w1 = a2 + a3 + a4 - a1 - a2 - a3 = a4 - a1
 int part2(std::vector<int> depths) {
     int count = 0;
     int size = depths.size();
-    for (int i = 0; i < size - 3; i++) {
-        int m = window_sum(depths, i, 3);
-        int n = window_sum(depths, i + 1, 3);
-        if (n > m) {
+    int previous = depths.at(0);
+    int n;
+    for (int i = 3; i < size; i++) {
+        n = depths.at(i);
+        if (n > previous) {
             count++;
         }
+        previous = depths.at(i - 2);
     }
     return count;
 }
