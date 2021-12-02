@@ -1,6 +1,5 @@
 #!python
 
-import re
 import helpers
 
 
@@ -13,11 +12,9 @@ forward 2'''
 
 
 def parse(text):
-    pattern = re.compile('(\w*) (\d*)')
     for line in text.strip().split('\n'):
         line = line.strip()
-        match = pattern.match(line)
-        a, b = match.groups()
+        a, b = line.split()
         yield a, int(b)
 
 
