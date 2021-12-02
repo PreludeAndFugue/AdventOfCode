@@ -34,7 +34,7 @@ def part1(instructions):
         elif direction == 'forward':
             total_distance += distance
         else:
-            ValueError
+            raise ValueError
     return depth * total_distance
 
 
