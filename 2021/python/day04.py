@@ -81,6 +81,8 @@ def part2(numbers, boards):
     boards_won = set()
     for n in numbers:
         for i, board in enumerate(boards):
+            if i in boards_won:
+                continue
             board.call(n)
             if board.has_won():
                 boards_won.add(i)
