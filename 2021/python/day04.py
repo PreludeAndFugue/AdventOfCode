@@ -86,6 +86,18 @@ def part1(numbers, boards):
                 return board.score()
 
 
+def part2(numbers, boards):
+    board_count = len(boards)
+    boards_won = set()
+    for n in numbers:
+        for i, board in enumerate(boards):
+            board.call(n)
+            if board.has_won():
+                boards_won.add(i)
+                if len(boards_won) == board_count:
+                    return board.score()
+
+
 def main():
     test_n, test_boards = parse(TEST01)
     n, boards = parse(open(BASE + 'day04.txt', 'r').read())
@@ -96,6 +108,11 @@ def main():
     p1 = part1(n, boards)
     print(f'Part 1: {p1}')
 
+    t2 = part2(test_n, test_boards)
+    assert t2 == 1924
+
+    p2 = part2(n, boards)
+    print(f'Part 2: {p2}')
 
 if __name__ == '__main__':
     main()
