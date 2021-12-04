@@ -52,29 +52,19 @@ class Board(object):
 
 
 def parse(text):
-    text = text.strip()
-    lines = text.split('\n')
-    lines = iter(lines)
-    numbers = next(lines)
-    numbers = [int(n) for n in numbers.split(',')]
+    lines = iter(text.strip().split('\n'))
+    numbers = [int(n) for n in next(lines).split(',')]
     boards = []
     board = []
-    while True:
-        line = next(lines, None)
-
+    for line in lines:
         if line == '':
             if board:
                 boards.append(Board(board))
             board = []
-
-        elif line is None:
-            boards.append(Board(board))
-            break
-
         else:
             line_numbers = [int(x) for x in line.strip().split()]
             board.append(line_numbers)
-
+    boards.append(Board(board))
     return numbers, boards
 
 
