@@ -24,22 +24,20 @@ def parse(text):
         yield p1, p2
 
 
+def make_range(diff):
+    if diff > 0:
+        return range(diff + 1)
+    elif diff < 0:
+        return range(0, diff - 1, -1)
+    else:
+        return None
+
+
 def point_range(p1, p2, part1=True):
-    p1, p2 = sorted((p1, p2))
     dx = p2[0] - p1[0]
     dy = p2[1] - p1[1]
-    if dx > 0:
-        rx = range(dx + 1)
-    elif dx < 0:
-        rx = range(0, dx - 1, -1)
-    else:
-        rx = None
-    if dy > 0:
-        ry = range(dy + 1)
-    elif dy < 0:
-        ry = range(0, dy - 1, -1)
-    else:
-        ry = None
+    rx = make_range(dx)
+    ry = make_range(dy)
     if dy == 0:
         for x in rx:
             yield p1[0] + x, p1[1]
