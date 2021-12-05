@@ -1,6 +1,6 @@
 import Foundation
 
-let test = """
+private let test = """
 forward 5
 down 5
 forward 8
