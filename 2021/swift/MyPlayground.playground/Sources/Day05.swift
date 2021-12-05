@@ -28,6 +28,9 @@ public func day05() {
     let p1 = count(a1)
     print(p1)
 
+    let t2 = testInput.flatMap({ range($0, diagonals: true) })
+    assert(count(t2) == 12)
+
     let a2 = input.flatMap({ range($0, diagonals: true) })
     let p2 = count(a2)
     print(p2)
