@@ -35,7 +35,7 @@ public func day01() {
 // MARK: - Private
 
 
-func getDepths() -> [Int] {
+private func getDepths() -> [Int] {
     let url = Bundle.main.url(forResource: "day01", withExtension: "txt")!
     return try! String(contentsOf: url)
         .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -44,14 +44,14 @@ func getDepths() -> [Int] {
 }
 
 
-func calculate(depths: [Int], diff: Int) -> Int {
+private func calculate(depths: [Int], diff: Int) -> Int {
     zip(depths, depths[diff...])
         .map({ $0.1 > $0.0 ? 1 : 0 })
         .reduce(0, +)
 }
 
 
-func tests(depths: [Int]) {
+private func tests(depths: [Int]) {
     assert(calculate(depths: depths, diff: 1) == 7)
     assert(calculate(depths: depths, diff: 3) == 5)
 }
