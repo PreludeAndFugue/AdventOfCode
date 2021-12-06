@@ -16,10 +16,7 @@ private let test = """
 
 public func day05() {
     let testInput = parse(test)
-
-    let url = Bundle.main.url(forResource: "day05", withExtension: "txt")!
-    let string = try! String(contentsOf: url)
-    let input = parse(string)
+    let input = parse(read("day05"))
 
     let t1 = testInput.flatMap({ range($0, diagonals: false) })
     assert(count(t1) == 5)

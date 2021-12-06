@@ -36,8 +36,7 @@ public func day01() {
 
 
 private func getDepths() -> [Int] {
-    let url = Bundle.main.url(forResource: "day01", withExtension: "txt")!
-    return try! String(contentsOf: url)
+    return read("day01")
         .trimmingCharacters(in: .whitespacesAndNewlines)
         .split(separator: "\n")
         .compactMap({ Int($0) })

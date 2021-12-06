@@ -11,9 +11,7 @@ forward 2
 
 public func day02() {
     let testInstructions = parse(test)
-    let url = Bundle.main.url(forResource: "day02", withExtension: "txt")!
-    let string = try! String(contentsOf: url)
-    let instructions = parse(string)
+    let instructions = parse(read("day02"))
 
     tests(testInstructions)
 
