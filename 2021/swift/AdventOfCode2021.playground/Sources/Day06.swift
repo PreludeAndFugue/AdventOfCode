@@ -7,10 +7,7 @@ private let test = """
 
 public func day06() {
     let testInput = parse(test)
-
-    let url = Bundle.main.url(forResource: "day06", withExtension: "txt")!
-    let string = try! String(contentsOf: url)
-    let input = parse(string)
+    let input = parse(read("day06"))
 
     tests(fish: testInput)
 
@@ -22,9 +19,7 @@ public func day06() {
 
 
 private func parse(_ string: String) -> [Int: Int] {
-    let ns = string.trimmingCharacters(in: .whitespacesAndNewlines)
-        .split(separator: ",")
-        .map({ Int($0)! })
+    let ns = parseInts(string)
     var fish: [Int: Int] = [
         0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0
     ]
