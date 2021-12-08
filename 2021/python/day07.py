@@ -6,10 +6,7 @@ TEST01 = '''16,1,2,0,4,2,7,1,2,14'''
 
 
 def total_cost_1(position, crabs):
-    d = 0
-    for c in crabs:
-        d += abs(c - position)
-    return d
+    return sum(abs(c - position) for c in crabs)
 
 
 def total_cost_2(position, crabs):
@@ -22,8 +19,7 @@ def total_cost_2(position, crabs):
 
 def part(crabs, cost_function):
     positions = range(min(crabs), max(crabs) + 1)
-    cost_positions = [cost_function(p, crabs) for p in positions]
-    return min(cost_positions)
+    return min(cost_function(p, crabs) for p in positions)
 
 
 def main():
