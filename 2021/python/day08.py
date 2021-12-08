@@ -18,24 +18,16 @@ egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
 '''
 
-TEST02 = '''acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf'''
-
-
 NUMBERS = {
     'cf': 1,
-
     'acf': 7,
-
     'bcdf': 4,
-
     'acdeg': 2,
     'acdfg': 3,
     'abdfg': 5,
-
     'abcefg': 0,
     'abdefg': 6,
     'abcdfg': 9,
-
     'abcdefg': 8,
 }
 
@@ -56,22 +48,23 @@ def part1(all_values):
 
 
 def solve_patterns(patterns):
-    numbers = {
-        1: [set(p) for p in patterns if len(p) == 2][0],
-        7: [set(p) for p in patterns if len(p) == 3][0],
-        4: [set(p) for p in patterns if len(p) == 4][0],
-        235: [set(p) for p in patterns if len(p) == 5],
-        609: [set(p) for p in patterns if len(p) == 6]
-    }
+    n_1 = [set(p) for p in patterns if len(p) == 2][0]
+    n_7 = [set(p) for p in patterns if len(p) == 3][0]
+    n_4 = [set(p) for p in patterns if len(p) == 4][0]
+    # 2, 3, and 5 are the five character patterns.
+    n_235 = [set(p) for p in patterns if len(p) == 5]
+    n_609 = [set(p) for p in patterns if len(p) == 6]
+
     def remove_letter(numbers, x):
         for number in numbers.keys():
             numbers[number] = numbers[number] - set(x)
-    for two, three, five in permutations(numbers[235], 3):
-        for six, zero, nine in permutations(numbers[609], 3):
+
+    for two, three, five in permutations(n_235, 3):
+        for six, zero, nine in permutations(n_609, 3):
             test_numbers = {
-                1: numbers[1],
-                7: numbers[7],
-                4: numbers[4],
+                1: n_1,
+                7: n_7,
+                4: n_4,
                 2: two,
                 3: three,
                 5: five,
@@ -79,7 +72,6 @@ def solve_patterns(patterns):
                 0: zero,
                 9: nine,
             }
-            # print(test_numbers)
             a = test_numbers[7] - test_numbers[1]
             remove_letter(test_numbers, a)
             g = test_numbers[9] - a - test_numbers[4]
@@ -102,8 +94,8 @@ def solve_patterns(patterns):
                 'f': f,
                 'b': b,
             }
-            x = all(True if len(v) == 1 else False for v in result.values())
-            if x:
+            is_correct = all(True if len(v) == 1 else False for v in result.values())
+            if is_correct:
                 return {v.pop(): k for k, v in result.items()}
     raise ValueError('no match')
 
