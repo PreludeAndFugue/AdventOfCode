@@ -106,8 +106,8 @@ def part2(data):
         solution = solve_patterns(patterns)
         translation = str.maketrans(solution)
         fixed_values = [''.join(sorted(s.translate(translation))) for s in values]
-        numbers = [NUMBERS[f] for f in fixed_values]
-        n = sum(n * 10 ** i for i, n in enumerate(reversed(numbers)))
+        digits = [NUMBERS[f] for f in fixed_values]
+        n = sum(n * 10 ** i for i, n in enumerate(reversed(digits)))
         total += n
     return total
 
