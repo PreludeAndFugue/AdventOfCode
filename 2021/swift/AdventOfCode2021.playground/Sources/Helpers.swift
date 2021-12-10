@@ -12,3 +12,13 @@ func parseInts(_ string: String) -> [Int] {
         .split(separator: ",")
         .map({ Int($0)! })
 }
+
+
+internal struct Point: Hashable, CustomDebugStringConvertible {
+    let x: Int
+    let y: Int
+
+    var debugDescription: String {
+        "(\(x), \(y))"
+    }
+}

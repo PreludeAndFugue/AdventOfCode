@@ -34,12 +34,6 @@ public func day05() {
 }
 
 
-private struct Point: Hashable {
-    let x: Int
-    let y: Int
-}
-
-
 private func parse(_ string: String) -> [[[Int]]] {
     return string.trimmingCharacters(in: .whitespacesAndNewlines)
         .split(separator: "\n")
