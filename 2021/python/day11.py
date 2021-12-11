@@ -33,7 +33,8 @@ def get_neighbours(location, grid):
     for dx, dy in NEIGHBOURS:
         new_location = x + dx, y + dy
         try:
-            yield new_location, grid[new_location]
+            _ = grid[new_location]
+            yield new_location
         except:
             pass
 
@@ -49,10 +50,6 @@ def print_grid(grid):
 
 
 def step(grid):
-    def increment(grid):
-        for location in grid:
-            grid[location] += 1
-
     def flash(grid):
         will_flash = set()
         repeat = True
@@ -64,33 +61,27 @@ def step(grid):
                 value = grid[location]
                 if value < 10:
                     continue
-                for l, v in get_neighbours(location, grid):
+                for l in get_neighbours(location, grid):
                     grid[l] += 1
                 will_flash.add(location)
                 repeat = True
-
         for location in will_flash:
             grid[location] = 0
-
         return len(will_flash)
 
-    increment(grid)
-    flash_count = flash(grid)
-    return grid, flash_count
+    for location in grid:
+        grid[location] += 1
+    return flash(grid)
 
 
 def part1(grid):
-    count = 0
-    for _ in range(100):
-        grid, c = step(grid)
-        count += c
-    return count
+    return sum(step(grid) for _ in range(100))
 
 
 def part2(grid):
     step_count = 0
     while True:
-        grid, c = step(grid)
+        c = step(grid)
         step_count += 1
         if c == 100:
             return step_count
