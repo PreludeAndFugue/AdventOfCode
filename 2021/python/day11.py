@@ -50,28 +50,27 @@ def print_grid(grid):
 
 
 def step(grid):
-    def flash(grid):
-        will_flash = set()
-        repeat = True
-        while repeat:
-            repeat = False
-            for location in grid:
-                if location in will_flash:
-                    continue
-                value = grid[location]
-                if value < 10:
-                    continue
-                for l in get_neighbours(location, grid):
-                    grid[l] += 1
-                will_flash.add(location)
-                repeat = True
-        for location in will_flash:
-            grid[location] = 0
-        return len(will_flash)
-
     for location in grid:
         grid[location] += 1
-    return flash(grid)
+
+    will_flash = set()
+    repeat = True
+    while repeat:
+        repeat = False
+        for location in grid:
+            if location in will_flash:
+                continue
+            value = grid[location]
+            if value < 10:
+                continue
+            for l in get_neighbours(location, grid):
+                grid[l] += 1
+            will_flash.add(location)
+            repeat = True
+    for location in will_flash:
+        grid[location] = 0
+    return len(will_flash)
+
 
 
 def part1(grid):
