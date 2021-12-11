@@ -54,23 +54,20 @@ def step(grid):
         grid[location] += 1
 
     will_flash = set()
-    repeat = True
-    while repeat:
-        repeat = False
-        for location in grid:
-            if location in will_flash:
-                continue
-            value = grid[location]
-            if value < 10:
-                continue
-            for l in get_neighbours(location, grid):
-                grid[l] += 1
-            will_flash.add(location)
-            repeat = True
+    can_flash = [l for l, v in grid.items() if v >= 10]
+    while can_flash:
+        location = can_flash.pop()
+        if location in will_flash:
+            continue
+        for l in get_neighbours(location, grid):
+            grid[l] += 1
+            if grid[l] >= 10:
+                can_flash.append(l)
+        will_flash.add(location)
+
     for location in will_flash:
         grid[location] = 0
     return len(will_flash)
-
 
 
 def part1(grid):
