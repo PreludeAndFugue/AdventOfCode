@@ -98,8 +98,9 @@ def find_paths(map_, extender):
         seen.add(path)
         if path[-1] == 'end':
             results.append(path)
-        extended = list(extender(path, map_))
-        to_check.extend(extended)
+        else:
+            extended = list(extender(path, map_))
+            to_check.extend(extended)
     return results
 
 
