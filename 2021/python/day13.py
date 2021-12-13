@@ -38,18 +38,18 @@ def fold_dot(instruction, dot):
     x, y = dot
     if axis == 'x':
         if x > n:
-            return x - 2*(x - n), y
+            return 2*n - x, y
         else:
             return dot
     else:
         if y > n:
-            return x, y - 2*(y - n)
+            return x, 2*n - y
         else:
             return dot
 
 
 def fold_dots(instruction, dots):
-    return list(set(fold_dot(instruction, dot) for dot in dots)) 
+    return set(fold_dot(instruction, dot) for dot in dots)
 
 
 def part1(instructions, dots):
@@ -63,16 +63,9 @@ def part2(instructions, dots):
         dots = fold_dots(i, dots)
     max_x = max(dot[0] for dot in dots)
     max_y = max(dot[1] for dot in dots)
-    unique_dots = set(dots)
     pattern = []
     for y in range(max_y + 1):
-        row = []
-        for x in range(max_x + 1):
-            dot = x, y
-            if dot in unique_dots:
-                row.append('#')
-            else:
-                row.append('.')
+        row = ['#' if (x, y) in dots else ' ' for x in range(max_x + 1)]
         pattern.append(''.join(row))
     print('\n'.join(pattern))
 
@@ -87,7 +80,7 @@ def main():
     p1 = part1(instructions, dots)
     print(f'Part 1: {p1}')
 
-    part2(*test_input)
+    # part2(*test_input)
     part2(instructions, dots)
 
 
