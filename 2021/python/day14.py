@@ -1,6 +1,6 @@
 #!python3
 
-from collections import Counter
+from collections import defaultdict
 
 from helpers import BASE
 
@@ -32,37 +32,50 @@ def parse(string):
 
 
 def step(template, pairs):
-    insertions = []
+    new_template = defaultdict(int)
+    for t, count in template.items():
+        t_new = pairs[t]
+        t1 = t[0]
+        t2 = t[1]
+        new_template[t1 + t_new] += count
+        new_template[t_new + t2] += count
+    return new_template
+
+
+def part(template, pairs, n):
+    test = defaultdict(int)
     for t1, t2 in zip(template, template[1:]):
-        pair_insertion = pairs[t1 + t2]
-        insertions.append(pair_insertion)
-    new_template = []
-    for t, i, in zip(template, insertions):
-        new_template.append(t)
-        new_template.append(i)
-    new_template.append(template[-1])
-    return ''.join(new_template)
-
-
-def part1(template, pairs):
-    for _ in range(10):
-        template = step(template, pairs)
-    count = Counter(template)
+        test[t1 + t2] += 1
+    for _ in range(n):
+        test = step(test, pairs)
+    count = defaultdict(int)
+    for t, c in test.items():
+        for t_i in t:
+            count[t_i] += c / 2
+    count[template[0]] += 0.5
+    count[template[-1]] += 0.5
     values = count.values()
     min_count = min(values)
     max_count = max(values)
-    return max_count - min_count
+    diff = max_count - min_count
+    return diff
 
 
 def main():
     test_input = parse(TEST01)
     template, pairs = parse(open(BASE + 'day14.txt', 'r').read())
 
-    t1 = part1(*test_input)
+    t1 = part(*test_input, 10)
     assert t1 == 1588
 
-    p1 = part1(template, pairs)
+    p1 = part(template, pairs, 10)
     print(f'Part 1 {p1}')
+
+    t2 = part(*test_input, 40)
+    assert t2 == 2188189693529
+
+    p2 = part(template, pairs, 40)
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
