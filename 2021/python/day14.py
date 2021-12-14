@@ -1,6 +1,6 @@
 #!python3
 
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 from helpers import BASE
 
@@ -43,22 +43,19 @@ def step(template, pairs):
 
 
 def part(template, pairs, n):
-    test = defaultdict(int)
-    for t1, t2 in zip(template, template[1:]):
-        test[t1 + t2] += 1
+    test = Counter(t1 + t2 for t1, t2 in zip(template, template[1:]))
     for _ in range(n):
         test = step(test, pairs)
     count = defaultdict(int)
     for t, c in test.items():
         for t_i in t:
-            count[t_i] += c / 2
-    count[template[0]] += 0.5
-    count[template[-1]] += 0.5
+            count[t_i] += c
+    count[template[0]] += 1
+    count[template[-1]] += 1
     values = count.values()
-    min_count = min(values)
-    max_count = max(values)
-    diff = max_count - min_count
-    return diff
+    min_count = min(values) // 2
+    max_count = max(values) // 2
+    return max_count - min_count
 
 
 def main():
