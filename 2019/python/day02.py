@@ -50,6 +50,19 @@ def part1(program):
     return c.memory[0]
 
 
+def part2(program):
+    for noun in range(100):
+        for verb in range(100):
+            p = program.copy()
+            p[1] = noun
+            p[2] = verb
+            c = IntcodeComputer(p)
+            c.run()
+            o = c.memory[0]
+            if o == 19690720:
+                return 100 * noun + verb
+
+
 def main():
     c1 = IntcodeComputer([1,0,0,0,99])
     c1.run()
@@ -69,8 +82,11 @@ def main():
 
     program = list(map(int, open(BASE + 'day02.txt', 'r').read().strip().split(',')))
 
-    p1 = part1(program)
+    p1 = part1(program.copy())
     print(f'Part 1: {p1}')
+
+    p2 = part2(program.copy())
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
