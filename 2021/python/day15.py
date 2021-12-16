@@ -5,8 +5,6 @@
 '''
 
 import csv
-import heapq
-from functools import cache
 
 from helpers import BASE
 
@@ -38,7 +36,28 @@ def neighbours(location, input_map):
             yield n, input_map[n]
 
 
-def part1(input_map):
+def enlarge(input_map):
+    def new_n(n, i, j):
+        m = n + i + j
+        if m > 9:
+            return m - 9
+        return m
+    dx, dy = max(input_map)
+    dx += 1
+    dy += 1
+    new_map = {}
+    for l, n in input_map.items():
+        x, y = l
+        for j in range(5):
+            for i in range(5):
+                w = x + i * dx
+                z = y + j * dy
+                m = new_n(n, i, j)
+                new_map[w, z] = m
+    return new_map
+
+
+def dijkstra(input_map):
     '''Dijkstra's algorithm.'''
     start = min(input_map)
     end = max(input_map)
@@ -60,6 +79,14 @@ def part1(input_map):
     return distance[end]
 
 
+def part1(input_map):
+    return dijkstra(input_map)
+
+
+def part2(input_map):
+    full_map = enlarge(input_map)
+    return dijkstra(full_map)
+
 
 def main():
     test_map = parse(TEST01)
@@ -70,6 +97,12 @@ def main():
 
     p1 = part1(map_.copy())
     print(f'Part 1: {p1}')
+
+    t2 = part2(test_map.copy())
+    assert t2 == 315
+
+    p2 = part2(map_.copy())
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
