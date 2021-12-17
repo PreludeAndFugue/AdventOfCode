@@ -46,55 +46,55 @@ def parse(string):
     return iter(string.strip().translate(TRANSLATION))
 
 
-def get_version(x):
+def get_version(bits):
     try:
         parts = []
         for _ in range(3):
-            parts.append(next(x))
+            parts.append(next(bits))
         return int(''.join(parts), 2)
     except StopIteration:
         return None
 
 
-def get_type(x):
-    return int(''.join(next(x) for _ in range(3)), 2)
+def get_type(bits):
+    return int(''.join(next(bits) for _ in range(3)), 2)
 
 
-def get_value(x):
+def get_value(bits):
     more_parts = True
     ns = []
     while more_parts:
-        prefix = next(x)
+        prefix = next(bits)
         more_parts = True if prefix == '1' else False
-        n = ''.join(next(x) for _ in range(4))
+        n = ''.join(next(bits) for _ in range(4))
         ns.append(n)
     return int(''.join(ns), 2)
 
 
-def get_packet(x):
-    v = get_version(x)
+def get_packet(bits):
+    v = get_version(bits)
     if v is None:
         return None
-    t = get_type(x)
+    t = get_type(bits)
     if t == 4:
-        n = get_value(x)
+        n = get_value(bits)
         return (v, t, n)
     else:
-        i = next(x)
+        i = next(bits)
         if i == '0':
-            l = int(''.join(next(x) for _ in range(15)), 2)
-            bits = iter(next(x) for _ in range(l))
+            l = int(''.join(next(bits) for _ in range(15)), 2)
+            sub_bits = iter(next(bits) for _ in range(l))
             sub_packets = []
             while True:
-                sub_packet = get_packet(bits)
+                sub_packet = get_packet(sub_bits)
                 if sub_packet is None:
                     return (v, t, sub_packets)
                 sub_packets.append(sub_packet)
         elif i == '1':
-            i_n = int(''.join(next(x) for _ in range(11)), 2)
+            i_n = int(''.join(next(bits) for _ in range(11)), 2)
             sub_packets = []
             for _ in range(i_n):
-                sub_packet = get_packet(x)
+                sub_packet = get_packet(bits)
                 sub_packets.append(sub_packet)
             return (v, t, sub_packets)
         else:
