@@ -6,8 +6,9 @@ class IntcodeError(Exception):
 
 
 class IntcodeComputer(object):
-    def __init__(self, program):
+    def __init__(self, program, console):
         self.memory = program
+        self.console = console
         self.pointer = 0
 
 
@@ -70,7 +71,8 @@ class IntcodeComputer(object):
     def _input(self, mode1, mode2, mode3):
         '''Opcode 3'''
         assert mode1 == 0 and mode2 == 0 and mode3 == 0
-        n = int(sys.stdin.readline().strip())
+        # n = int(sys.stdin.readline().strip())
+        n = int(self.console.readline().strip())
         p1 = self.memory[self.pointer + 1]
         self.memory[p1] = n
         self.pointer += 2
@@ -81,7 +83,8 @@ class IntcodeComputer(object):
         assert mode2 == 0 and mode3 == 0
         p1 = self.memory[self.pointer + 1]
         n = self.memory[p1] if mode1 == 0 else p1
-        sys.stdout.write(f'{n}\n')
+        # sys.stdout.write(f'{n}\n')
+        self.console.write(f'{n}')
         self.pointer += 2
 
 
@@ -133,3 +136,17 @@ class IntcodeComputer(object):
         n2 = self.memory[p2] if mode2 == 0 else p2
         self.memory[p3] = 1 if n1 == n2 else 0
         self.pointer += 4
+
+
+class Console(object):
+    def __init__(self, buffer):
+        self.pointer = 0
+        self.buffer = [str(b) for b in buffer]
+
+    def readline(self):
+        s = self.buffer[self.pointer]
+        self.pointer += 1
+        return s
+
+    def write(self, s):
+        self.buffer.append(str(s))
