@@ -98,7 +98,70 @@ off x=-93533..-4276,y=-16170..68771,z=-104985..-24507'''
 x = re.compile(r"(\w*) x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+)")
 
 
-def parse(string, clamp=True):
+class Cuboid(object):
+    def __init__(self, xs, ys, zs):
+        super().__init__()
+        self.xs = xs
+        self.ys = ys
+        self.zs = zs
+
+
+    def intersection(self, other):
+        if self.xs[1] < other.xs[0] or other.xs[1] < self.xs[0]:
+            return None
+        if self.ys[1] < other.ys[0] or other.ys[1] < self.ys[0]:
+            return None
+        if self.zs[1] < other.zs[0] or other.zs[1] < self.zs[0]:
+            return None
+        x_min = max(self.xs[0], other.xs[0])
+        x_max = min(self.xs[1], other.xs[1])
+        y_min = max(self.ys[0], other.ys[0])
+        y_max = min(self.ys[1], other.ys[1])
+        z_min = max(self.zs[0], other.zs[0])
+        z_max = min(self.zs[1], other.zs[1])
+        return Cuboid((x_min, x_max), (y_min, y_max), (z_min, z_max))
+
+
+    def remove_common(self, common):
+        '''Subtract common from self. Can return multiple Cuboids.'''
+        xs = self._segments(self.xs, common.xs)
+        ys = self._segments(self.ys, common.ys)
+        zs = self._segments(self.zs, common.zs)
+        cuboids = []
+        for i, x in xs:
+            for j, y in ys:
+                for k, z in zs:
+                    if not i and not j and not k:
+                        continue
+                    c = Cuboid(x, y, z)
+                    cuboids.append(c)
+        return cuboids
+
+
+    def size(self):
+        x_min, x_max = self.xs
+        y_min, y_max = self.ys
+        z_min, z_max = self.zs
+        return (x_max - x_min + 1) * (y_max - y_min + 1) * (z_max - z_min + 1)
+
+
+    def __repr__(self):
+        return f'C(x: {self.xs}, y: {self.ys}, z: {self.zs})'
+
+
+    def _segments(self, self_range, common_range):
+        s_min, s_max = self_range
+        c_min, c_max = common_range
+        segments = []
+        if s_min < c_min:
+            segments.append((True, (s_min, c_min - 1)))
+        segments.append((False, common_range))
+        if s_max > c_max:
+            segments.append((True, (c_max + 1, s_max)))
+        return segments
+
+
+def parse(string):
     for line in string.strip().split('\n'):
         m = x.match(line.strip())
         instruction = m.group(1)
@@ -108,80 +171,66 @@ def parse(string, clamp=True):
         y_max = int(m.group(5))
         z_min = int(m.group(6))
         z_max = int(m.group(7))
-        if clamp:
-            x_min = max(x_min, -50)
-            x_max = min(x_max, 50)
-            y_min = max(y_min, -50)
-            y_max = min(y_max, 50)
-            z_min = max(z_min, -50)
-            z_max = min(z_max, 50)
-        x_range = range(x_min, x_max + 1)
-        y_range = range(y_min, y_max + 1)
-        z_range = range(z_min, z_max + 1)
-        yield instruction, x_range, y_range, z_range
+        c = Cuboid((x_min, x_max), (y_min, y_max), (z_min, z_max))
+        yield instruction, c
 
 
-def reboot(instructions):
-    on_cubes = set()
-    for instruction, x_range, y_range, z_range in instructions:
-        # print(instruction, x_range, y_range, z_range)
-        new_cubes = set()
-        for x in x_range:
-            for y in y_range:
-                for z in z_range:
-                    new_cubes.add((x, y, z))
+def in_init_region(cuboid):
+    x_min, x_max = cuboid.xs
+    if x_min < -50 or x_max > 50:
+        return False
+    y_min, y_max = cuboid.ys
+    if y_min < -50 or y_max > 50:
+        return False
+    z_min, z_max = cuboid.zs
+    if z_min < -50 or z_max > 50:
+        return False
+    return True
+
+
+def part1(instructions):
+    instructions = [i for i in instructions if in_init_region(i[1])]
+    return part2(instructions)
+
+
+def part2(instructions):
+    core = []
+    for instruction, cuboid in instructions:
+        new_core = []
+        for c in core:
+            common = cuboid.intersection(c)
+            if common:
+                remains = c.remove_common(common)
+                new_core.extend(remains)
+            else:
+                new_core.append(c)
+
+        core = new_core
+
         if instruction == 'on':
-            on_cubes = on_cubes.union(new_cubes)
-        elif instruction == 'off':
-            on_cubes = on_cubes.difference(new_cubes)
-        else:
-            raise ValueError
-    return len(on_cubes)
+            core.append(cuboid)
 
-
-def boundary(instructions):
-    x_min = 0
-    x_max = 0
-    y_min = 0
-    y_max = 0
-    z_min = 0
-    z_max = 0
-    for instruction, x_range, y_range, z_range in instructions:
-        x_min = min(x_min, min(x_range))
-        x_max = max(x_max, max(x_range))
-        y_min = min(y_min, min(y_range))
-        y_max = max(y_max, max(y_range))
-        z_min = min(z_min, min(z_range))
-        z_max = max(z_max, max(z_range))
-
-    print(x_min, x_max)
-    print(y_min, y_max)
-    print(z_min, z_max)
-
-    dx = x_max - x_min + 1
-    dy = y_max - y_min + 1
-    dz = z_max - z_min + 1
-    print(dx, dy, dz)
-    print(dx * dy * dz)
+    c = sum(c.size() for c in core)
+    return c
 
 
 def main():
     t1 = parse(TEST01)
-    x1 = reboot(t1)
-    assert x1 == 39
+    assert part2(t1) == 39
 
     t2 = parse(TEST02)
-    x2 = reboot(t2)
-    assert x2 == 590784
+    assert part1(t2) == 590784
 
-    instructions = parse(open(BASE + 'day22.txt', 'r').read())
-    p1 = reboot(instructions)
+    instructions = list(parse(open(BASE + 'day22.txt', 'r').read()))
+
+    p1 = part1(instructions)
     print(f'Part 1: {p1}')
 
-    # t3 = parse(TEST03, clamp=False)
-    # boundary(t3)
-    # x3 = reboot(t3)
-    # print(x3)
+    t3 = list(parse(TEST03))
+    assert part2(t3) == 2758514936282235
+
+    p2 = part2(instructions)
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
