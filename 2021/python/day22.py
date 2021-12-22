@@ -1,5 +1,11 @@
 #!python3
 
+'''
+Axis aligned bounding boxes.
+
+https://en.wikipedia.org/wiki/Bounding_volume
+'''
+
 from itertools import combinations
 import re
 
