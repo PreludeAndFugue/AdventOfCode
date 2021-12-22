@@ -57,14 +57,12 @@ def path(p, orbits):
 
 def part1(orbits):
     count = 0
-    seen = set()
     to_search = [('COM', 0)]
     while to_search:
         p, depth = to_search.pop(0)
-        if p not in seen:
-            count += depth
-            for child in orbits[p]:
-                to_search.append((child, depth + 1))
+        count += depth
+        for child in orbits[p]:
+            to_search.append((child, depth + 1))
     return count
 
 
