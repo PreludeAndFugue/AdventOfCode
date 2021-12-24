@@ -47,11 +47,6 @@ GOAL_COLUMNS = {
     'D': 9
 }
 
-# Nodes cannot stop on these open positions
-INVALID_POSITIONS = set([
-    (1, 3), (1, 5), (1, 7), (1, 9)
-])
-
 PART2 = '''
 #############
 #...........#
@@ -155,8 +150,14 @@ def update_map(map_, old_location, new_location, node):
         return None
     if r_old == 1:
         if r_new == 1:
+            # Once an amphipod stops moving in the hallway, it will stay in
+            # that spot until it can move into a room.
             return None
         if r_new > 1:
+            # Amphipods will never move from the hallway into a room unless
+            # that room is their destination room and that room contains no
+            # amphipods which do not also have that room as their own
+            # destination.
             if c_new != c_goal:
                 return None
             if below == '.' or below.isupper():
