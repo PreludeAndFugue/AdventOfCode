@@ -10,6 +10,7 @@ Part 2
 ------
 
 46941: too low
+47661: too low
 
 When testing part 2:
 42099: too low [44169]
@@ -88,7 +89,7 @@ TEST = '''
 #############
 #...........#
 ###B#C#B#D###
-  #A#D#C#A#
+  #a#D#c#A#
   #########'''.strip()
 
 
@@ -98,7 +99,7 @@ TEST2 = '''
 ###B#C#B#D###
   #D#C#B#A#
   #D#B#A#C#
-  #A#D#C#A#
+  #a#D#c#A#
   #########'''.strip()
 
 
@@ -153,11 +154,16 @@ def update_map(map_, old_location, new_location, node):
     if below == '.':
         return None
     if r_old == 1:
+        if r_new == 1:
+            return None
         if r_new > 1:
             if c_new != c_goal:
                 return None
             if below == '.' or below.isupper():
                 return None
+
+    if r_new == 1 and below.islower():
+        return None
 
     if c_new != c_old:
         if r_new > 1:
@@ -209,6 +215,14 @@ def bfs(node, location, map_):
             yield new_map, d
 
 
+def reconstruct_path(came_from, current):
+    path = [current]
+    while current in came_from:
+        current = came_from[current]
+        path.append(current)
+    return reversed(path)
+
+
 def astar(start, goal, h):
     def get_neighbours(map_):
         '''Get all (cost, neighbour) pairs of map.'''
@@ -219,6 +233,7 @@ def astar(start, goal, h):
     goals = make_goals(goal)
 
     open_set = set([start])
+    came_from = {}
     open_set_heap = []
     heapq.heappush(open_set_heap, (0, start))
 
@@ -243,8 +258,8 @@ def astar(start, goal, h):
         # input()
 
         if current == goal:
-            print(current)
-            return g_score[current]
+            # print(current)
+            return g_score[current], reconstruct_path(came_from, current)
 
         # open_set.remove(current)
 
@@ -253,6 +268,9 @@ def astar(start, goal, h):
             # input()
             tentative_g_score = g_score.get(current, MAX) + d
             if tentative_g_score < g_score.get(neighbour, MAX):
+
+                came_from[neighbour] = current
+
                 g_score[neighbour] = tentative_g_score
                 f = tentative_g_score + h(neighbour, goals)
                 f_score[neighbour] = f
@@ -267,20 +285,21 @@ def astar(start, goal, h):
 
 def heuristic(map_, goals):
     '''Cost of node to goal.'''
-    i = {'A': 0, 'B': 0, 'C': 0, 'D': 0}
-    cost = 0
-    for node, location in node_locations(map_):
-        # print(node, location)
-        node_i = i[node]
-        i[node] += 1
-        goal_location = goals[node][node_i]
-        # print('\t', goal_location)
-        d = manhattan(location, goal_location)
-        # print('\t', d)
-        c = d * MOVE_COST[node]
-        cost += c
-        # print('\t', c)
-    return cost
+    return 0
+    # i = {'A': 0, 'B': 0, 'C': 0, 'D': 0}
+    # cost = 0
+    # for node, location in node_locations(map_):
+    #     # print(node, location)
+    #     node_i = i[node]
+    #     i[node] += 1
+    #     goal_location = goals[node][node_i]
+    #     # print('\t', goal_location)
+    #     d = manhattan(location, goal_location)
+    #     # print('\t', d)
+    #     c = d * MOVE_COST[node]
+    #     cost += c
+    #     # print('\t', c)
+    # return cost
 
 
 def test():
@@ -297,22 +316,29 @@ def test():
 
 
 def part1():
-    cost = astar(TEST, PART1_GOAL, heuristic)
-    # cost = astar(PART1, PART1_GOAL, heuristic)
+    cost, path = astar(TEST, PART1_GOAL, heuristic)
+    # cost, path = astar(PART1, PART1_GOAL, heuristic)
     print(cost)
+    for x in path:
+        print(x)
+        print()
 
 
 def part2():
-    cost = astar(TEST2, PART2_GOAL, heuristic)
-    # cost = astar(PART2, PART2_GOAL, heuristic)
+    # cost, path = astar(TEST2, PART2_GOAL, heuristic)
+    cost, path = astar(PART2, PART2_GOAL, heuristic)
     print(cost)
+    print('Path------------------')
+    for x in path:
+        print(x)
+        print()
 
 
 def main():
     # test()
     # test1()
-    part1()
-    # part2()
+    # part1()
+    part2()
 
 
 if __name__ == '__main__':
