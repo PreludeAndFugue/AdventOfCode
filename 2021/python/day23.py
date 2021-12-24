@@ -219,14 +219,14 @@ def astar(start, goal, h):
     goals = make_goals(goal)
 
     open_set = set([start])
-    came_from = {}
     open_set_heap = []
     heapq.heappush(open_set_heap, (0, start))
+    came_from = {}
 
     g_score = {start: 0}
     f_score = {start: h(start, goals)}
 
-    i = 1
+    # i = 1
     while open_set:
         d, current = heapq.heappop(open_set_heap)
         open_set.remove(current)
