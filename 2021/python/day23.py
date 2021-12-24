@@ -146,7 +146,7 @@ def update_map(map_, old_location, new_location, node):
     r_old, c_old = old_location
     r_new, c_new = new_location
 
-    # print(r_new, MAP_DEPTH)
+    # Prune invalid map configurations, etc
 
     below = layout[r_new + 1][c_new]
     c_goal = GOAL_COLUMNS[node]
@@ -175,20 +175,7 @@ def update_map(map_, old_location, new_location, node):
         if r_new < r_old:
             return None
 
-
-    # if r_old > 1 and r_new < r_old:
-    #     if below == '.':
-    #         return None
-
-    # If moving to the bottom layer, then this node shouldn't move
-    # back out
     layout[r_new][c_new] = node.lower() if c_new != c_old and r_new > 1 else node
-
-    # if r_new == MAP_DEPTH - 1:
-    #     below = layout[MAP_DEPTH][c_new]
-    #     if below.isupper():
-    #         return None
-
     layout[r_old][c_old] = '.'
     return '\n'.join(''.join(row) for row in layout)
 
@@ -208,8 +195,6 @@ def bfs(node, location, map_):
                 to_check.append((new_location, new_d))
         seen.add(check)
     for new_location, d in valid:
-        # if new_location in INVALID_POSITIONS:
-        #     continue
         new_map = update_map(map_, location, new_location, node)
         if new_map:
             yield new_map, d
@@ -242,103 +227,69 @@ def astar(start, goal, h):
 
     i = 1
     while open_set:
-        # current = get_cheapest()
         d, current = heapq.heappop(open_set_heap)
         open_set.remove(current)
 
-        if i % 10000 == 0:
-            l = len(open_set)
-            print(i, 'len open set', l, l / i)
-            print('cost', d)
-            print(current)
-            print()
-            # input()
-        i += 1
-        # print(len(open_set))
-        # input()
+        # if i % 10000 == 0:
+        #     l = len(open_set)
+        #     print(i, 'len open set', l, l / i)
+        #     print('cost', d)
+        #     print(current)
+        #     print()
+        # i += 1
 
         if current == goal:
-            # print(current)
             return g_score[current], reconstruct_path(came_from, current)
 
-        # open_set.remove(current)
-
         for neighbour, d in get_neighbours(current):
-            # print(neighbour, d)
-            # input()
             tentative_g_score = g_score.get(current, MAX) + d
             if tentative_g_score < g_score.get(neighbour, MAX):
-
                 came_from[neighbour] = current
-
                 g_score[neighbour] = tentative_g_score
                 f = tentative_g_score + h(neighbour, goals)
                 f_score[neighbour] = f
                 if neighbour not in open_set:
                     open_set.add(neighbour)
                     heapq.heappush(open_set_heap, (f, neighbour))
-            #         print('adding to open set')
-            # input()
 
     raise ValueError("Couldn't find path")
 
 
 def heuristic(map_, goals):
     '''Cost of node to goal.'''
-    return 0
-    # i = {'A': 0, 'B': 0, 'C': 0, 'D': 0}
-    # cost = 0
-    # for node, location in node_locations(map_):
-    #     # print(node, location)
-    #     node_i = i[node]
-    #     i[node] += 1
-    #     goal_location = goals[node][node_i]
-    #     # print('\t', goal_location)
-    #     d = manhattan(location, goal_location)
-    #     # print('\t', d)
-    #     c = d * MOVE_COST[node]
-    #     cost += c
-    #     # print('\t', c)
-    # return cost
-
-
-def test():
-    map_ = '''
-#############
-#...........#
-###.#A#.#.###
-  #.#A#.#.#
-  #########'''.strip()
-    for new_map, d in bfs('A', (2, 5), map_):
-        print(new_map)
-        print(d)
-        print()
+    i = {'A': 0, 'B': 0, 'C': 0, 'D': 0}
+    cost = 0
+    for node, location in node_locations(map_):
+        node_i = i[node]
+        i[node] += 1
+        goal_location = goals[node][node_i]
+        d = manhattan(location, goal_location)
+        c = d * MOVE_COST[node]
+        cost += c
+    return cost
 
 
 def part1():
-    cost, path = astar(TEST, PART1_GOAL, heuristic)
-    # cost, path = astar(PART1, PART1_GOAL, heuristic)
-    print(cost)
-    for x in path:
-        print(x)
-        print()
+    # cost, path = astar(TEST, PART1_GOAL, heuristic)
+    cost, _ = astar(PART1, PART1_GOAL, heuristic)
+    return cost
 
 
 def part2():
     # cost, path = astar(TEST2, PART2_GOAL, heuristic)
-    cost, path = astar(PART2, PART2_GOAL, heuristic)
-    print(cost)
-    print('Path------------------')
-    for x in path:
-        print(x)
-        print()
+    cost, _ = astar(PART2, PART2_GOAL, heuristic)
+    return cost
 
 
 def main():
     # test()
     # test1()
-    # part1()
-    part2()
+    p1 = part1()
+    print(f'Part 1: {p1}')
+
+
+    p2 = part2()
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
