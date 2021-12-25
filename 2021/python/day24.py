@@ -1,15 +1,7 @@
 #!python3
 
-from itertools import product
-
 from helpers import BASE
 from day24helpers import ALU
-
-
-def test():
-    y = [9, 8, 7, 6, 5, 4, 3, 2, 1]
-    for x in product(y, repeat=14):
-        yield x
 
 
 def make_input_numbers(n):
@@ -20,6 +12,10 @@ def make_input_numbers(n):
 
 def run(input_numbers):
     '''
+    The early x tests all set x equal to one. Want the later x tests to set x to zero so
+    that we can keep dividing z by 26 to get it to zero. This provides the following
+    constraints on the fourteen input numbers.
+
     w_6 = w_5 - 2
     w_4 = w_7 - 7
     w_8 = w_9 - 4
@@ -166,58 +162,23 @@ def run(input_numbers):
     return z, ws
 
 
-def part1():
-    current_min = 1_000_000_000_000_000_000
-    for numbers in product([9, 8, 7, 6, 5, 4, 3, 2, 1], repeat=12):
-        # n = sum(m * 10 ** i for i, m in enumerate(reversed(numbers)))
-        # if n % 26 : continue
-        # print(numbers)
-        z, x = run(numbers)
-        if z < current_min:
-            current_min = z
-            print(x)
-            # print(numbers, n, n % 26)
-            print(z, z % 26)
-        # print(z)
-
-
 def main():
     program = open(BASE + 'day24.txt', 'r').read().strip()
 
     numbers = [
-        13579246899999, 11111111111111, 22222222222222,
-        99999999999999,
-
-        12345678912345,
-
-        # w_5 = w_6 + 2
-        99999799999999,
-        # w_4 = w_7 - 7
-        99929799999999,
-        #
-        99929795999999,
-
+        # largest
         99429795993929,
+        # smallest
         18113181571611,
     ]
     for n in numbers:
         input_numbers = make_input_numbers(n)
-        print(n)
-        # z = run(input_numbers)
-        # print(z)
-
-        input_numbers = make_input_numbers(n)
         c = ALU(program, input_numbers)
         c.run()
-        print(c.memory)
-
-        # assert z == c.memory['z']
-
-    # part1()
+        assert c.memory['z'] == 0
 
     print('Part 1: 99429795993929')
     print('Part 2: 18113181571611')
-
 
 
 if __name__ == '__main__':
