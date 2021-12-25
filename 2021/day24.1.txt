@@ -1,0 +1,128 @@
+w = input (1...9)
+
+x = 1
+z = w + 2
+
+w = input (1...9)
+
+x = z % 26 + 10
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 4) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 + 14
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 8) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 + 11
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 7) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 + 14
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 12) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 - 14
+z = z // 26
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = z * y
+y = (w + 7) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26
+z = z // 26
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 10) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 + 10
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 14) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 - 10
+z = z // 26
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 2) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 + 13
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 6) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 - 12
+z = z // 26
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 8) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 - 3
+z = z // 26
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 11) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 - 11
+z = z // 26
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 5) * x
+z = z + y
+
+w = input (1...9)
+
+x = z % 26 - 2
+z = z // 26
+x = 1 if x != w else 0
+y = 25 * x + 1
+z = y * z
+y = (w + 11) * x
+z = z + y
