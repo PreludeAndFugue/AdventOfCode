@@ -16,6 +16,7 @@ Input
 
 from itertools import combinations
 
+from maths import lcm
 
 COORDS = ['x', 'y', 'z']
 
@@ -66,6 +67,10 @@ class MoonCoord(object):
 
     def kinetic_energy(self, index):
         return abs(self.__dict__[f'v{index}'])
+
+
+    def state(self):
+        return (self.c1, self.c2, self.c3, self.c4, self.v1, self.v2, self.v3, self.v4)
 
 
     def _apply_gravity(self):
@@ -132,12 +137,38 @@ def test2():
     assert part1(moons, 100) == 1940
 
 
+def test3():
+    moons = parse(TEST01)
+    assert part2(moons) == 2772
+
+
+def test4():
+    moons = parse(TEST02)
+    assert part2(moons) == 4686774924
+
+
 def part1(moons, steps):
     for _ in range(1, steps + 1):
         for mc in moons.values():
             mc.time_step()
     e = total_energy(moons)
     return e
+
+
+def part2(moons):
+    ns = []
+    for m in moons.values():
+        states = {m.state(): 0}
+        for i in range(500000):
+            m.time_step()
+            state = m.state()
+            if state in states:
+                ns.append(i)
+                break
+            states[state] = i
+    ns = [n + 1 for n in ns]
+    a, b, c = ns
+    return lcm(lcm(a, b), c)
 
 
 def main():
@@ -147,6 +178,12 @@ def main():
     moons = parse(INPUT)
     p1 = part1(moons, 1000)
     print(f'Part 1: {p1}')
+
+    test3()
+    test4()
+
+    p2 = part2(moons)
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
