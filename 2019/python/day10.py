@@ -89,17 +89,27 @@ def make_vectors(asteroids):
     for a1, a2 in combinations(asteroids, 2):
         x1, y1 = a1
         x2, y2 = a2
-        vectors[a1].append((x2 - x1, y2 - y1))
-        vectors[a2].append((x1 - x2, y1 - y2))
+        vectors[a1].append((x2 - x1, -(y2 - y1)))
+        vectors[a2].append((x1 - x2, -(y1 - y2)))
     return vectors
 
 
 def make_angles(vectors, best):
-    print(vectors)
     angles = defaultdict(list)
     for x, y in vectors:
-        a = atan2(-y, x)
+        a = atan2(y, x)
+        if a < 0:
+            # Switch the angles below the x-axis to rotate anti-clockwise.
+            a += 2 * pi
         angles[a].append((x, y))
+    # Switch to clockwise rotation.
+    angles = {2 * pi - k if k > 0 else k: v for k, v in angles.items()}
+    # Make zero angle slightly greater than zero.
+    angles = {(k + 0.000001) if k == 0 else k: v for k, v in angles.items()}
+    # Rotate to make the positive y-axis the zero angle.
+    angles = {(k + pi / 2) % (2 * pi): v for k, v in angles.items()}
+    for a, ast in angles.items():
+        ast.sort(key=lambda x: abs(x[0]) + abs(x[1]))
     return angles
 
 
@@ -132,7 +142,7 @@ def test5():
 def test6():
     asteroids = parse(TEST05)
     _, best = part1(asteroids)
-    part2(asteroids, best)
+    assert part2(asteroids, best) == 802
 
 
 def part1(asteroids):
@@ -154,10 +164,18 @@ def part2(asteroids, best):
     vs = make_vectors(asteroids)
     best_vectors = vs[best]
     angles = make_angles(best_vectors, best)
-    for angle, vs in angles.items():
-        print(angle)
-        print(vs)
-        print()
+    count = 0
+    sorted_angles = sorted(angles.keys())
+    while True:
+        for angle in sorted_angles:
+            ast = angles[angle]
+            try:
+                a = ast.pop(0)
+                count += 1
+                if count == 200:
+                    return 100 * (best[0] + a[0]) + best[1] - a[1]
+            except IndexError:
+                pass
 
 
 def main():
@@ -173,6 +191,9 @@ def main():
     print(f'Part 1: {p1}')
 
     test6()
+
+    p2 = part2(asteroids, best)
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
