@@ -5,6 +5,7 @@ from itertools import combinations
 from math import atan2, pi
 
 from helpers import BASE
+from maths import gcd
 
 TEST01 = '''.#..#
 .....
@@ -74,14 +75,6 @@ def parse(string):
             if ch == '#':
                 asteroids.add((x, y))
     return asteroids
-
-
-def gcd(a, b):
-    a = abs(a)
-    b = abs(b)
-    while b > 0:
-        a, b = b, a % b
-    return a
 
 
 def make_vectors(asteroids):
