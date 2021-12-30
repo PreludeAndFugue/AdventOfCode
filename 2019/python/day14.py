@@ -1,6 +1,8 @@
 #!python3
 
 from collections import defaultdict
+from copy import deepcopy
+from math import ceil
 
 from helpers import BASE
 
@@ -24,15 +26,17 @@ TEST02 = '''9 ORE => 2 A
 2 AB, 3 BC, 4 CA => 1 FUEL'''
 
 
-TEST03 = '''157 ORE => 5 NZVS
+TEST03 = '''
+157 ORE => 5 NZVS
 165 ORE => 6 DCFZ
-44 XJWVT, 5 KHKGT, 1 QDVJ, 29 NZVS, 9 GPVTF, 48 HKGWZ => 1 FUEL
-12 HKGWZ, 1 GPVTF, 8 PSHF => 9 QDVJ
 179 ORE => 7 PSHF
 177 ORE => 5 HKGWZ
-7 DCFZ, 7 PSHF => 2 XJWVT
 165 ORE => 2 GPVTF
-3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT'''
+12 HKGWZ, 1 GPVTF, 8 PSHF => 9 QDVJ
+7 DCFZ, 7 PSHF => 2 XJWVT
+3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT
+44 XJWVT, 5 KHKGT, 1 QDVJ, 29 NZVS, 9 GPVTF, 48 HKGWZ => 1 FUEL
+'''
 
 
 TEST04 = '''2 VPVL, 7 FWMGM, 2 CXFTF, 11 MNCFX => 1 STKFG
@@ -66,16 +70,6 @@ TEST05 = '''171 ORE => 8 CNZTR
 121 ORE => 7 VRPVC
 7 XCVML => 6 RJRHP
 5 BHXH, 4 VRPVC => 5 LTCX'''
-
-'''
-{'BHXH': 3048, 'KTJDG': 3201, 'VRPVC': 32981, 'CNZTR': 69552}
-3048 / 4 = 762 -> 762 * 114 = 86,868
-3201 / 9 = 355.7 -> 356 -> 356 * 189 = 67,284
-32981 / 7 = 4711.6 -> 4712 -> 4712 * 121 = 570,152
-69552 / 8 = 8,694 -> 8,694 * 171 = 1,486,674
-
-total = 2,210,978
-'''
 
 
 def parse(string):
@@ -111,6 +105,23 @@ def test1():
     assert part1(m5) == 2210736
 
 
+def test2():
+    m3 = parse(TEST03)
+    t3 = part1(deepcopy(m3))
+    t3b = part2(m3, t3)
+    assert t3b == 82892753
+
+    m4 = parse(TEST04)
+    t4 = part1(deepcopy(m4))
+    t4b = part2(m4, t4)
+    assert t4b == 5586022
+
+    m5 = parse(TEST05)
+    t5 = part1(deepcopy(m5))
+    t5b = part2(m5, t5)
+    assert t5b == 460664
+
+
 def reaction_has_chemicals(reaction):
     '''Do any chemicals in the fuel reaction have positive amounts.'''
     for chemical, amount in reaction.items():
@@ -120,7 +131,7 @@ def reaction_has_chemicals(reaction):
 
 
 def get_chemicals(reaction):
-    '''Get the chemicals from the fuel recation that have a positive amount.'''
+    '''Get the chemicals from the fuel reaction that have a positive amount.'''
     for chemical, amount in reaction.items():
         if chemical != ORE and amount > 0:
             yield chemical
@@ -134,26 +145,55 @@ def get_reaction_for_chemical(chemical, reactions):
     return None
 
 
-def part1(reactions):
-    fuel = reactions.pop(('FUEL', 1))
+def calculate_ore(fuel, reactions):
     while reaction_has_chemicals(fuel):
         for chemical in get_chemicals(fuel):
             amount, reaction = get_reaction_for_chemical(chemical, reactions)
             if reaction is None:
                 continue
-            fuel[chemical] -= amount
+            n = fuel[chemical]
+            multiplier = int(ceil(n / amount))
+            fuel[chemical] -= multiplier * amount
             for ch, amount in reaction.items():
-                fuel[ch] += amount
+                fuel[ch] = fuel.get(ch, 0) + multiplier * amount
             break
-    return fuel['ORE']
+    return fuel[ORE]
+
+
+def part1(reactions):
+    fuel = reactions.pop((FUEL, 1))
+    return calculate_ore(fuel, reactions)
+
+
+def part2(reactions, ore_per_fuel):
+    ore = 1000000000000
+    lower = ore // ore_per_fuel
+    upper = 2 * lower
+    fuel = reactions.pop((FUEL, 1))
+    while True:
+        mid = (upper + lower) // 2
+        f = fuel.copy()
+        f = {k: mid * v for k, v in fuel.items()}
+        x = calculate_ore(f, reactions)
+        if mid == upper or mid == lower:
+            return mid
+        if x > ore:
+            upper = mid
+        else:
+            lower = mid
 
 
 def main():
     test1()
 
     mapping = parse(open(BASE + 'day14.txt', 'r').read())
-    p1 = part1(mapping)
+    p1 = part1(deepcopy(mapping))
     print(f'Part 1: {p1}')
+
+    test2()
+
+    p2 = part2(mapping, p1)
+    print(f'Part 2: {p2}')
 
 
 if __name__ == '__main__':
