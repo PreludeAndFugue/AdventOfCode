@@ -1,37 +1,11 @@
 #!python3
 
-'''
-Solve with a matrix
-
-columns: ore, a, b, c, d, e, fuel
-[10, -10, 0, 0, 0, 0, 0]
-[1, 0, -1, 0, 0, 0, 0]
-[0, 7, 1, -1, 0, 0, 0]
-[0, 7, 0, 1, -1, 0, 0]
-[0, 7, 0, 0, 1, -1, 0]
-[0, 7, 0, 0, 0, 1, 1]
-
-The last row is the fuel equation: use the other rows to remove numbers in the
-middle columns (a to e). Then the fuel (final) column will be in this form
-
-[n, 0, 0, 0, 0, 0, 1]
-
-n will be the amount of ore required
-
-Best row order:
-- fuel equation
-- non-ore equations
-- ore equations
-
-Then work top to bottom to simplify the first row.
-'''
-
 from collections import defaultdict
-from math import ceil
 
 from helpers import BASE
-from maths import lcm
 
+ORE = 'ORE'
+FUEL = 'FUEL'
 
 TEST01 = '''10 ORE => 10 A
 1 ORE => 1 B
@@ -117,97 +91,60 @@ def parse(string):
     return mapping
 
 
-def contains_name(items, name):
-    for n, _ in items:
-        if n == name:
-            return True
-    return False
-
-
-def substitute_eqns(eqns, fuel):
-    new_fuel = defaultdict(int)
-    for name, amount in fuel.items():
-        for eqn_lhs, eqn_rhs in eqns.items():
-            eqn_name = eqn_lhs[0]
-            eqn_amount = eqn_lhs[1]
-            if eqn_name == name:
-                # print(eqn_name, eqn_amount, amount)
-                if amount < eqn_amount:
-                    n = 1
-                elif amount == eqn_amount:
-                    n = 1
-                else:
-                    n = int(ceil(amount / eqn_amount))
-                # print('n', n)
-                for x, m in eqn_rhs.items():
-                    # print('\t', x, m)
-                    new_fuel[x] += n * m
-                break
-        else:
-            new_fuel[name] += amount
-
-    print(new_fuel)
-    input()
-
-    return new_fuel
-
-
 def test1():
     m1 = parse(TEST01)
     t1 = part1(m1)
-    print(t1)
     assert t1 == 31
 
     m2 = parse(TEST02)
     t2 = part1(m2)
-    print(t2)
     assert t2 == 165
 
     m3 = parse(TEST03)
     t3 = part1(m3)
-    print(t3)
     assert t3 == 13312
 
     m4 = parse(TEST04)
     assert part1(m4) == 180697
 
     m5 = parse(TEST05)
-    for k, v in m5.items():
-        print(k)
-        print(v)
-        print()
     assert part1(m5) == 2210736
 
 
-def part1(mapping):
-    fuel = mapping.pop(('FUEL', 1))
-    ore_eqns = {k: v for k, v in mapping.items() if 'ORE' in v}
-    other_eqns = {k: v for k, v in mapping.items() if 'ORE' not in v}
+def reaction_has_chemicals(reaction):
+    '''Do any chemicals in the fuel reaction have positive amounts.'''
+    for chemical, amount in reaction.items():
+        if chemical != ORE and amount > 0:
+            return True
+    return False
 
-    # print(fuel)
-    # print('\n\n')
 
-    do_loop = True
-    while do_loop:
-        # print(fuel)
-        # print('\n\n')
-        has_changed = True
-        while has_changed:
-            has_changed = False
-            new_fuel = substitute_eqns(other_eqns, fuel)
-            if new_fuel != fuel:
-                has_changed = True
-            fuel = new_fuel
+def get_chemicals(reaction):
+    '''Get the chemicals from the fuel recation that have a positive amount.'''
+    for chemical, amount in reaction.items():
+        if chemical != ORE and amount > 0:
+            yield chemical
 
-        has_changed = True
-        while has_changed:
-            has_changed = False
-            new_fuel = substitute_eqns(ore_eqns, fuel)
-            if new_fuel != fuel:
-                has_changed = True
-            fuel = new_fuel
 
-        do_loop = len(fuel) > 1
+def get_reaction_for_chemical(chemical, reactions):
+    '''Get a reaction which has the chemical on the lhs.'''
+    for (ch, amount), reaction in reactions.items():
+        if ch == chemical:
+            return amount, reaction
+    return None
+
+
+def part1(reactions):
+    fuel = reactions.pop(('FUEL', 1))
+    while reaction_has_chemicals(fuel):
+        for chemical in get_chemicals(fuel):
+            amount, reaction = get_reaction_for_chemical(chemical, reactions)
+            if reaction is None:
+                continue
+            fuel[chemical] -= amount
+            for ch, amount in reaction.items():
+                fuel[ch] += amount
+            break
     return fuel['ORE']
 
 
