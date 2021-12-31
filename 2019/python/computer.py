@@ -6,6 +6,11 @@ MODE_POSITION = 0
 MODE_IMMEDIATE = 1
 MODE_RELATIVE = 2
 
+
+def read_program(file_path):
+    return list(map(int, open(file_path, 'r').read().strip().split(',')))
+
+
 class IntcodeError(Exception):
     pass
 
