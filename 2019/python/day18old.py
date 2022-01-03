@@ -1,7 +1,9 @@
 #!python3
 
-
-from queue import Queue
+from collections import defaultdict
+from itertools import combinations
+from queue import Queue, PriorityQueue
+from string import ascii_lowercase, ascii_uppercase
 
 INPUT = 'day18.txt'
 
@@ -10,6 +12,7 @@ TEST_INPUT_1 = '''
 #b.A.@.a#
 #########
 '''
+TEST_OUTPUT_1 = 8
 
 TEST_INPUT_2 = '''
 ########################
@@ -18,6 +21,7 @@ TEST_INPUT_2 = '''
 #d.....................#
 ########################
 '''
+TEST_OUTPUT_2 = 86
 
 TEST_INPUT_3 = '''
 ########################
@@ -26,6 +30,7 @@ TEST_INPUT_3 = '''
 #.....@.a.B.c.d.A.e.F.g#
 ########################
 '''
+TEST_OUTPUT_3 = 132
 
 TEST_INPUT_4 = '''
 #################
@@ -38,6 +43,8 @@ TEST_INPUT_4 = '''
 #l.F..d...h..C.m#
 #################
 '''
+TEST_OUTPUT_4 = 136
+# a, f, b, j, g, n, h, d, l, o, e, p, c, i, k, m
 
 TEST_INPUT_5 = '''
 ########################
@@ -47,23 +54,28 @@ TEST_INPUT_5 = '''
 ###g#h#i################
 ########################
 '''
+TEST_OUTPUT_5 = 81
 
 
 def parse_map(input):
     base_map = {}
-    start = None
-    keys = set()
+    keys = {}
     for x, line in enumerate(input.strip().split('\n')):
         for y, ch in enumerate(line):
             if ch == '#':
                 continue
-            if ch ==  '@':
-                start = x, y
-                ch = '.'
-            if ch.isascii() and ch.islower():
-                keys.add(ch)
+            elif ch ==  '@':
+                keys[ch] = x, y
+            elif ch in ascii_lowercase:
+                keys[ch] = x, y
+            elif ch in ascii_uppercase:
+                pass
+            elif ch == '.':
+                pass
+            else:
+                raise Exception(f'Wrong chr {ch}')
             base_map[(x, y)] = ch
-    return base_map, start, keys
+    return base_map, keys
 
 
 def get_neighbours(x, y, base_map):
@@ -75,95 +87,206 @@ def get_neighbours(x, y, base_map):
             yield new_x, new_y, value
 
 
-def _part1(base_map, start, keys):
-    x, y = start
-    seen = set()
+def bfs(l1, l2, base_map):
     to_check = Queue()
-    to_check.put((x, y, 0, ''))
+    to_check.put((l1,))
+    seen = set()
     while to_check:
-        state = to_check.get()
-        x, y, distance, current_keys = state
+        path = to_check.get()
+        l = path[-1]
+        seen.add(l)
 
-        # input()
-        print(state)
+        if l == l2:
+            # print(l, l1, l2)
+            required_keys = [
+                base_map[x] for x in path[1:-1]
+                if base_map[x] in ascii_uppercase or base_map[x] in ascii_lowercase
+            ]
+            required_keys = [x.lower() for x in required_keys]
+            r = set(required_keys)
+            # print(r)
+            # print(base_map[l])
+            # if base_map[l] != '@':
+            #     r.remove(base_map[l])
+            return len(path) - 1, r
 
-        if set(current_keys) == keys:
-            return distance
+        x, y = l
+        for n_x, n_y, _ in get_neighbours(x, y, base_map):
+            n = n_x, n_y
+            if n not in seen:
+                new_path = path + (n,)
+                to_check.put(new_path)
+    raise Exception('Goal not found')
 
-        seen_before = (x, y, current_keys)
-        seen.add(seen_before)
 
-        for n_x, n_y, value in get_neighbours(x, y, base_map):
-            # print('neighbour', n_x, n_y, value)
-            if value == '.':
-                state = (n_x, n_y, distance + 1, current_keys)
-                seen_before = (n_x, n_y, current_keys)
-                if seen_before not in seen:
-                    to_check.put(state)
+def make_key_map(key_locations, base_map):
+    locations = list(key_locations.values())
+    key_map = defaultdict(dict)
+    for l1, l2 in combinations(locations, 2):
+        k1, k2 = base_map[l1], base_map[l2]
+        d, required_keys = bfs(l1, l2, base_map)
+        key_map[k1][k2] = d, required_keys
+        key_map[k2][k1] = d, required_keys
+    return key_map
 
-            elif value.isupper():
-                # print('is door', value)
-                if value.lower() in current_keys:
-                    # print('have key', current_keys)
-                    state = (n_x, n_y, distance + 1, current_keys)
-                    seen_before = (n_x, n_y, current_keys)
-                    if seen_before not in seen:
-                        to_check.put(state)
-                else:
-                    pass
-                    # print('dont have key, current keys', current_keys)
 
-            elif value.islower():
-                if value not in current_keys:
-                    new_keys = current_keys + value
-                    # print('got new key', new_keys, distance + 1)
-                else:
-                    new_keys = current_keys
+def get_key_neighbours(location, current_keys, key_map):
+    # print('get key neighbours', location, current_keys)
+    for k, (d, required_keys) in key_map[location].items():
+        # print(k, d, required_keys)
+        c = set(current_keys + location)
+        # print(c)
+        # print()
+        if k == '@':
+            continue
+        if k in current_keys:
+            continue
+        if not required_keys <= c:
+            continue
+        yield k, d
 
-                state = (n_x, n_y, distance + 1, new_keys)
-                seen_before = (n_x, n_y, new_keys)
-                if seen_before not in seen:
-                    to_check.put(state)
-            else:
-                raise Exception
+
+def bfs_keys(key_map):
+    # print(key_map)
+    # print(key_map['i'])
+    all_key_count = len(key_map)
+    to_check = PriorityQueue()
+    to_check.put((0, '@'))
+    seen = set()
+    while to_check:
+        d, path = to_check.get()
+
+        print(d, path)
+        input()
+
+        if len(path) == all_key_count:
+            return path
+
+        l = path[-1]
+        seen.add(path)
+        for n, d_n in get_key_neighbours(l, path, key_map):
+            new_path = path + n
+            if new_path not in seen:
+                # to_check.put((d + d_n - len(new_path), new_path))
+                to_check.put((d + d_n, new_path))
+    raise Exception('Goal not found')
+
+
+def path_length(path, key_map):
+    total = 0
+    for k1, k2 in zip(path, path[1:]):
+        d = key_map[k1][k2][0]
+        total += d
+    return total
 
 
 def test1():
-    base_map, start, keys = parse_map(TEST_INPUT_1)
-    return _part1(base_map, start, keys)
+    base_map, key_locations = parse_map(TEST_INPUT_1)
+    key_map = make_key_map(key_locations, base_map)
+    p = bfs_keys(key_map)
+    d = path_length(p, key_map)
+    print(p)
+    print(d)
 
 
 def test2():
-    base_map, start, keys = parse_map(TEST_INPUT_2)
-    return _part1(base_map, start, keys)
+    base_map, key_locations = parse_map(TEST_INPUT_2)
+    key_map = make_key_map(key_locations, base_map)
+    p = bfs_keys(key_map)
+    d = path_length(p, key_map)
+    print(p)
+    print(d)
+
 
 def test3():
-    base_map, start, keys = parse_map(TEST_INPUT_3)
-    return _part1(base_map, start, keys)
+    base_map, key_locations = parse_map(TEST_INPUT_3)
+    key_map = make_key_map(key_locations, base_map)
+    p = bfs_keys(key_map)
+    d = path_length(p, key_map)
+    print(p)
+    print(d)
+
 
 def test4():
-    base_map, start, keys = parse_map(TEST_INPUT_4)
-    return _part1(base_map, start, keys)
+    base_map, key_locations = parse_map(TEST_INPUT_4)
+    key_map = make_key_map(key_locations, base_map)
+    p = bfs_keys(key_map)
+    d = path_length(p, key_map)
+    print(p)
+    print(d)
+
+
+def test4a():
+    base_map, key_locations = parse_map(TEST_INPUT_4)
+    key_map = make_key_map(key_locations, base_map)
+
+    assert key_map['m']['a'][1] == set('hc')
+    assert key_map['m']['b'][1] == set('ch')
+    assert key_map['m']['c'][1] == set('ch')
+    assert key_map['m']['d'][1] == set('ch')
+    assert key_map['m']['e'][1] == set('ch')
+    assert key_map['m']['f'][1] == set('ch')
+    assert key_map['m']['g'][1] == set('ch')
+    assert key_map['m']['h'][1] == set('c')
+    assert key_map['m']['i'][1] == set('cgh')
+    assert key_map['m']['j'][1] == set('abch')
+    assert key_map['m']['k'][1] == set('aceh')
+    assert key_map['m']['l'][1] == set('cdfh')
+    assert key_map['m']['n'][1] == set('bcgh')
+    assert key_map['m']['o'][1] == set('cdfh')
+    assert key_map['m']['p'][1] == set('ceh')
+
+    assert key_map['a']['b'][1] == set()
+    assert key_map['a']['c'][1] == set()
+    assert key_map['a']['d'][1] == set()
+    assert key_map['a']['e'][1] == set()
+    assert key_map['a']['f'][1] == set()
+    assert key_map['a']['g'][1] == set()
+    assert key_map['a']['h'][1] == set()
+    assert key_map['a']['i'][1] == set('cg')
+    assert key_map['a']['j'][1] == set('ab')
+    assert key_map['a']['k'][1] == set('e')
+    assert key_map['a']['l'][1] == set('df')
+    assert key_map['a']['m'][1] == set('ch')
+    assert key_map['a']['n'][1] == set('bg')
+    assert key_map['a']['o'][1] == set('df')
+    assert key_map['a']['p'][1] == set('eh')
+
+
+def test4b():
+    base_map, key_locations = parse_map(TEST_INPUT_4)
+    key_map = make_key_map(key_locations, base_map)
+
+    a = list(get_key_neighbours('a', '', key_map))
+    assert len(a) == 7
+    assert set([x[0] for x in a]) == set('bcdefgh')
+
+    b_with_a = list(get_key_neighbours('b', 'a', key_map))
+    assert len(b_with_a) == 7
+    assert set([x[0] for x in b_with_a]) == set('jcefghd')
+
+    a_with_b = list(get_key_neighbours('a', 'b', key_map))
+    assert len(a_with_b) == 7
+    assert set([x[0] for x in a_with_b]) == set('jcdefgh')
+
 
 def test5():
-    base_map, start, keys = parse_map(TEST_INPUT_5)
-    return _part1(base_map, start, keys)
-
-
-def part1():
-    base_map, start, keys = parse_map(open(INPUT, 'r').read())
-    return _part1(base_map, start, keys)
+    base_map, key_locations = parse_map(TEST_INPUT_5)
+    key_map = make_key_map(key_locations, base_map)
+    p = bfs_keys(key_map)
+    d = path_length(p, key_map)
+    print(p)
+    print(d)
 
 
 def main():
-    # assert test1() == 8
-    # assert test2() == 86
-    # assert test3() == 132
-    assert test4() == 136
-    # assert test5() == 81
-
-    # p = part1()
-    # print(p)
+    # test1()
+    # test2()
+    # test3()
+    # test5()
+    test4()
+    test4a()
+    test4b()
 
 
 if __name__ == "__main__":
