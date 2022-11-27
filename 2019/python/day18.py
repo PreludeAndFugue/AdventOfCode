@@ -1,5 +1,9 @@
 #!python3
 
+'''
+4232: too high
+'''
+
 from collections import defaultdict
 import heapq
 from itertools import combinations
