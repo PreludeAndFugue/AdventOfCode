@@ -8,23 +8,45 @@
 
 import Foundation
 
-extension Coordinate {
-    func north() -> Coordinate { Coordinate(x: x, y: y - 1)}
-    func south() -> Coordinate { Coordinate(x: x, y: y + 1)}
-    func west() -> Coordinate { Coordinate(x: x - 1, y: y)}
-    func east() -> Coordinate { Coordinate(x: x + 1, y: y)}
-}
+private enum Direction: Character {
+    case N = "N"
+    case S = "S"
+    case E = "E"
+    case W = "W"
 
+    var dx: Int {
+        switch self {
+        case .N, .S: return 0
+        case .E: return 1
+        case .W: return -1
+        }
+    }
+
+    var dy: Int {
+        switch self {
+        case .N: return -1
+        case .S: return 1
+        case .E, .W: return 0
+        }
+    }
+
+    var isVertical: Bool {
+        switch self {
+        case .N, .S: return true
+        case .E, .W: return false
+        }
+    }
+}
 
 private struct Position: Hashable {
     enum PositionType {
         case doorVertical
         case doorHorizontal
-        case path
+        case room
 
         var ch: String {
             switch self {
-            case .path: return "."
+            case .room: return "."
             case .doorVertical: return "-"
             case .doorHorizontal: return "|"
             }
@@ -33,23 +55,23 @@ private struct Position: Hashable {
         var isDoor: Bool {
             switch self {
             case .doorVertical, .doorHorizontal: return true
-            case .path: return false
+            case .room: return false
             }
         }
 
         func nextVertical() -> PositionType {
             switch self {
-            case .doorVertical: return .path
+            case .doorVertical: return .room
             case .doorHorizontal: fatalError()
-            case .path: return .doorVertical
+            case .room: return .doorVertical
             }
         }
 
         func nextHorizontal() -> PositionType {
             switch self {
             case .doorVertical: fatalError()
-            case .doorHorizontal: return .path
-            case .path: return .doorHorizontal
+            case .doorHorizontal: return .room
+            case .room: return .doorHorizontal
             }
         }
     }
@@ -58,33 +80,12 @@ private struct Position: Hashable {
     let type: PositionType
     let distance: Int
 
-    func north() -> Position {
-        let newCoord = Coordinate(x: coord.x, y: coord.y - 1)
+    func move(_ direction: Direction) -> Position {
+        let newCoord = Coordinate(x: coord.x + direction.dx, y: coord.y + direction.dy)
         let newDistance = type.isDoor ? distance + 1 : distance
-        return Position(coord: newCoord, type: type.nextVertical(), distance: newDistance)
+        let newType = direction.isVertical ? type.nextVertical() : type.nextHorizontal()
+        return Position(coord: newCoord, type: newType, distance: newDistance)
     }
-
-
-    func south() -> Position {
-        let newCoord = Coordinate(x: coord.x, y: coord.y + 1)
-        let newDistance = type.isDoor ? distance + 1 : distance
-        return Position(coord: newCoord, type: type.nextVertical(), distance: newDistance)
-    }
-
-
-    func east() -> Position {
-        let newCoord = Coordinate(x: coord.x + 1, y: coord.y)
-        let newDistance = type.isDoor ? distance + 1 : distance
-        return Position(coord: newCoord, type: type.nextHorizontal(), distance: newDistance)
-    }
-
-
-    func west() -> Position {
-        let newCoord = Coordinate(x: coord.x - 1, y: coord.y)
-        let newDistance = type.isDoor ? distance + 1 : distance
-        return Position(coord: newCoord, type: type.nextHorizontal(), distance: newDistance)
-    }
-
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(coord)
@@ -92,12 +93,7 @@ private struct Position: Hashable {
 }
 
 
-private func maxPosition(_ positions: [Coordinate: Position]) -> Int {
-    positions.values.map({ $0.distance }).max() ?? 0
-}
-
-
-private func print(positions: [Coordinate: Position]) -> String {
+private func asString(positions: [Coordinate: Position]) -> String {
     let start = Coordinate(x: 0, y: 0)
     let xs = positions.keys.map({ $0.x })
     let ys = positions.keys.map({ $0.y })
@@ -128,35 +124,15 @@ private func print(positions: [Coordinate: Position]) -> String {
 
 func run20() {
     var stack: [Position] = []
-    var position = Position(coord: Coordinate(x: 0, y: 0), type: .path, distance: 0)
+    var position = Position(coord: Coordinate(x: 0, y: 0), type: .room, distance: 0)
     var positions: [Coordinate: Position] = [position.coord: position]
 
     for ch in data20 {
         switch ch {
-        case "N":
+        case "N", "S", "E", "W":
             for _ in 0..<2 {
-                position = position.north()
-                if !positions.contains(where: { $0.key == position.coord}) {
-                    positions[position.coord] = position
-                }
-            }
-        case "S":
-            for _ in 0..<2 {
-                position = position.south()
-                if !positions.contains(where: { $0.key == position.coord}) {
-                    positions[position.coord] = position
-                }
-            }
-        case "E":
-            for _ in 0..<2 {
-                position = position.east()
-                if !positions.contains(where: { $0.key == position.coord}) {
-                    positions[position.coord] = position
-                }
-            }
-        case "W":
-            for _ in 0..<2 {
-                position = position.west()
+                let direction = Direction(rawValue: ch)!
+                position = position.move(direction)
                 if !positions.contains(where: { $0.key == position.coord}) {
                     positions[position.coord] = position
                 }
@@ -176,11 +152,9 @@ func run20() {
 
     assert(stack.isEmpty)
 
-//    print(positions)
-
-    let s = print(positions: positions)
+//    let s = asString(positions: positions)
 //    print(s)
-    let m = maxPosition(positions)
+    let m = positions.values.map({ $0.distance }).max() ?? 0
     print(m)
 
     var count = 0
