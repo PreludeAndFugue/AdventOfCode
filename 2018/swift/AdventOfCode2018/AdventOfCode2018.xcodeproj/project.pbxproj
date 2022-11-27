@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E0885A12934138300BF37CA /* Run20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0885A02934138300BF37CA /* Run20.swift */; };
+		4E0885A32934139900BF37CA /* Data20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0885A22934139900BF37CA /* Data20.swift */; };
 		4E0DA73921D1796A006CC90E /* AStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0DA73821D1796A006CC90E /* AStar.swift */; };
 		4E33E50621D536A900C50053 /* Run16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E33E50521D536A900C50053 /* Run16.swift */; };
 		4E33E50821D5382500C50053 /* Data16Part1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E33E50721D5382500C50053 /* Data16Part1.swift */; };
@@ -22,6 +24,7 @@
 		4E3413FC21CEB095007CA38C /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3413FB21CEB095007CA38C /* Coordinate.swift */; };
 		4E3413FF21CEB3DA007CA38C /* Runner13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3413FE21CEB3DA007CA38C /* Runner13.swift */; };
 		4E34140121CEB6EE007CA38C /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34140021CEB6EE007CA38C /* Node.swift */; };
+		4E3DAF1929329EEB009D6AA0 /* Run15a.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3DAF1829329EEB009D6AA0 /* Run15a.swift */; };
 		4E4E1D5221D5940100CCE24B /* Run18.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4E1D5121D5940100CCE24B /* Run18.swift */; };
 		4E4E1D5421D5942400CCE24B /* Data18.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4E1D5321D5942400CCE24B /* Data18.swift */; };
 		4E4E1D5621D5945400CCE24B /* Game18.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4E1D5521D5945400CCE24B /* Game18.swift */; };
@@ -72,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4E0885A02934138300BF37CA /* Run20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run20.swift; sourceTree = "<group>"; };
+		4E0885A22934139900BF37CA /* Data20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data20.swift; sourceTree = "<group>"; };
 		4E0DA73821D1796A006CC90E /* AStar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AStar.swift; sourceTree = "<group>"; };
 		4E33E50521D536A900C50053 /* Run16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run16.swift; sourceTree = "<group>"; };
 		4E33E50721D5382500C50053 /* Data16Part1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data16Part1.swift; sourceTree = "<group>"; };
@@ -92,6 +97,7 @@
 		4E3413FD21CEB38A007CA38C /* Data13TestC.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Data13TestC.txt; sourceTree = "<group>"; };
 		4E3413FE21CEB3DA007CA38C /* Runner13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runner13.swift; sourceTree = "<group>"; };
 		4E34140021CEB6EE007CA38C /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		4E3DAF1829329EEB009D6AA0 /* Run15a.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run15a.swift; sourceTree = "<group>"; };
 		4E4E1D5121D5940100CCE24B /* Run18.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run18.swift; sourceTree = "<group>"; };
 		4E4E1D5321D5942400CCE24B /* Data18.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data18.swift; sourceTree = "<group>"; };
 		4E4E1D5521D5945400CCE24B /* Game18.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game18.swift; sourceTree = "<group>"; };
@@ -141,6 +147,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E08859F2934136900BF37CA /* 20 */ = {
+			isa = PBXGroup;
+			children = (
+				4E0885A02934138300BF37CA /* Run20.swift */,
+				4E0885A22934139900BF37CA /* Data20.swift */,
+			);
+			path = 20;
+			sourceTree = "<group>";
+		};
 		4E33E50421D5369B00C50053 /* 16 */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +194,14 @@
 				4E34140021CEB6EE007CA38C /* Node.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4E3DAF1729329EC5009D6AA0 /* 15a */ = {
+			isa = PBXGroup;
+			children = (
+				4E3DAF1829329EEB009D6AA0 /* Run15a.swift */,
+			);
+			path = 15a;
 			sourceTree = "<group>";
 		};
 		4E4E1D5021D593F200CCE24B /* 18 */ = {
@@ -234,9 +257,11 @@
 				4E3413EB21CE8213007CA38C /* 13 */,
 				4EE4ECFF21CFE4000047E363 /* 14 */,
 				4E74870221D04F72008ABF13 /* 15 */,
+				4E3DAF1729329EC5009D6AA0 /* 15a */,
 				4E33E50421D5369B00C50053 /* 16 */,
 				4E4E1D5021D593F200CCE24B /* 18 */,
 				4ECDA2E521D94035007BADF1 /* 19 */,
+				4E08859F2934136900BF37CA /* 20 */,
 				4EA47D9B21CD442A0028CB3B /* main.swift */,
 			);
 			path = AdventOfCode2018;
@@ -342,7 +367,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1410;
 				ORGANIZATIONNAME = "Gary Kerr";
 				TargetAttributes = {
 					4EA47D9721CD442A0028CB3B = {
@@ -391,6 +416,7 @@
 				4E3413F521CE8390007CA38C /* TrackMaker.swift in Sources */,
 				4EE4ED0321CFF47B0047E363 /* Runner14.swift in Sources */,
 				4E33E50821D5382500C50053 /* Data16Part1.swift in Sources */,
+				4E0885A32934139900BF37CA /* Data20.swift in Sources */,
 				4E33E51021D53ED800C50053 /* Runner16Part1.swift in Sources */,
 				4EA47DB121CD6BCA0028CB3B /* Data10.swift in Sources */,
 				4E33E51221D5685A00C50053 /* Runner16Part2.swift in Sources */,
@@ -400,12 +426,14 @@
 				4EA47DA621CD44A90028CB3B /* Game.swift in Sources */,
 				4E74870421D04F86008ABF13 /* Run15.swift in Sources */,
 				4E3413FC21CEB095007CA38C /* Coordinate.swift in Sources */,
+				4E3DAF1929329EEB009D6AA0 /* Run15a.swift in Sources */,
 				4E4E1D5221D5940100CCE24B /* Run18.swift in Sources */,
 				4E74870621D04FE8008ABF13 /* Unit.swift in Sources */,
 				4EA47DBD21CD84110028CB3B /* Run11.swift in Sources */,
 				4E33E50A21D5385700C50053 /* Data16Part2.swift in Sources */,
 				4EA47DAC21CD61B90028CB3B /* GameWithCircle.swift in Sources */,
 				4EE4ED0121CFE4130047E363 /* Run14.swift in Sources */,
+				4E0885A12934138300BF37CA /* Run20.swift in Sources */,
 				4E3413F021CE8214007CA38C /* Track.swift in Sources */,
 				4E74870A21D051DD008ABF13 /* MapParser.swift in Sources */,
 				4E33E50C21D538A900C50053 /* OpCode.swift in Sources */,
@@ -456,6 +484,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -464,6 +493,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -481,7 +511,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -517,6 +547,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -525,6 +556,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -536,7 +568,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -550,7 +582,9 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = T59AZ797LW;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.preludeandfugue.AdventOfCode2018;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -561,7 +595,9 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = T59AZ797LW;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.preludeandfugue.AdventOfCode2018;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
