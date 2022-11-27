@@ -31,7 +31,11 @@ private func getBoundingBox(points: [Point]) -> CGRect {
     let maxX = xValues.max()!
     let minY = yValues.min()!
     let maxY = yValues.max()!
-    return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+    return CGRect(
+        origin: CGPoint(x: Double(minX), y: Double(minY)),
+        size: CGSize(width: Double(maxX) - Double(minX), height: Double(maxY) - Double(minY))
+    )
+//    return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
 }
 
 

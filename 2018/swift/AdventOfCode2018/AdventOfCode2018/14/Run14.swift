@@ -57,7 +57,7 @@ private func test() {
 }
 
 
-private func test2() {
+private func test2_14() {
     for (string, position) in tests2 {
         let runner = Runner14()
         let testPosition = runner.run2(string: string)

@@ -54,7 +54,7 @@ private func test() {
 }
 
 
-private func test1() {
+private func test1_9() {
     let game = GameWithCircle(playerCount: 9, marbleCount: 25)
     game.run()
 }

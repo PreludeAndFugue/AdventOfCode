@@ -29,6 +29,8 @@ final class Node {
 
 extension Node: CustomDebugStringConvertible {
     var debugDescription: String {
-        return "Node(v: \(value), p: \(previous?.value), n: \(next?.value))"
+        let previous = previous?.value ?? -1
+        let next = next?.value ?? -1
+        return "Node(v: \(value), p: \(previous), n: \(next))"
     }
 }
