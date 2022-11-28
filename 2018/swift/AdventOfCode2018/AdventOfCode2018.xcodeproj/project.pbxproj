@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -54,6 +54,9 @@
 		4EA47DC621CDBDBC0028CB3B /* Data12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA47DC521CDBDBC0028CB3B /* Data12.swift */; };
 		4EA47DC821CDBFA70028CB3B /* Rule12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA47DC721CDBFA70028CB3B /* Rule12.swift */; };
 		4EA47DCA21CDC1170028CB3B /* Program12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA47DC921CDC1170028CB3B /* Program12.swift */; };
+		4EBE2B432935340C00EF583C /* Run22.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE2B422935340C00EF583C /* Run22.swift */; };
+		4EBE2B452935377100EF583C /* Data22.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE2B442935377100EF583C /* Data22.swift */; };
+		4EBE2B482935483500EF583C /* HeapModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4EBE2B472935483500EF583C /* HeapModule */; };
 		4ECDA2E721D94048007BADF1 /* Run19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECDA2E621D94048007BADF1 /* Run19.swift */; };
 		4ECDA2E921D940EC007BADF1 /* Data19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECDA2E821D940EC007BADF1 /* Data19.swift */; };
 		4ECDA2ED21D94242007BADF1 /* Parser19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECDA2EC21D94242007BADF1 /* Parser19.swift */; };
@@ -128,6 +131,8 @@
 		4EA47DC521CDBDBC0028CB3B /* Data12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data12.swift; sourceTree = "<group>"; };
 		4EA47DC721CDBFA70028CB3B /* Rule12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule12.swift; sourceTree = "<group>"; };
 		4EA47DC921CDC1170028CB3B /* Program12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Program12.swift; sourceTree = "<group>"; };
+		4EBE2B422935340C00EF583C /* Run22.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run22.swift; sourceTree = "<group>"; };
+		4EBE2B442935377100EF583C /* Data22.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data22.swift; sourceTree = "<group>"; };
 		4ECDA2E621D94048007BADF1 /* Run19.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run19.swift; sourceTree = "<group>"; };
 		4ECDA2E821D940EC007BADF1 /* Data19.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data19.swift; sourceTree = "<group>"; };
 		4ECDA2EC21D94242007BADF1 /* Parser19.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser19.swift; sourceTree = "<group>"; };
@@ -141,6 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EBE2B482935483500EF583C /* HeapModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +268,7 @@
 				4E4E1D5021D593F200CCE24B /* 18 */,
 				4ECDA2E521D94035007BADF1 /* 19 */,
 				4E08859F2934136900BF37CA /* 20 */,
+				4EBE2B41293533FB00EF583C /* 22 */,
 				4EA47D9B21CD442A0028CB3B /* main.swift */,
 			);
 			path = AdventOfCode2018;
@@ -321,6 +328,15 @@
 			path = 12;
 			sourceTree = "<group>";
 		};
+		4EBE2B41293533FB00EF583C /* 22 */ = {
+			isa = PBXGroup;
+			children = (
+				4EBE2B422935340C00EF583C /* Run22.swift */,
+				4EBE2B442935377100EF583C /* Data22.swift */,
+			);
+			path = 22;
+			sourceTree = "<group>";
+		};
 		4ECDA2E521D94035007BADF1 /* 19 */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +372,9 @@
 			dependencies = (
 			);
 			name = AdventOfCode2018;
+			packageProductDependencies = (
+				4EBE2B472935483500EF583C /* HeapModule */,
+			);
 			productName = AdventOfCode2018;
 			productReference = 4EA47D9821CD442A0028CB3B /* AdventOfCode2018 */;
 			productType = "com.apple.product-type.tool";
@@ -385,6 +404,9 @@
 				Base,
 			);
 			mainGroup = 4EA47D8F21CD442A0028CB3B;
+			packageReferences = (
+				4EBE2B462935483500EF583C /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			productRefGroup = 4EA47D9921CD442A0028CB3B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -399,6 +421,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EBE2B452935377100EF583C /* Data22.swift in Sources */,
 				4E3413F121CE8214007CA38C /* Run13.swift in Sources */,
 				4EA47DAA21CD5C390028CB3B /* Circle.swift in Sources */,
 				4EA47DBA21CD83E70028CB3B /* CGRect+Extensions.swift in Sources */,
@@ -422,6 +445,7 @@
 				4E33E51221D5685A00C50053 /* Runner16Part2.swift in Sources */,
 				4EA47DB321CD6FAD0028CB3B /* PointParser.swift in Sources */,
 				4EA47DC821CDBFA70028CB3B /* Rule12.swift in Sources */,
+				4EBE2B432935340C00EF583C /* Run22.swift in Sources */,
 				4E74870821D05195008ABF13 /* Game15.swift in Sources */,
 				4EA47DA621CD44A90028CB3B /* Game.swift in Sources */,
 				4E74870421D04F86008ABF13 /* Run15.swift in Sources */,
@@ -625,6 +649,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4EBE2B462935483500EF583C /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4EBE2B472935483500EF583C /* HeapModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4EBE2B462935483500EF583C /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = HeapModule;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4EA47D9021CD442A0028CB3B /* Project object */;
 }

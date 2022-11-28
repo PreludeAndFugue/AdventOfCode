@@ -38,6 +38,6 @@ extension Coordinate {
 
 extension Coordinate: CustomDebugStringConvertible {
     var debugDescription: String {
-        return "C(x: \(self.x), y: \(self.y))"
+        return "(\(x), \(y))"
     }
 }
