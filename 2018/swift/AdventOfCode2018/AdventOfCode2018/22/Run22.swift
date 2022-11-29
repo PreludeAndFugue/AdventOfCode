@@ -167,7 +167,7 @@ class Search {
         var seen: [Coordinate: [Tool: Int]] = [start: [.torch: 0]]
         var q: Heap<Node> = []
         q.insert(Node(minutes: 0, coord: start, tool: .torch, type: .rocky))
-        
+
         while !q.isEmpty {
             let n = q.removeMin()
 
