@@ -15,185 +15,146 @@ import HeapModule
 // The fourth floor contains nothing relevant.
 
 
-fileprivate extension String {
-    struct Gen {
-        static let th = "thGen"
-        static let pl = "plGen"
-        static let st = "stGen"
-        static let pr = "prGen"
-        static let ru = "ruGen"
-    }
-    struct Mic {
-        static let th = "thMic"
-        static let pl = "plMic"
-        static let st = "stMic"
-        static let pr = "prMic"
-        static let ru = "ruMic"
-    }
-}
-
-
 class Day11 {
+    let start = [1, 1, 1, 1, 2, 1, 2, 3, 3, 3, 3]
+    let goal = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+
+
     struct Node: Comparable {
         static func < (lhs: Day11.Node, rhs: Day11.Node) -> Bool {
-            lhs.state.goalDistance < rhs.state.goalDistance
+            lhs.count < rhs.count
         }
 
-        let state: State
+        let state: [Int]
         let count: Int
     }
 
-    struct State: Equatable, Hashable, CustomDebugStringConvertible {
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(elevator)
-            hasher.combine(positions)
-        }
 
-        static func == (lhs: Day11.State, rhs: Day11.State) -> Bool {
-            lhs.elevator == rhs.elevator && lhs.positions == rhs.positions
-        }
-
-        static func < (lhs: Day11.State, rhs: Day11.State) -> Bool {
-            lhs.goalDistance < rhs.goalDistance
-        }
-
-        let elevator: Int
-        let positions: [String: Int]
+    func goalDistance(_ state: [Int]) -> Int {
+        4 * state.count - state.reduce(0, +)
+    }
 
 
-        init(elevator: Int, thGen: Int, thMc: Int, plGen: Int, plMc: Int, stGen: Int, stMc: Int, prGen: Int, prMc: Int, ruGen: Int, ruMc: Int) {
-            self.elevator = elevator
-            positions = [
-                .Gen.th: thGen, .Mic.th: thMc,
-                .Gen.pl: plGen, .Mic.pl: plMc,
-                .Gen.st: stGen, .Mic.st: stMc,
-                .Gen.pr: prGen, .Mic.pr: prMc,
-                .Gen.ru: ruGen, .Mic.ru: ruMc,
-            ]
-        }
-
-        init(elevator: Int, positions: [String: Int]) {
-            self.elevator = elevator
-            self.positions = positions
-        }
-
-        static let start = State(elevator: 1, thGen: 1, thMc: 1, plGen: 1, plMc: 2, stGen: 1, stMc: 2, prGen: 3, prMc: 3, ruGen: 3, ruMc: 3)
-        static let goal = State(elevator: 4, thGen: 4, thMc: 4, plGen: 4, plMc: 4, stGen: 4, stMc: 4, prGen: 4, prMc: 4, ruGen: 4, ruMc: 4)
-
-
-        var goalDistance: Int {
-            40 - positions.values.reduce(0, +)
-        }
-
-
-        var isValid: Bool {
-            if positions[.Gen.th] != positions[.Mic.th] {
-                let thMc = positions[.Mic.th]
-                if positions[.Gen.pl] == thMc || positions[.Gen.st] == thMc || positions[.Gen.pr] == thMc || positions[.Gen.ru] == thMc {
+    func isValidState(_ state: [Int]) -> Bool {
+        if state[1] != state[2] {
+            for i in [3, 5, 7, 9] {
+                if state[2] == state[i] {
                     return false
                 }
             }
-            if positions[.Gen.pl] != positions[.Mic.pl] {
-                let mic = positions[.Mic.pl]
-                if positions[.Gen.th] == mic || positions[.Gen.st] == mic || positions[.Gen.pr] == mic || positions[.Gen.ru] == mic {
+        }
+        if state[3] != state[4] {
+            for i in [1, 5, 7, 9] {
+                if state[4] == state[i] {
                     return false
                 }
             }
-            if positions[.Gen.st] != positions[.Mic.st] {
-                let mic = positions[.Mic.st]
-                if positions[.Gen.th] == mic || positions[.Gen.pl] == mic || positions[.Gen.pr] == mic || positions[.Gen.ru] == mic {
+        }
+        if state[5] != state[6] {
+            for i in [1, 3, 7, 9] {
+                if state[6] == state[i] {
                     return false
                 }
             }
-            if positions[.Gen.pr] != positions[.Mic.pr] {
-                let mic = positions[.Mic.pr]
-                if positions[.Gen.th] == mic || positions[.Gen.pl] == mic || positions[.Gen.st] == mic || positions[.Gen.ru] == mic {
+        }
+        if state[7] != state[8] {
+            for i in [1, 3, 5, 9] {
+                if state[8] == state[i] {
                     return false
                 }
             }
-            if positions[.Gen.ru] != positions[.Mic.ru] {
-                let mic = positions[.Mic.ru]
-                if positions[.Gen.th] == mic || positions[.Gen.pl] == mic || positions[.Gen.st] == mic || positions[.Gen.pr] == mic {
+        }
+        if state[9] != state[10] {
+            for i in [1, 3, 5, 7] {
+                if state[10] == state[i] {
                     return false
                 }
             }
-            return true
+        }
+        return true
+    }
+
+
+    func canMoveDownFrom(_ state: [Int]) -> Bool {
+        let elevator = state[0]
+        for n in state[1...] {
+            if n - elevator < 0 {
+                return true
+            }
+        }
+        return false
+    }
+
+
+    func neighbours(_ state: [Int]) -> [[Int]] {
+        let elevator = state[0]
+        var keys: [Int] = []
+
+        for (i, n) in state[1...].enumerated() {
+            if n == elevator {
+                keys.append(i + 1)
+            }
         }
 
+        let canMoveDown = canMoveDownFrom(state)
 
-        var debugDescription: String {
-            "State(ele: \(elevator), pos: \(positions))"
+        var newStates: [[Int]] = []
+
+        // Move 1
+        for key in keys {
+            if elevator < 4 {
+                // Move up
+                var newState = state
+                newState[0] += 1
+                newState[key] += 1
+                if isValidState(newState) {
+                    newStates.append(newState)
+                }
+            }
+
+            if elevator > 1 && canMoveDown {
+                // Move down
+                var newState = state
+                newState[0] -= 1
+                newState[key] -= 1
+                if isValidState(newState) {
+                    newStates.append(newState)
+                }
+            }
         }
 
+        // Move 2 items
 
-        func neighbours() -> [State] {
-            var results: [State] = []
-
-            let keys = positions.filter({ $0.value == elevator }).keys
-
-//            print("neighbours")
-//            print("elevator", elevator)
-//            print("keys", keys)
-
-            // Move 1 item
-            for key in keys {
-//                print("    \(key)")
-                if elevator > 1 {
-                    // Move down
-                    var newPositions = positions
-                    newPositions[key]! -= 1
-                    let state = State(elevator: elevator - 1, positions: newPositions)
-                    results.append(state)
-                }
+        if keys.count > 1 {
+            for pair in keys.combinations(ofCount: 2) {
                 if elevator < 4 {
-                    // Move up
-                    var newPositions = positions
-                    newPositions[key]! += 1
-                    let state = State(elevator: elevator + 1, positions: newPositions)
-                    results.append(state)
-                }
-            }
-
-            // Move 2 items
-            if keys.count >= 2 {
-                for combo in keys.combinations(ofCount: 2) {
-                    let key1 = combo[0]
-                    let key2 = combo[1]
-
-//                    print("    \(key1), \(key2)")
-
-                    if elevator > 1 {
-                        // Move down
-                        var newPositions = positions
-                        newPositions[key1]! -= 1
-                        newPositions[key2]! -= 1
-                        let state = State(elevator: elevator - 1, positions: newPositions)
-                        results.append(state)
+                    var newState = state
+                    newState[0] += 1
+                    newState[pair[0]] += 1
+                    newState[pair[1]] += 1
+                    if isValidState(newState) {
+                        newStates.append(newState)
                     }
-                    if elevator < 4 {
-                        // Move up
-                        var newPositions = positions
-                        newPositions[key1]! += 1
-                        newPositions[key2]! += 1
-                        let state = State(elevator: elevator + 1, positions: newPositions)
-                        results.append(state)
+                }
+
+                if elevator > 1 && canMoveDown {
+                    var newState = state
+                    newState[0] -= 1
+                    newState[pair[0]] -= 1
+                    newState[pair[1]] -= 1
+                    if isValidState(newState) {
+                        newStates.append(newState)
                     }
                 }
             }
-
-
-            let filtered = results.filter({ $0.isValid })
-//            for f in filtered {
-//                print("    \(f)")
-//            }
-            return filtered
         }
+        return newStates
     }
 
 
     func search() -> Int {
-        var q: Heap<Node> = [Node(state: .start, count: 0)]
-        var seen: Set<State> = []
+        var q: Heap<Node> = [Node(state: start, count: 0)]
+        var seen: Set<[Int]> = []
 
 
         while !q.isEmpty {
@@ -206,15 +167,15 @@ class Day11 {
 //            _ = readLine()
 
 
-            if n.state == .goal {
+            if n.state == goal {
                 return n.count
             }
 
-            if seen.contains(n.state) { continue }
-
-            seen.insert(n.state)
-
-            for nState in n.state.neighbours() {
+            for nState in neighbours(n.state) {
+                if seen.contains(nState) {
+                    continue
+                }
+                seen.insert(nState)
                 q.insert(Node(state: nState, count: n.count + 1))
             }
         }

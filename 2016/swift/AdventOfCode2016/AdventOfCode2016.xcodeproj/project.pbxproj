@@ -44,6 +44,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E22550B29381F2900977234 /* Computer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Computer;
+			sourceTree = "<group>";
+		};
 		4E29526E2936B805004A2952 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +70,7 @@
 		4E2952792936B806004A2952 /* AdventOfCode2016 */ = {
 			isa = PBXGroup;
 			children = (
+				4E22550B29381F2900977234 /* Computer */,
 				4E2952812936B813004A2952 /* 11 */,
 				4E29527A2936B806004A2952 /* main.swift */,
 			);

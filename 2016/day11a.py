@@ -16,8 +16,12 @@ The fourth floor contains nothing relevant.
 
 # elevator: thulium, plutonium, strontium, promethium, ruthenium
 # generator, microchip pairs
-start = (1, 1, 1, 1, 2, 1, 2, 3, 3, 3, 3)
-goal = (4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4)
+# start = (1, 1, 1, 1, 2, 1, 2, 3, 3, 3, 3)
+# goal = (4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4)
+
+# part 2
+start = (1, 1, 1, 1, 2, 1, 2, 3, 3, 3, 3, 1, 1, 1, 1)
+goal = (4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4)
 
 
 def is_valid_state_2(state):
@@ -55,6 +59,38 @@ def is_valid_state_5(state):
     return True
 
 
+def is_valid_state_7(state):
+    if state[1] != state[2]:
+        for i in [3, 5, 7, 9, 11, 13]:
+            if state[2] == state[i]:
+                return False
+    if state[3] != state[4]:
+        for i in [1, 5, 7, 9, 11, 13]:
+            if state[4] == state[i]:
+                return False
+    if state[5] != state[6]:
+        for i in [1, 3, 7, 9, 11, 13]:
+            if state[6] == state[i]:
+                return False
+    if state[7] != state[8]:
+        for i in [1, 3, 5, 9, 11, 13]:
+            if state[8] == state[i]:
+                return False
+    if state[9] != state[10]:
+        for i in [1, 3, 5, 7, 11, 13]:
+            if state[10] == state[i]:
+                return False
+    if state[9] != state[10]:
+        for i in [1, 3, 5, 7, 9, 13]:
+            if state[12] == state[i]:
+                return False
+    if state[9] != state[10]:
+        for i in [1, 3, 5, 7, 9, 11]:
+            if state[14] == state[i]:
+                return False
+    return True
+
+
 def goal_distance(state):
     return 4 * len(state) - sum(state)
 
@@ -76,7 +112,7 @@ def neighbours_of_state(state):
             new_state[0] += 1
             new_state[key] += 1
             new_state = tuple(new_state)
-            if is_valid_state_5(new_state):
+            if is_valid_state_7(new_state):
                 yield new_state
 
         if elevator > 1 and can_move_down:
@@ -85,7 +121,7 @@ def neighbours_of_state(state):
             new_state[0] -= 1
             new_state[key] -= 1
             new_state = tuple(new_state)
-            if is_valid_state_5(new_state):
+            if is_valid_state_7(new_state):
                 yield new_state
 
     # Move 2 items
@@ -98,7 +134,7 @@ def neighbours_of_state(state):
                 new_state[key1] += 1
                 new_state[key2] += 1
                 new_state = tuple(new_state)
-                if is_valid_state_5(new_state):
+                if is_valid_state_7(new_state):
                     yield new_state
 
             if elevator > 1 and can_move_down:
@@ -108,7 +144,7 @@ def neighbours_of_state(state):
                 new_state[key1] -= 1
                 new_state[key2] -= 1
                 new_state = tuple(new_state)
-                if is_valid_state_5(new_state):
+                if is_valid_state_7(new_state):
                     yield new_state
 
 
