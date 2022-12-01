@@ -8,4 +8,6 @@
 import Foundation
 
 //Day11().run()
-Day12().run()
+//Day12().run()
+//Day23().run()
+Day25().run()
