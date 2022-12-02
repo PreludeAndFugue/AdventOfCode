@@ -15,6 +15,7 @@ enum Instruction: CustomDebugStringConvertible {
     case jnz(String, Int)
     case jnzInt(Int, String)
     case jnzValue(String, String)
+    case jnzIntInt(Int, Int)
     case tgl(String)
     case skp
     case out(Int)
@@ -30,6 +31,7 @@ enum Instruction: CustomDebugStringConvertible {
         case .jnz(let a, let b): return "jnz \(a) \(b)"
         case .jnzInt(let a, let b): return "jnz \(a) \(b)"
         case .jnzValue(let a, let b): return "jnz \(a) \(b)"
+        case .jnzIntInt(let a, let b): return "jnz \(a) \(b)"
         case .tgl(let a): return "tgl \(a)"
         case .skp: return "skp"
         case .out(let a): return "out \(a)"
@@ -63,15 +65,27 @@ class Compiler {
                 let instruction = Instruction.dec(register)
                 instructions.append(instruction)
             } else if line.starts(with: "jnz") {
-                let register = String(parts[1])
-                if parts[2].first?.isLetter == false {
-                    let jump = Int(parts[2])!
-                    let instruction = Instruction.jnz(register, jump)
-                    instructions.append(instruction)
+                if parts[1].first?.isLetter == false {
+                    let p1 = Int(parts[1])!
+                    if parts[2].first?.isLetter == false {
+                        let jump = Int(parts[2])!
+                        let instruction = Instruction.jnzIntInt(p1, jump)
+                        instructions.append(instruction)
+                    } else {
+                        let jump = String(parts[2])
+                        let instruction = Instruction.jnzInt(p1, jump)
+                        instructions.append(instruction)
+                    }
                 } else {
-                    let jump = String(parts[2])
-                    let instruction = Instruction.jnzValue(register, jump)
-                    instructions.append(instruction)
+                    if parts[2].first?.isLetter == false {
+                        let jump = Int(parts[2])!
+                        let instruction = Instruction.jnz(String(parts[1]), jump)
+                        instructions.append(instruction)
+                    } else {
+                        let jump = String(parts[2])
+                        let instruction = Instruction.jnzValue(String(parts[1]), jump)
+                        instructions.append(instruction)
+                    }
                 }
             } else if line.starts(with: "tgl") {
                 let jump = String(parts[1])
@@ -121,8 +135,6 @@ class Computer {
 
 //            print(instructions)
 //            print(pointer, i)
-//            print(i)
-//            readLine()
 
             switch i {
             case .cpy(let a, let b):
@@ -139,6 +151,8 @@ class Computer {
                 jnzInt(a: a, b: b)
             case .jnzValue(let a, let b):
                 jnzValue(a: a, b: b)
+            case .jnzIntInt(let a, let b):
+                jnzIntInt(a: a, b: b)
             case .tgl(let a):
                 tgl(a: a)
             case .skp:
@@ -148,6 +162,9 @@ class Computer {
             case .outReg(let a):
                 out(a: a)
             }
+
+//            print(registers)
+//            readLine()
 
 //            print(registers)
 //            print(instructions)
@@ -221,6 +238,15 @@ private extension Computer {
     }
 
 
+    func jnzIntInt(a: Int, b: Int) {
+        if a != 0 {
+            pointer += b
+        } else {
+            pointer += 1
+        }
+    }
+
+
     func tgl(a: String) {
         let p = pointer + registers[a]!
         if p < 0 || p >= maxPointer {
@@ -240,6 +266,8 @@ private extension Computer {
             instructions[p] = .cpy(a, b)
         case .jnzValue(let a, let b):
             instructions[p] = .cpyValue(a, b)
+        case .jnzIntInt(let a, let b):
+            instructions[p] = .skp
         case .cpy(let a, let b):
             instructions[p] = .jnzInt(a, b)
         case .cpyValue(let a, let b):
@@ -259,6 +287,8 @@ private extension Computer {
 
 
     func out(a: String) {
-        print(a)
+        let n = registers[a]
+        print(n!)
+        pointer += 1
     }
 }
