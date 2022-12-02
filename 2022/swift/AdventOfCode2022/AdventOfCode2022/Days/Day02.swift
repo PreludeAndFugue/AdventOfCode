@@ -17,12 +17,12 @@ struct Day02: Day {
     let d = "02"
 
     let map: [String: Int] = [
-        "A": 1,
-        "B": 2,
-        "C": 3,
-        "X": 1,
-        "Y": 2,
-        "Z": 3
+        "A": 0,
+        "B": 1,
+        "C": 2,
+        "X": 0,
+        "Y": 1,
+        "Z": 2
     ]
 
 
@@ -46,7 +46,7 @@ private extension Day02 {
     func part1(games: [(String, String)]) -> String {
         var totalScore = 0
         for (p1, p2) in games {
-            totalScore += map[p2]!
+            totalScore += map[p2]! + 1
             switch map[p2]! - map[p1]! {
             case 1, -2:
                 totalScore += 6
@@ -69,51 +69,19 @@ private extension Day02 {
             case "X":
                 // lose
                 totalScore += 0
-                totalScore += strategy(score: 0, player1: p1)
+                totalScore += (map[p1]! + 2) % 3 + 1
             case "Y":
                 // draw
                 totalScore += 3
-                totalScore += strategy(score: 3, player1: p1)
+                totalScore += map[p1]! + 1
             case "Z":
                 // win
                 totalScore += 6
-                totalScore += strategy(score: 6, player1: p1)
+                totalScore += (map[p1]! + 1) % 3 + 1
             default:
                 fatalError()
             }
         }
         return "\(totalScore)"
-    }
-
-
-    func strategy(score: Int, player1: String) -> Int {
-        switch score {
-        case 0:
-            switch player1 {
-            case "A":
-                return map["C"]!
-            case "B":
-                return map["A"]!
-            case "C":
-                return map["B"]!
-            default:
-                fatalError()
-            }
-        case 3:
-            return map[player1]!
-        case 6:
-            switch player1 {
-            case "A":
-                return map["B"]!
-            case "B":
-                return map["C"]!
-            case "C":
-                return map["A"]!
-            default:
-                fatalError()
-            }
-        default:
-            fatalError()
-        }
     }
 }
