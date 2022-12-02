@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug AdventOfCode2022",
+            "program": "${workspaceFolder:swift-vscode}/.build/debug/AdventOfCode2022",
+            "args": [],
+            "cwd": "${workspaceFolder:swift-vscode}",
+            "preLaunchTask": "swift: Build Debug AdventOfCode2022"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Release AdventOfCode2022",
+            "program": "${workspaceFolder:swift-vscode}/.build/release/AdventOfCode2022",
+            "args": [],
+            "cwd": "${workspaceFolder:swift-vscode}",
+            "preLaunchTask": "swift: Build Release AdventOfCode2022"
+        }
+    ]
+}
