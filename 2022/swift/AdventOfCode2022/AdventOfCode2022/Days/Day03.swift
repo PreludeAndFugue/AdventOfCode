@@ -9,7 +9,6 @@ import Foundation
 
 struct Day03: Day {
     static let lowercase = "abcdefghijklmnopqrstuvwxyz"
-    static let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     private let test1 = """
 vJrwpWtwJgWrhcsFMMfFFhFp
