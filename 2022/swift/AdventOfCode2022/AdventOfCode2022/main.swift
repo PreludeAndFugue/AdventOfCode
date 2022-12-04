@@ -7,7 +7,7 @@
 
 import Foundation
 
-let d = Day03()
+let d = Day04()
 
 do {
     let (p1, p2) = try d.run()
