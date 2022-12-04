@@ -21,12 +21,8 @@ struct Day04: Day {
 
     func run() throws -> (String, String) {
         let s = try getInput()
-        var data: [[ClosedRange<Int>]] = []
-        for line in s.split(separator: "\n") {
-            let rangeStrings = line.split(separator: ",")
-            let ranges = rangeStrings.map({ makeRange(string: String($0)) })
-            data.append(ranges)
-        }
+        let data = s.split(separator: "\n")
+            .map({ $0.split(separator: ",").map({ makeRange(string: String($0)) }) })
         let p1 = part1(ranges: data)
         let p2 = part2(ranges: data)
         return (p1, p2)
@@ -39,9 +35,8 @@ struct Day04: Day {
 private extension Day04 {
     func makeRange(string: String) -> ClosedRange<Int> {
         let bounds = string.split(separator: "-")
-        let lower = Int(bounds[0])!
-        let upper = Int(bounds[1])!
-        return lower...upper
+            .map({ Int($0)! })
+        return bounds[0]...bounds[1]
     }
 
 
