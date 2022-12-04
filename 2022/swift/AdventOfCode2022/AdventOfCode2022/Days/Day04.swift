@@ -28,7 +28,8 @@ struct Day04: Day {
             data.append(ranges)
         }
         let p1 = part1(ranges: data)
-        return (p1, "")
+        let p2 = part2(ranges: data)
+        return (p1, p2)
     }
 }
 
@@ -55,6 +56,25 @@ private extension Day04 {
                 }
             } else {
                 if p2.lowerBound >= p1.lowerBound && p2.upperBound <= p1.upperBound {
+                    count += 1
+                }
+            }
+        }
+        return "\(count)"
+    }
+
+
+    func part2(ranges: [[ClosedRange<Int>]]) -> String {
+        var count = 0
+        for pair in ranges {
+            let p1 = pair[0]
+            let p2 = pair[1]
+            if p1.lowerBound < p2.lowerBound {
+                if p1.upperBound >= p2.lowerBound {
+                    count += 1
+                }
+            } else {
+                if p1.lowerBound <= p2.upperBound {
                     count += 1
                 }
             }
