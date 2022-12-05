@@ -61,19 +61,31 @@ def part1(stacks, instructions):
     return get_stack_tops(stacks)
 
 
+def part2(stacks, instructions):
+    for i, stack1, stack2 in instructions:
+        p = stacks[stack1][-i:]
+        stacks[stack1][-i:] = []
+        stacks[stack2].extend(p)
+    return get_stack_tops(stacks)
+
+
 def main():
     s = get_input(d)
     stacks = setup_stacks(STACKS)
     instructions = list(get_instructions(s))
     p1 = part1(stacks, instructions)
 
+    stacks = setup_stacks(STACKS)
+    p2 = part2(stacks, instructions)
+
     print('Part 1:', p1)
+    print('Part 2', p2)
 
 
 def test():
     stacks = setup_stacks(TEST_STACKS)
     instructions =  get_instructions(TEST)
-    a = part1(stacks, instructions)
+    a = part2(stacks, instructions)
     print(a)
 
 
