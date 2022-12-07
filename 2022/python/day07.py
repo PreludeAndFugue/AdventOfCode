@@ -65,13 +65,12 @@ def insert_directory(name, directory_stack, root):
     directory[name] = {'files': []}
 
 
-def directory_sizes(directory, directory_name, path, current_sizes):
+def directory_sizes(directory, path, current_sizes):
     s = sum(size for size, _ in directory['files'])
     for dir_name, dir_ in directory.items():
         if dir_name == 'files': continue
-        s += directory_sizes(dir_, dir_name, path + '/' + dir_name, current_sizes)
-
-    current_sizes[path + directory_name] = s
+        s += directory_sizes(dir_, path + '/' + dir_name, current_sizes)
+    current_sizes[path] = s
     return s
 
 
@@ -93,8 +92,7 @@ def make_file_system(s):
             name = line.split(' ')[1]
             insert_directory(name, directory_stack, root)
         elif line.startswith('$ ls'):
-            # do nothing
-            continue
+            pass
         elif line[0].isdigit():
             size, name = line.split(' ')
             size = int(size)
@@ -112,9 +110,7 @@ def part2(all_sizes):
     used_space = all_sizes['/']
     unused_space = total_space - used_space
     space_required = unused_space_required - unused_space
-    values = [n for n in all_sizes.values() if n >= space_required]
-    values.sort()
-    return values[0]
+    return min(n for n in all_sizes.values() if n >= space_required)
 
 
 def main():
@@ -123,13 +119,13 @@ def main():
 
     file_system = make_file_system(s)
     all_sizes = {}
-    directory_sizes(file_system, '/', '', all_sizes)
+    directory_sizes(file_system, '/', all_sizes)
 
     p1 = part1(all_sizes)
     p2 = part2(all_sizes)
 
     print('Part 1:', p1)
-    print('Part 2', p2)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
