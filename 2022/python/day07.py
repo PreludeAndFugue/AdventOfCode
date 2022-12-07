@@ -9,9 +9,9 @@ directory = {
     # sub-directory
     "name": {
         ... sub directories
-        "files": [...]
+        "files": total_size
     }
-    "files": [(size, name), ...]
+    "files": total_size (don't need to store names)
 }
 
 Part 1
@@ -51,22 +51,16 @@ $ ls
 7214296 k
 '''
 
-def insert_file(file_details, directory_stack, root):
+
+def get_current_directory(directory_stack, root):
     directory = root
     for directory_name in directory_stack:
         directory = directory[directory_name]
-    directory['files'].append(file_details)
-
-
-def insert_directory(name, directory_stack, root):
-    directory = root
-    for directory_name in directory_stack:
-        directory = directory[directory_name]
-    directory[name] = {'files': []}
+    return directory
 
 
 def directory_sizes(directory, path, current_sizes):
-    s = sum(size for size, _ in directory['files'])
+    s = directory['files']
     for dir_name, dir_ in directory.items():
         if dir_name == 'files': continue
         s += directory_sizes(dir_, path + '/' + dir_name, current_sizes)
@@ -76,7 +70,7 @@ def directory_sizes(directory, path, current_sizes):
 
 def make_file_system(s):
     root = {
-        'files': []
+        'files': 0
     }
     directory_stack = []
     for line in s:
@@ -90,13 +84,13 @@ def make_file_system(s):
                 directory_stack.append(directory)
         elif line.startswith('dir'):
             name = line.split(' ')[1]
-            insert_directory(name, directory_stack, root)
+            get_current_directory(directory_stack, root)[name] = {'files': 0}
         elif line.startswith('$ ls'):
             pass
         elif line[0].isdigit():
-            size, name = line.split(' ')
+            size, _ = line.split(' ')
             size = int(size)
-            insert_file((size, name), directory_stack, root)
+            get_current_directory(directory_stack, root)['files'] += size
     return root
 
 
