@@ -14,6 +14,8 @@ TEST = '''30373
 33549
 35390'''
 
+DIRS = ((-1, 0), (0, -1), (0, 1), (1, 0))
+
 
 def part1(grid):
     def check(row, col):
@@ -51,7 +53,7 @@ def scenic_score(row, col, grid):
     height = grid[row][col]
     result = 1
     # up, left, right, down
-    for dr, dc in ((-1, 0), (0, -1), (0, 1), (1, 0)):
+    for dr, dc in DIRS:
         count = 0
         r, c = row, col
         while True:
