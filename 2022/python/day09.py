@@ -98,7 +98,6 @@ def part2(data):
                 t = move_tail(h, t)
                 rope[i + 1] = t
             # draw_rope(rope)
-            T = rope[-1]
             locations1.add(rope[1])
             locations9.add(rope[-1])
     return len(locations1), len(locations9)
