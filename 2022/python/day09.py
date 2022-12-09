@@ -76,28 +76,17 @@ def move_tail(H, T):
         else:
             return Tx + dx, Ty + dy//2
     elif d == 4:
+        # Extra rule for part 2
         return Tx + dx//2, Ty + dy//2
     else:
         raise ValueError
 
 
-def part1(data):
-    H = 0, 0
-    T = 0, 0
-    locations = set()
-    for d, n in data:
-        for _ in range(n):
-            dx, dy = DIR[d]
-            H = H[0] + dx, H[1] + dy
-            T = move_tail(H, T)
-            locations.add(T)
-    return len(locations)
-
-
 def part2(data):
     rope = [(0, 0)]*10
     # draw_rope(rope)
-    locations = set()
+    locations1 = set()
+    locations9 = set()
     for d, n in data:
         # print(d, n)
         for _ in range(n):
@@ -110,8 +99,9 @@ def part2(data):
                 rope[i + 1] = t
             # draw_rope(rope)
             T = rope[-1]
-            locations.add(T)
-    return len(locations)
+            locations1.add(rope[1])
+            locations9.add(rope[-1])
+    return len(locations1), len(locations9)
 
 
 def main():
@@ -119,8 +109,7 @@ def main():
     # s = TEST2
     data = list(parse(s))
 
-    p1 = part1(data)
-    p2 = part2(data)
+    p1, p2 = part2(data)
 
     print('Part 1:', p1)
     print('Part 2:', p2)
