@@ -12,12 +12,42 @@ L 5
 R 2'''
 
 
+TEST2 = '''R 5
+U 8
+L 8
+D 3
+R 17
+D 10
+L 25
+U 20'''
+
+
 DIR = {
-    'U': (0, 1),
-    'D': (0, -1),
+    'U': (0, -1),
+    'D': (0, 1),
     'L': (-1, 0),
     'R': (1, 0)
 }
+
+
+def draw_rope(rope):
+    xs = [k[0] for k in rope]
+    ys = [k[1] for k in rope]
+    d = {k: str(9 - n) for n, k in enumerate(reversed(rope))}
+    x_min = min(xs) - 1
+    x_max = max(xs) + 1
+    y_min = min(ys) - 1
+    y_max = max(ys) + 1
+    rows = []
+    for y in range(y_min, y_max + 1):
+        row = []
+        for x in range(x_min, x_max + 1):
+            location = x, y
+            item = d.get(location, '.')
+            row.append(item)
+        rows.append(''.join(row))
+    print('\n'.join(rows))
+    print()
 
 
 def parse(s):
@@ -45,6 +75,8 @@ def move_tail(H, T):
             return Tx + dx//2, Ty + dy
         else:
             return Tx + dx, Ty + dy//2
+    elif d == 4:
+        return Tx + dx//2, Ty + dy//2
     else:
         raise ValueError
 
@@ -62,14 +94,36 @@ def part1(data):
     return len(locations)
 
 
+def part2(data):
+    rope = [(0, 0)]*10
+    # draw_rope(rope)
+    locations = set()
+    for d, n in data:
+        # print(d, n)
+        for _ in range(n):
+            dx, dy = DIR[d]
+            H = rope[0]
+            H = H[0] + dx, H[1] + dy
+            rope[0] = H
+            for i, (h, t) in enumerate(zip(rope, rope[1:])):
+                t = move_tail(h, t)
+                rope[i + 1] = t
+            # draw_rope(rope)
+            T = rope[-1]
+            locations.add(T)
+    return len(locations)
+
+
 def main():
     s = get_input('09')
-    # s = TEST1
+    # s = TEST2
     data = list(parse(s))
-    print(data)
 
     p1 = part1(data)
+    p2 = part2(data)
+
     print('Part 1:', p1)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
