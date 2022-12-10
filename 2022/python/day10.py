@@ -176,9 +176,9 @@ def check_signal_strength(cycle, x):
 def draw(cycle, x):
     cycle -= 1
     if x - 1 <= cycle % 40 <= x + 1:
-        return '#'
+        return '█'
     else:
-        return '.'
+        return ' '
 
 
 def run(instructions):
