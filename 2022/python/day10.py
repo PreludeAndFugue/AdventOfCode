@@ -156,9 +156,9 @@ def parse(s):
     for line in s.split('\n'):
         parts = line.split(' ')
         instruction = parts[0]
-        if instruction == 'noop':
+        if instruction == NOOP:
             yield instruction, None
-        elif instruction == 'addx':
+        elif instruction == ADDX:
             x = int(parts[1])
             yield instruction, x
         else:
