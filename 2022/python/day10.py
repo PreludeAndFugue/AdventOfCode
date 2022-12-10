@@ -166,52 +166,40 @@ def parse(s):
 
 
 def check_signal_strength(cycle, x):
-    cases = set((20, 60, 100, 140, 180, 220))
-    if cycle in cases:
-        return cycle * x
-    else:
-        return 0
+    return cycle * x if cycle in set((20, 60, 100, 140, 180, 220)) else 0
 
 
 def draw(cycle, x):
-    cycle -= 1
-    if x - 1 <= cycle % 40 <= x + 1:
-        return '█'
-    else:
-        return ' '
+    return '█' if x - 1 <= (cycle - 1) % 40 <= x + 1 else ' '
 
 
 def run(instructions):
+    def work(x):
+        nonlocal signal_strength
+        nonlocal picture
+        nonlocal cycle
+        signal_strength += check_signal_strength(cycle, x)
+        picture.append(draw(cycle, x))
+        cycle += 1
+
     cycle = 1
     x = 1
     picture = []
     signal_strength = 0
     for instruction, value in instructions:
         if instruction == NOOP:
-            signal_strength += check_signal_strength(cycle, x)
-            picture.append(draw(cycle, x))
-            cycle += 1
+            work(x)
 
         elif instruction == ADDX:
-            signal_strength += check_signal_strength(cycle, x)
-            picture.append(draw(cycle, x))
-            cycle += 1
-
-            signal_strength += check_signal_strength(cycle, x)
-            picture.append(draw(cycle, x))
-            cycle += 1
+            for _ in range(2):
+                work(x)
             x += value
 
         else:
             raise ValueError
 
-    p = ''.join(picture)
-    answer = []
-    while p:
-        answer.append(p[:40])
-        p = p[40:]
-    return signal_strength, '\n'.join(answer)
-
+    p = ''.join(p if (i + 1) % 40 else f'{p}\n' for i, p in enumerate(picture))
+    return signal_strength, p
 
 
 def main():
