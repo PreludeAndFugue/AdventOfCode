@@ -1,4 +1,5 @@
 
+from itertools import islice
 from help import get_input
 
 TEST1 = '''addx 15
@@ -172,32 +173,55 @@ def check_signal_strength(cycle, x):
         return 0
 
 
+def draw(cycle, x):
+    cycle -= 1
+    if x - 1 <= cycle % 40 <= x + 1:
+        return '#'
+    else:
+        return '.'
+
+
 def run(instructions):
     cycle = 1
     x = 1
+    picture = []
+    signal_strength = 0
     for instruction, value in instructions:
         if instruction == NOOP:
-            yield check_signal_strength(cycle, x)
+            signal_strength += check_signal_strength(cycle, x)
+            picture.append(draw(cycle, x))
             cycle += 1
 
         elif instruction == ADDX:
-            yield check_signal_strength(cycle, x)
+            signal_strength += check_signal_strength(cycle, x)
+            picture.append(draw(cycle, x))
             cycle += 1
 
-            yield check_signal_strength(cycle, x)
-            x += value
+            signal_strength += check_signal_strength(cycle, x)
+            picture.append(draw(cycle, x))
             cycle += 1
+            x += value
+
         else:
             raise ValueError
+
+    p = ''.join(picture)
+    answer = []
+    while p:
+        answer.append(p[:40])
+        p = p[40:]
+    return signal_strength, '\n'.join(answer)
+
 
 
 def main():
     s = get_input('10')
     instructions = parse(s)
     # instructions = parse(TEST1)
-    p1 = sum(x for x in run(instructions))
+    p1, p2 = run(instructions)
 
     print('Part 1:', p1)
+    print(p2)
 
 
 if __name__ == '__main__':
