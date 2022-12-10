@@ -176,10 +176,12 @@ def draw(cycle, x):
 def run(instructions):
     def work(x, picture):
         nonlocal cycle
-        s = check_signal_strength(cycle, x)
+        nonlocal signal_strength
+        signal_strength += check_signal_strength(cycle, x)
         picture.append(draw(cycle, x))
+        if cycle % 40 == 0:
+            picture.append('\n')
         cycle += 1
-        return s
 
     cycle = 1
     x = 1
@@ -187,18 +189,17 @@ def run(instructions):
     signal_strength = 0
     for instruction, value in instructions:
         if instruction == NOOP:
-            signal_strength += work(x, picture)
+            work(x, picture)
 
         elif instruction == ADDX:
             for _ in range(2):
-                signal_strength += work(x, picture)
+                work(x, picture)
             x += value
 
         else:
             raise ValueError
 
-    p = ''.join(p if (i + 1) % 40 else f'{p}\n' for i, p in enumerate(picture))
-    return signal_strength, p
+    return signal_strength, ''.join(picture)
 
 
 def main():
