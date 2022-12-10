@@ -173,23 +173,19 @@ def check_signal_strength(cycle, x):
 
 
 def run(instructions):
-    pointer = 0
     cycle = 1
     x = 1
     for instruction, value in instructions:
         if instruction == NOOP:
             yield check_signal_strength(cycle, x)
-            pointer += 1
             cycle += 1
 
         elif instruction == ADDX:
             yield check_signal_strength(cycle, x)
-            pointer += 1
             cycle += 1
 
             yield check_signal_strength(cycle, x)
             x += value
-            pointer += 1
             cycle += 1
         else:
             raise ValueError
