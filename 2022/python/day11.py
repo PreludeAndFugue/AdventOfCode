@@ -44,23 +44,21 @@ class Monkey:
         self.inspect_count = 0
 
 
-    def update_worry_levels(self):
-        # print('update worry levels: ', end='')
-        # print(self.items, end='')
-        # print(' -> ', end='')
+    def update_worry_levels_1(self):
         self.items = [self.operation(item) // 3 for item in self.items]
-        # print(self.items)
+        self.inspect_count += len(self.items)
+
+
+    def update_worry_levels_2(self, modulo):
+        self.items = [self.operation(item) % modulo for item in self.items]
         self.inspect_count += len(self.items)
 
 
     def throw_items(self, monkeys):
-        # print('throw')
         for item in self.items:
             if item % self.test == 0:
-                # print(f'\tthrow {item} to {self.true}')
                 monkeys[self.true].items.append(item)
             else:
-                # print(f'\tthrow {item} to {self.false}')
                 monkeys[self.false].items.append(item)
         self.items = []
 
@@ -78,6 +76,7 @@ def make_operation(s):
         n = int(parts[2])
         return lambda x: operator(x, n)
 
+
 def make_monkey(s):
     lines = [l.strip() for l in s.split('\n')]
     n = int(lines[0].split(' ')[1].strip(':'))
@@ -89,22 +88,36 @@ def make_monkey(s):
     return Monkey(n, items, operation, test, true, false)
 
 
-def round(monkeys):
+def round1(monkeys):
     monkey_ids = sorted(monkeys.keys())
     for id_ in monkey_ids:
         monkey = monkeys[id_]
-        # print(monkey)
-        monkey.update_worry_levels()
+        monkey.update_worry_levels_1()
+        monkey.throw_items(monkeys)
+
+
+def round2(monkeys, modulo):
+    monkey_ids = sorted(monkeys.keys())
+    for id_ in monkey_ids:
+        monkey = monkeys[id_]
+        monkey.update_worry_levels_2(modulo)
         monkey.throw_items(monkeys)
 
 
 def part1(monkeys):
     for _ in range(20):
-        round(monkeys)
-        # input()
-        # for m in monkeys.values():
-            # print(m)
-        # input()
+        round1(monkeys)
+    counts = list(reversed(sorted(m.inspect_count for m in monkeys.values())))[:2]
+    return mul(*counts)
+
+
+def part2(monkeys):
+    modulo = 1
+    tests = [monkey.test for monkey in monkeys.values()]
+    for test in tests:
+        modulo *= test
+    for _ in range(1, 10_000 + 1):
+        round2(monkeys, modulo)
     counts = list(reversed(sorted(m.inspect_count for m in monkeys.values())))[:2]
     return mul(*counts)
 
@@ -117,6 +130,12 @@ def main():
 
     p1 = part1(monkeys)
     print('Part 1:', p1)
+
+    monkeys = [make_monkey(m) for m in s.split('\n\n')]
+    monkeys = {m.n: m for m in monkeys}
+
+    p2 = part2(monkeys)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
