@@ -1,6 +1,7 @@
 
 from help import get_input
 
+from functools import reduce
 from operator import add, mul
 
 
@@ -110,9 +111,7 @@ def part1(monkeys, monkey_ids):
 
 
 def part2(monkeys, monkey_ids):
-    modulo = 1
-    for test in [monkey.test for monkey in monkeys.values()]:
-        modulo *= test
+    modulo = reduce(mul, (monkey.test for monkey in monkeys.values()))
     for _ in range(10_000):
         round2(monkeys, monkey_ids, modulo)
     counts = list(reversed(sorted(m.inspect_count for m in monkeys.values())))[:2]
