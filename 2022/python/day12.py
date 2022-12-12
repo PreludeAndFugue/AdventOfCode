@@ -9,6 +9,7 @@ accszExk
 acctuvwj
 abdefghi'''
 
+
 DIR = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 
@@ -38,10 +39,10 @@ def get_neighbours(l, h, M):
             yield (xi, yi), hi
 
 
-def part1(M, S, E):
-    q = [(0, S)]
+def search(M, start_locations, E):
+    q = [(0, s) for s in start_locations]
     heapq.heapify(q)
-    seen = set()
+    seen = set(start_locations)
 
     while q:
         d, l = heapq.heappop(q)
@@ -57,16 +58,14 @@ def part1(M, S, E):
             seen.add(ln)
 
 
+def part1(M, S, E):
+    return search(M, [S], E)
+
+
 def part2(M, S, E):
     hs = M[S]
     start_locations = [l for l, h in M.items() if h == hs]
-    min_d = 1_000_000_000
-    for l in start_locations:
-        d = part1(M, l, E)
-        if d is None:
-            continue
-        min_d = min(d, min_d)
-    return min_d
+    return search(M, start_locations, E)
 
 
 def main():
