@@ -57,6 +57,18 @@ def part1(M, S, E):
             seen.add(ln)
 
 
+def part2(M, S, E):
+    hs = M[S]
+    start_locations = [l for l, h in M.items() if h == hs]
+    min_d = 1_000_000_000
+    for l in start_locations:
+        d = part1(M, l, E)
+        if d is None:
+            continue
+        min_d = min(d, min_d)
+    return min_d
+
+
 def main():
     s = get_input('12')
     # s = TEST
@@ -64,6 +76,9 @@ def main():
 
     p1 = part1(M, S, E)
     print('Part 1:', p1)
+
+    p2 = part2(M, S, E)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
