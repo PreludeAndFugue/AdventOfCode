@@ -1,0 +1,105 @@
+
+from itertools import zip_longest
+
+from help import get_input
+
+'''
+Part 1
+------
+6118: too high
+'''
+
+TEST1 = '''[1,1,3,1,1]
+[1,1,5,1,1]
+
+[[1],[2,3,4]]
+[[1],4]
+
+[9]
+[[8,7,6]]
+
+[[4,4],4,4]
+[[4,4],4,4,4]
+
+[7,7,7,7]
+[7,7,7]
+
+[]
+[3]
+
+[[[]]]
+[[]]
+
+[1,[2,[3,[4,[5,6,7]]]],8,9]
+[1,[2,[3,[4,[5,6,0]]]],8,9]'''
+
+
+def parse(s):
+    for pair in s.split('\n\n'):
+        left, right = pair.split('\n')
+        left = eval(left)
+        right = eval(right)
+        yield left, right
+
+
+def check_order(left, right, depth):
+    for l, r in zip_longest(left, right):
+        if r is None:
+            return False
+        if l is None:
+            return True
+        if isinstance(l, int) and isinstance(r, int):
+            if l < r:
+                return True
+            elif l > r:
+                return False
+            else:
+                continue
+        if isinstance(l, int) and isinstance(r, list):
+            c = check_order([l], r, depth + 1)
+            if c is None:
+                continue
+            else:
+                return c
+        elif isinstance(l, list) and isinstance(r, int):
+            c = check_order(l, [r], depth + 1)
+            if c is None:
+                continue
+            else:
+                return c
+        elif isinstance(l, list) and isinstance(r, list):
+            c = check_order(l, r, depth + 1)
+            if c is None:
+                continue
+            else:
+                return c
+        else:
+            raise ValueError
+    if depth == 0:
+        return True
+    else:
+        return None
+
+
+def part1(pairs):
+    s = 0
+    for i, (left, right) in enumerate(pairs, start=1):
+        c = check_order(left, right, 0)
+        if c:
+            s += i
+    return s
+
+
+
+def main():
+    s = get_input('13')
+    # s = TEST1
+    pairs = list(parse(s))
+
+    p1 = part1(pairs)
+
+    print('Part 1:', p1)
+
+
+if __name__ == '__main__':
+    main()
