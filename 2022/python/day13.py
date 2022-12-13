@@ -43,7 +43,7 @@ def parse(s):
         yield left, right
 
 
-def check_order(left, right, depth):
+def check_order(left, right, depth=0):
     for l, r in zip_longest(left, right):
         if r is None:
             return False
@@ -83,19 +83,15 @@ def check_order(left, right, depth):
 
 
 def sorter(left, right):
-    c = check_order(left, right, 0)
-    if c == True:
-        return -1
-    if c == False:
-        return 1
-    return 0
+    c = check_order(left, right)
+    assert isinstance(c, bool)
+    return -1 if c else 1
 
 
 def part1(pairs):
     s = 0
     for i, (left, right) in enumerate(pairs, start=1):
-        c = check_order(left, right, 0)
-        if c:
+        if check_order(left, right):
             s += i
     return s
 
