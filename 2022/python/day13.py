@@ -1,4 +1,5 @@
 
+from functools import cmp_to_key
 from itertools import zip_longest
 
 from help import get_input
@@ -81,6 +82,15 @@ def check_order(left, right, depth):
         return None
 
 
+def sorter(left, right):
+    c = check_order(left, right, 0)
+    if c == True:
+        return -1
+    if c == False:
+        return 1
+    return 0
+
+
 def part1(pairs):
     s = 0
     for i, (left, right) in enumerate(pairs, start=1):
@@ -90,6 +100,21 @@ def part1(pairs):
     return s
 
 
+def part2(pairs):
+    start = [[2]]
+    end = [[6]]
+    flat = [start, end]
+    for l, r in pairs:
+        flat.append(l)
+        flat.append(r)
+    s = sorted(flat, key=cmp_to_key(sorter))
+    indices = []
+    for i, x in enumerate(s, start=1):
+        if x == start or x == end:
+            indices.append(i)
+    a, b = indices
+    return a * b
+
 
 def main():
     s = get_input('13')
@@ -97,8 +122,10 @@ def main():
     pairs = list(parse(s))
 
     p1 = part1(pairs)
+    p2 = part2(pairs)
 
     print('Part 1:', p1)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
