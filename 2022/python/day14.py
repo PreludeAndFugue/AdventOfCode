@@ -31,14 +31,20 @@ def parse(s):
             dy = y2 - y1
             if dx != 0:
                 assert dy == 0
-                x_sgn = -1 if dx < 0 else 1
-                for i in range(abs(dx) + 1):
-                    m[(x1 + i*x_sgn, y1)] = ROCK
+                if dx < 0:
+                    r = range(dx, 1)
+                else:
+                    r = range(dx + 1)
+                for i in r:
+                    m[(x1 + i, y1)] = ROCK
             elif dy != 0:
                 assert dx == 0
-                y_sgn = -1 if dy < 0 else 1
-                for i in range(dy + 1):
-                    m[(x1, y1 + i*y_sgn)] = ROCK
+                if dy < 0:
+                    r = range(dy, 1)
+                else:
+                    r = range(dy + 1)
+                for i in r:
+                    m[(x1, y1 + i)] = ROCK
             else:
                 raise ValueError
     return m
@@ -64,14 +70,15 @@ def draw(m):
 
 def get_next(location, m):
     lx, ly = location
+    ns = []
     for x, y in DIRS:
         nx = lx + x
         ny = ly + y
         n = (nx, ny)
         value = m.get(n, VOID)
         if value == VOID:
-            return n
-    return None
+            ns.append(n)
+    return ns
 
 
 def is_below_bottom(l, m):
@@ -83,32 +90,59 @@ def is_below_bottom(l, m):
 def drop(m):
     l = START
     while True:
-        ln = get_next(l, m)
-        if ln is None:
+        lns = get_next(l, m)
+        if not lns:
             m[l] = SAND
             return True
-        elif is_below_bottom(ln, m):
+        ln = lns[0]
+        if is_below_bottom(ln, m):
             return False
         else:
             l = ln
 
 
-def main():
-    s = get_input('14')
-    # s = TEST1.strip()
-    m = parse(s)
-    draw(m)
+def add_floor(m):
+    y_max = max(y for _, y in m.keys())
+    for x in range(0, 1000):
+        m[(x, y_max + 2)] = ROCK
 
+
+def fill(m):
+    '''A flood fill for a faster part 2.'''
+    q = [START]
+    while q:
+        l = q.pop()
+        m[l] = SAND
+        for n in get_next(l, m):
+            q.append(n)
+    return m
+
+
+def part1(s):
+    m = parse(s)
     while True:
         result = drop(m)
         if not result:
             break
-        draw(m)
-        print()
-        # input()
+    return sum(1 for v in m.values() if v == SAND)
 
-    c = sum(1 for v in m.values() if v == SAND)
-    print(c)
+
+def part2(s):
+    m = parse(s)
+    add_floor(m)
+    fill(m)
+    return sum(1 for v in m.values() if v == SAND)
+
+
+def main():
+    s = get_input('14')
+    # s = TEST1.strip()
+    p1 = part1(s)
+    p2 = part2(s)
+
+    print('Part 1:', p1)
+    print('Part 2:', p2)
+
 
 
 if __name__ == '__main__':
