@@ -12,7 +12,6 @@ TEST1 = '''498,4 -> 498,6 -> 496,6
 503,4 -> 502,4 -> 502,9 -> 494,9'''
 
 
-DIRS = [(0, 1), (-1, 1), (1, 1)]
 START = (500, 0)
 
 ROCK = '█'
@@ -71,9 +70,9 @@ def draw(m):
 def get_next(location, m):
     lx, ly = location
     ns = []
-    for x, y in DIRS:
+    for x in (0, -1, 1):
         nx = lx + x
-        ny = ly + y
+        ny = ly + 1
         n = (nx, ny)
         value = m.get(n, VOID)
         if value == VOID:
@@ -81,13 +80,7 @@ def get_next(location, m):
     return ns
 
 
-def is_below_bottom(l, m):
-    max_y = max(y for (_, y) in m.keys())
-    _, y = l
-    return y > max_y
-
-
-def drop(m):
+def drop(m, y_max):
     l = START
     while True:
         lns = get_next(l, m)
@@ -95,7 +88,7 @@ def drop(m):
             m[l] = SAND
             return True
         ln = lns[0]
-        if is_below_bottom(ln, m):
+        if ln[1] > y_max:
             return False
         else:
             l = ln
@@ -120,8 +113,9 @@ def fill(m):
 
 def part1(s):
     m = parse(s)
+    y_max = max(y for (_, y) in m.keys())
     while True:
-        result = drop(m)
+        result = drop(m, y_max)
         if not result:
             break
     return sum(1 for v in m.values() if v == SAND)
