@@ -26,6 +26,7 @@ regex = re.compile('Valve (\w+) has flow rate=(\d+); tunnels? leads? to valves? 
 
 START = 'AA'
 TOTAL_TIME = 30
+TOTAL_TIME_PART_1 = 30
 
 def parse(s):
     M = {}
@@ -43,52 +44,48 @@ def parse(s):
 
 def neighbour_state(state, M, P):
     total_pressure, valve, minute, opened_valves = state
+    new_pressure = sum(P[v] for v in opened_valves)
     if P[valve] > 0 and valve not in opened_valves:
-        new_pressure = total_pressure + ((TOTAL_TIME - minute) * P[valve])
         new_open = opened_valves.copy()
-        new_open.add(valve)
-        yield new_pressure, valve, minute + 1, new_open
+        new_open = new_open | frozenset([valve])
+        yield total_pressure + new_pressure, valve, minute + 1, new_open
     for neighbour in M[valve]:
-        yield total_pressure, neighbour, minute + 1, opened_valves
+        yield total_pressure + new_pressure, neighbour, minute + 1, opened_valves
 
 
 def part1(M, P):
     '''
     State: total_pressure, current valve, minute, opened valves
     '''
-    # print(M)
-    # print(P)
-    # print(can_open)
-    start_state = 0, START, 0, set()
+    start_state = 0, START, 0, frozenset()
     q = [start_state]
     seen = set()
 
     best_state = start_state
 
-    pressure = 0
+    i = 0
 
     while q:
         state = heapq.heappop(q)
-        if state[0] > pressure:
+        if state[0] > best_state[0]:
             best_state = state
-            pressure = state[0]
-        # print(q)
-        # print(state)
-        # input()
 
-        test = state[0], state[1]
+        i += 1
+        if i % 1_000_000 == 0:
+            print(len(q))
+            print(best_state)
+
+        test = state[0], state[1], state[3]
         if test in seen:
             continue
         seen.add(test)
 
         for n_state in neighbour_state(state, M, P):
-            # print('\t', n_state)
-            if state[2] >= 30:
-                continue
-            heapq.heappush(q, n_state)
+            if n_state[2] <= TOTAL_TIME_PART_1:
+                heapq.heappush(q, n_state)
 
     print('best state', best_state)
-    return pressure
+    return best_state[0]
 
 
 def main():
