@@ -1,0 +1,105 @@
+
+import heapq
+import re
+
+from help import get_input
+
+'''
+Part1
+-----
+1762: too low
+1857: too low, same as other answer
+'''
+
+TEST1 = '''Valve AA has flow rate=0; tunnels lead to valves DD, II, BB
+Valve BB has flow rate=13; tunnels lead to valves CC, AA
+Valve CC has flow rate=2; tunnels lead to valves DD, BB
+Valve DD has flow rate=20; tunnels lead to valves CC, AA, EE
+Valve EE has flow rate=3; tunnels lead to valves FF, DD
+Valve FF has flow rate=0; tunnels lead to valves EE, GG
+Valve GG has flow rate=0; tunnels lead to valves FF, HH
+Valve HH has flow rate=22; tunnel leads to valve GG
+Valve II has flow rate=0; tunnels lead to valves AA, JJ
+Valve JJ has flow rate=21; tunnel leads to valve II'''
+
+regex = re.compile('Valve (\w+) has flow rate=(\d+); tunnels? leads? to valves? (.*)')
+
+START = 'AA'
+TOTAL_TIME = 30
+
+def parse(s):
+    M = {}
+    P = {}
+    for line in s.split('\n'):
+        m = regex.match(line)
+        assert m is not None
+        valve = m[1]
+        rate = int(m[2])
+        other_valves = m[3].split(', ')
+        M[valve] = other_valves
+        P[valve] = rate
+    return M, P
+
+
+def neighbour_state(state, M, P):
+    total_pressure, valve, minute, opened_valves = state
+    if P[valve] > 0 and valve not in opened_valves:
+        new_pressure = total_pressure + ((TOTAL_TIME - minute) * P[valve])
+        new_open = opened_valves.copy()
+        new_open.add(valve)
+        yield new_pressure, valve, minute + 1, new_open
+    for neighbour in M[valve]:
+        yield total_pressure, neighbour, minute + 1, opened_valves
+
+
+def part1(M, P):
+    '''
+    State: total_pressure, current valve, minute, opened valves
+    '''
+    # print(M)
+    # print(P)
+    # print(can_open)
+    start_state = 0, START, 0, set()
+    q = [start_state]
+    seen = set()
+
+    best_state = start_state
+
+    pressure = 0
+
+    while q:
+        state = heapq.heappop(q)
+        if state[0] > pressure:
+            best_state = state
+            pressure = state[0]
+        # print(q)
+        # print(state)
+        # input()
+
+        test = state[0], state[1]
+        if test in seen:
+            continue
+        seen.add(test)
+
+        for n_state in neighbour_state(state, M, P):
+            # print('\t', n_state)
+            if state[2] >= 30:
+                continue
+            heapq.heappush(q, n_state)
+
+    print('best state', best_state)
+    return pressure
+
+
+def main():
+    s = get_input('16')
+    # s = TEST1.strip()
+    M, P = parse(s)
+
+    p1 = part1(M, P)
+
+    print('Part 1:', p1)
+
+
+if __name__ == '__main__':
+    main()
