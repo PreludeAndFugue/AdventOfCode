@@ -23,6 +23,73 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3'''
 regex = re.compile('Sensor at x=(-*\d+), y=(-*\d+): closest beacon is at x=(-*\d+), y=(-*\d+)')
 
 
+class Rectangle:
+    def __init__(self, x_min, y_min, x_max, y_max):
+        self.x_min = x_min
+        self.y_min = y_min
+        self.x_max = x_max
+        self.y_max = y_max
+
+
+    @property
+    def width(self):
+        return self.x_max - self.x_min
+
+
+    @property
+    def height(self):
+        return self.y_max - self.y_min
+
+
+    @staticmethod
+    def make_from_sensor_and_beacon(s, b):
+        d = rotated_manhattan(s, b)
+        xmin = s[0] - d
+        xmax = s[0] + d
+        ymin = s[1] - d
+        ymax = s[1] + d
+        return Rectangle(xmin, ymin, xmax, ymax)
+
+
+    def subtract(self, other):
+        '''Subtract another rectangle from this rectangle.
+
+        Returns a list of rectangles.
+        '''
+        intersection = self._intersection(other)
+        if intersection is None:
+            return [self]
+
+        return []
+
+
+    def coords(self):
+        for x in range(self.x_min, self.x_max + 1):
+            for y in range(self.y_min, self.y_max + 1):
+                yield x, y
+
+
+    def _intersection(self, other):
+        '''The intersection of this an another rectangle
+
+        Returns a rectangle or None.
+        '''
+        if self.x_max < other.x_min:
+            return None
+        if self.x_min > other.x_max:
+            return None
+        if self.y_max < other.y_min:
+            return None
+        if self.y_min > other.y_max:
+            return None
+
+        return None
+
+
+    def __repr__(self) -> str:
+        return f'R({self.x_min}, {self.y_min}, {self.x_max}, {self.y_max})'
+
+
 def parse(s):
     for line in s.split('\n'):
         m = regex.match(line)
@@ -95,19 +162,6 @@ def tuning_freq(b):
     return 4000000 * x + y
 
 
-def compress_coordinates(data):
-    values = set()
-    for s, b in data:
-        values.add(s[0])
-        values.add(s[1])
-        values.add(b[0])
-        values.add(b[1])
-    values = sorted(values)
-    decompress = {i: v for i, v in enumerate(values)}
-    compress = {v: i for i, v in decompress.items()}
-    return compress, decompress
-
-
 def part1(data, y):
     locations = set()
     for s, b in data:
@@ -127,83 +181,41 @@ def part1(data, y):
     return len(locations)
 
 
-def make_extra(c, d):
-    '''Make all points within manhattan distance d of c.'''
-    x, y = c
-    results = []
-    for xi in range(x - d, x + d + 1):
-        for yi in range(y - d, y + d + 1):
-            ci = xi, yi
-            if manhattan(c, ci) <= d:
-                results.append(ci)
-    return results
-
-
-def make_rotated_extra(c, d):
-    x, y = c
-    results = []
-    for xi in range(x - d, x + d + 1):
-        for yi in range(y - d, y + d + 1):
-            results.append((xi, yi))
-    return results
-
-
 def part2(data):
-    hash_locations = set()
+    xs = []
+    ys = []
     for s, b in data:
-        d = rotated_manhattan(s, b)
-        for x in range(s[0] - d, s[0] + d + 1):
-            for y in range(s[1] - d, s[1] + d + 1):
-                hash_locations.add((x, y))
-    draw(data, [])
-    draw(data, hash_locations)
-
-    # unrotate
-    unrotated_hash_locations = [unrotate_coordinate(l) for l in hash_locations]
-    unrotated_hash_locations = [l for l in unrotated_hash_locations if l is not None]
-    # unrotated_data = [(unrotate_coordinate(s), unrotate_coordinate(b)) for s, b in data]
-
-    print(data)
-    # print(unrotated_data)
-    # draw(unrotated_data, unrotated_hash_locations)
-
+        xs.append(s[0])
+        xs.append(b[0])
+        ys.append(s[1])
+        ys.append(b[1])
+    xmin = min(xs)
+    ymin = min(ys)
+    xmax = max(xs)
+    ymax = max(ys)
+    everything = [Rectangle(xmin, ymin, xmax, ymax)]
+    print(everything)
+    to_remove = [Rectangle.make_from_sensor_and_beacon(s, b) for s, b in data]
+    for r in to_remove:
+        print(r, r.width, r.height)
+        # print(list(r.coords()))
 
 
 def main():
     # s = get_input('15')
     s = TEST1.strip()
     data = list(parse(s))
-    extra = make_extra((8, 7), 9)
-
-    # draw(data, extra)
-    # print()
-
-    # draw(data, [])
-    # compress, decompress = compress_coordinates(data)
-
     rotated_data = [(rotate_coordinate(s), rotate_coordinate(b)) for s, b in data]
-    rotate_compress, _ = compress_coordinates(rotated_data)
-
-    # compressed_data = [((compress[s[0]], compress[s[1]]), (compress[b[0]], compress[b[1]])) for s, b in data]
-    compressed_rotated_data = [((rotate_compress[s[0]], rotate_compress[s[1]]), (rotate_compress[b[0]], rotate_compress[b[1]])) for s, b in rotated_data]
-    # rotated_extra = [rotate_coordinate(x) for x in extra]
-    # rotated_coord = rotate_coordinate((8, 7))
-    # rotated_extra = make_rotated_extra(rotated_coord, 9)
-    # draw(rotated_data, rotated_extra)
-
-    # print(data)
-    # print(rotated_data)
-    for a, b in zip(rotated_data, compressed_rotated_data):
-        print(a)
-        print(b)
-        print()
 
     # p1 = part1(data, 10)
-    # p1 = part1(data, 2000000)
-    p2 = part2(compressed_rotated_data)
+    p1 = part1(data, 2000000)
+    p2 = part2(rotated_data)
 
-    # print('Part1:', p1)
+    print('Part1:', p1)
     # print('Part 2', p2)
+
+    for s, b in rotated_data:
+        print(s, b, rotated_manhattan(s, b))
 
 
 if __name__ == '__main__':
