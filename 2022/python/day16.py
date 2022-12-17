@@ -45,7 +45,6 @@ def parse(s):
 
 def neighbour_state(state, M, P):
     pressure, valve, minute, opened = state
-    # extra_pressure = sum(P[v] for v in opened)
     if P[valve] > 0 and valve not in opened:
         new_openened = opened.copy()
         new_openened = new_openened | frozenset([valve])
@@ -79,23 +78,14 @@ def part1(M, P):
     start_state = 0, START, 0, frozenset()
     q = [start_state]
     seen = set()
-
-    best_state = start_state
-
-    i = 0
+    pressure = 0
 
     while q:
         state = heapq.heappop(q)
-        if state[0] > best_state[0]:
-            best_state = state
-
-        # i += 1
-        # if i % 1_000_000 == 0:
-        #     print(len(q))
-        #     print(best_state)
+        if state[0] > pressure:
+            pressure = state[0]
 
         test = state[0], state[1], state[2]
-        # test = state
         if test in seen:
             continue
         seen.add(test)
@@ -104,8 +94,7 @@ def part1(M, P):
             if n_state[2] <= TOTAL_TIME_PART_1:
                 heapq.heappush(q, n_state)
 
-    # print('best state', best_state)
-    return best_state[0]
+    return pressure
 
 
 def part2(M, P):
