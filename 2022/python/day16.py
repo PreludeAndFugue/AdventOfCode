@@ -27,6 +27,7 @@ regex = re.compile('Valve (\w+) has flow rate=(\d+); tunnels? leads? to valves? 
 
 START = 'AA'
 TOTAL_TIME_PART_1 = 30
+TOTAL_TIME_PART_2 = 26
 
 def parse(s):
     M = {}
@@ -43,14 +44,15 @@ def parse(s):
 
 
 def neighbour_state(state, M, P):
-    total_pressure, valve, minute, opened_valves = state
-    new_pressure = sum(P[v] for v in opened_valves)
-    if P[valve] > 0 and valve not in opened_valves:
-        new_open = opened_valves.copy()
-        new_open = new_open | frozenset([valve])
-        yield total_pressure + new_pressure, valve, minute + 1, new_open
+    pressure, valve, minute, opened = state
+    # extra_pressure = sum(P[v] for v in opened)
+    if P[valve] > 0 and valve not in opened:
+        new_openened = opened.copy()
+        new_openened = new_openened | frozenset([valve])
+        extra_pressure = (TOTAL_TIME_PART_1 - minute - 1) * P[valve]
+        yield pressure + extra_pressure, valve, minute + 1, new_openened
     for neighbour in M[valve]:
-        yield total_pressure + new_pressure, neighbour, minute + 1, opened_valves
+        yield pressure, neighbour, minute + 1, opened
 
 
 def neighbour_state_2(state, M, P):
@@ -60,14 +62,14 @@ def neighbour_state_2(state, M, P):
     can_open_v2 = P[v2] > 0 and v2 not in opened
     if can_open_v1:
         if can_open_v2:
-
+            pass
         else:
-
+            pass
     else:
         if can_open_v2:
-
+            pass
         else:
-            
+            pass
 
 
 def part1(M, P):
@@ -87,12 +89,13 @@ def part1(M, P):
         if state[0] > best_state[0]:
             best_state = state
 
-        i += 1
-        if i % 1_000_000 == 0:
-            print(len(q))
-            print(best_state)
+        # i += 1
+        # if i % 1_000_000 == 0:
+        #     print(len(q))
+        #     print(best_state)
 
-        test = state[0], state[1], state[3]
+        test = state[0], state[1], state[2]
+        # test = state
         if test in seen:
             continue
         seen.add(test)
@@ -101,7 +104,7 @@ def part1(M, P):
             if n_state[2] <= TOTAL_TIME_PART_1:
                 heapq.heappush(q, n_state)
 
-    print('best state', best_state)
+    # print('best state', best_state)
     return best_state[0]
 
 
