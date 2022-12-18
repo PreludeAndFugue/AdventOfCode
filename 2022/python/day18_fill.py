@@ -1,6 +1,4 @@
 
-from itertools import product
-
 from help import get_input
 
 
