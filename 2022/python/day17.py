@@ -1,7 +1,74 @@
 
 from itertools import cycle
 
+from suffix_tree import Tree
+
 from help import get_input
+
+'''
+Look for a repeating pattern in the rock.
+
+https://en.wikipedia.org/wiki/Longest_repeated_substring_problem
+
+Example
+-------
+After first 36 rows (21 rocks), there is a repeating pattern of 53 rows (at rock 56).
+
+....#..
+....#..
+....#..
+....#..
+.##.#..
+.##.#..
+..###..
+...#...
+..###..
+...#...
+..####.
+..###..
+..###..
+..####.
+....###
+.....#.
+.#####.
+.#..#..
+.#..#..
+.####.#
+.####.#
+###.###
+.#####.
+.###...
+.###...
+.#.#...
+.#.#.#.
+.######
+.#####.
+....#..
+....#..
+....#..
+....#..
+.##.#..
+.##.#..
+..###..
+....#..
+...###.
+#...#..
+#####..
+#.#....
+#.#....
+####...
+..#####
+...#.##
+..####.
+.##....
+.##...#
+..#...#
+..#.###
+..#..#.
+..#.###
+.#####.
+
+'''
 
 TEST1 = '''>>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>'''
 
@@ -44,6 +111,16 @@ def rock5(y):
         (2, y + DY), (3, y + DY)
     ]
 
+ROCKS = [rock1, rock2, rock3, rock4, rock5]
+
+
+def make_jet(s):
+    return cycle((i, si) for i, si in enumerate(s))
+
+
+def make_rocks(rfunc):
+    return cycle((i, r) for i, r in enumerate(rfunc))
+
 
 def draw(chamber, rock):
     xs = []
@@ -67,7 +144,7 @@ def draw(chamber, rock):
             if (x, y) in rock:
                 row[-1] = '@'
         rows.append(''.join(row))
-    print('\n'.join(rows))
+    return '\n'.join(rows)
 
 
 def can_push(r, chamber):
@@ -113,10 +190,13 @@ def hit_test(r, chamber):
     return 0
 
 
-def fall(r, jet, chamber):
+def fall(i, r, ri, jet, chamber):
     did_move = True
     while did_move:
-        j = next(jet)
+        ji, j = next(jet)
+        # print(ji, j)
+        # if ri == 0 and ji == 0:
+        #     print('Zeroth rock and zeroth jet', i)
         r = push(r, j, chamber)
         r, did_move = move(r, chamber)
     return r
@@ -132,15 +212,28 @@ def get_max_y(chamber):
 
 
 def part1(s):
-    jet = cycle(s)
-    rocks = cycle([rock1, rock2, rock3, rock4, rock5])
+    jet = make_jet(s)
+    rocks = make_rocks(ROCKS)
     chamber = CHAMBER.copy()
 
-    for _ in range(2022):
+    ys = []
+    for i in range(1, 2022 + 1):
         max_y = get_max_y(chamber)
-        r = next(rocks)(max_y)
-        r = fall(r, jet, chamber)
+
+        ri, rfunc = next(rocks)
+        r = rfunc(max_y)
+        r = fall(i, r, ri, jet, chamber)
         merge(r, chamber)
+
+        max_y = get_max_y(chamber)
+        ys.append(max_y)
+
+    with open('t17.txt', 'w') as g:
+        y_previous = 0
+        for i, y in enumerate(ys):
+            dy = y - y_previous
+            y_previous = y
+            g.write(f'{dy}')
 
     return get_max_y(chamber)
 
