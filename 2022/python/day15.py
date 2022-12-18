@@ -23,73 +23,6 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3'''
 regex = re.compile('Sensor at x=(-*\d+), y=(-*\d+): closest beacon is at x=(-*\d+), y=(-*\d+)')
 
 
-class Rectangle:
-    def __init__(self, x_min, y_min, x_max, y_max):
-        self.x_min = x_min
-        self.y_min = y_min
-        self.x_max = x_max
-        self.y_max = y_max
-
-
-    @property
-    def width(self):
-        return self.x_max - self.x_min
-
-
-    @property
-    def height(self):
-        return self.y_max - self.y_min
-
-
-    @staticmethod
-    def make_from_sensor_and_beacon(s, b):
-        d = rotated_manhattan(s, b)
-        xmin = s[0] - d
-        xmax = s[0] + d
-        ymin = s[1] - d
-        ymax = s[1] + d
-        return Rectangle(xmin, ymin, xmax, ymax)
-
-
-    def subtract(self, other):
-        '''Subtract another rectangle from this rectangle.
-
-        Returns a list of rectangles.
-        '''
-        intersection = self._intersection(other)
-        if intersection is None:
-            return [self]
-
-        return []
-
-
-    def coords(self):
-        for x in range(self.x_min, self.x_max + 1):
-            for y in range(self.y_min, self.y_max + 1):
-                yield x, y
-
-
-    def _intersection(self, other):
-        '''The intersection of this an another rectangle
-
-        Returns a rectangle or None.
-        '''
-        if self.x_max < other.x_min:
-            return None
-        if self.x_min > other.x_max:
-            return None
-        if self.y_max < other.y_min:
-            return None
-        if self.y_min > other.y_max:
-            return None
-
-        return None
-
-
-    def __repr__(self) -> str:
-        return f'R({self.x_min}, {self.y_min}, {self.x_max}, {self.y_max})'
-
-
 def parse(s):
     for line in s.split('\n'):
         m = regex.match(line)
@@ -97,22 +30,6 @@ def parse(s):
         s = int(m[1]), int(m[2])
         b = int(m[3]), int(m[4])
         yield s, b
-
-
-def rotate_coordinate(c):
-    x, y = c
-    return x + y, y - x
-
-
-def unrotate_coordinate(c):
-    x, y = c
-    # assert (x - y) % 2 == 0, c
-    # assert (x + y) % 2 == 0, c
-    if (x - y) % 2 != 0:
-        return None
-    if (x + y) % 2 != 0:
-        return None
-    return (x - y)//2, (x + y)//2
 
 
 def draw(data, extra):
@@ -151,17 +68,6 @@ def manhattan(a, b):
     return abs(x2 - x1) + abs(y2 - y1)
 
 
-def rotated_manhattan(a, b):
-    x1, y1 = a
-    x2, y2 = b
-    return max(abs(x2 - x1), abs(y2 - y1))
-
-
-def tuning_freq(b):
-    x, y = b
-    return 4000000 * x + y
-
-
 def part1(data, y):
     locations = set()
     for s, b in data:
@@ -181,41 +87,15 @@ def part1(data, y):
     return len(locations)
 
 
-def part2(data):
-    xs = []
-    ys = []
-    for s, b in data:
-        xs.append(s[0])
-        xs.append(b[0])
-        ys.append(s[1])
-        ys.append(b[1])
-    xmin = min(xs)
-    ymin = min(ys)
-    xmax = max(xs)
-    ymax = max(ys)
-    everything = [Rectangle(xmin, ymin, xmax, ymax)]
-    print(everything)
-    to_remove = [Rectangle.make_from_sensor_and_beacon(s, b) for s, b in data]
-    for r in to_remove:
-        print(r, r.width, r.height)
-        # print(list(r.coords()))
-
-
 def main():
-    # s = get_input('15')
-    s = TEST1.strip()
+    s = get_input('15')
+    # s = TEST1.strip()
     data = list(parse(s))
-    rotated_data = [(rotate_coordinate(s), rotate_coordinate(b)) for s, b in data]
 
     # p1 = part1(data, 10)
     p1 = part1(data, 2000000)
-    p2 = part2(rotated_data)
 
-    print('Part1:', p1)
-    # print('Part 2', p2)
-
-    for s, b in rotated_data:
-        print(s, b, rotated_manhattan(s, b))
+    print('Part 1:', p1)
 
 
 if __name__ == '__main__':
