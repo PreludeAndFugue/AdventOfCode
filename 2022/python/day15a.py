@@ -31,16 +31,31 @@ def draw(coords, s):
     return '\n'.join(rows)
 
 
-def make_boundary(s, b):
+def is_out_of_bounds(c, mmax):
+    x, y = c
+    if not (0 <= x <= mmax):
+        return True
+    if not (0 <= y <= mmax):
+        return True
+    return False
+
+
+def make_boundary(s, b, mmax):
     d = manhattan(s, b) + 1
     sx, sy = s
     for y in range(-d, d + 1):
         x = d - abs(y)
         if x == 0:
-            yield sx, sy + y
+            c = sx, sy + y
+            if not is_out_of_bounds(c, mmax):
+                yield sx, sy + y
         else:
-            yield sx - x, sy + y
-            yield sx + x, sy + y
+            c = sx - x, sy + y
+            if not is_out_of_bounds(c, mmax):
+                yield sx - x, sy + y
+            c = sx + x, sy + y
+            if not is_out_of_bounds(c, mmax):
+                yield sx + x, sy + y
 
 
 def filter_boundary(sensor, boundary, all_sensors, mmax):
@@ -50,7 +65,8 @@ def filter_boundary(sensor, boundary, all_sensors, mmax):
             continue
         d = manhattan(s, b)
         test_boundary = [x for x in test_boundary if manhattan(x, s) > d]
-    test_boundary = [b for b in test_boundary if 0 <= b[0] <= mmax and 0 <= b[1] <= mmax]
+        if not test_boundary:
+            return test_boundary
     return test_boundary
 
 
@@ -63,15 +79,17 @@ def part2():
     x = get_input('15')
     # x = TEST1.strip()
 
-    sbs = list(parse(x))
+    mmax = 4_000_000
+
+    sbs = sorted(list(parse(x)))
     boundaries = dict()
     for s, b in sbs:
-        boundary = list(make_boundary(s, b))
+        boundary = list(make_boundary(s, b, mmax))
         boundaries[s] = boundary
 
     remaining_boundary = set()
     for s, boundary in boundaries.items():
-        result = filter_boundary(s, boundary, sbs, 4000000)
+        result = filter_boundary(s, boundary, sbs, mmax)
         for r in result:
             remaining_boundary.add(r)
 
