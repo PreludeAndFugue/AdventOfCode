@@ -19,7 +19,8 @@ Blueprint 2:
 TEST1 = '''Blueprint 1: Each ore robot costs 4 ore. Each clay robot costs 2 ore. Each obsidian robot costs 3 ore and 14 clay. Each geode robot costs 2 ore and 7 obsidian.
 Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsidian robot costs 3 ore and 8 clay. Each geode robot costs 3 ore and 12 obsidian.'''
 
-T = 24
+T1 = 24
+T2 = 32
 
 def parse(s):
     for line in s.split('\n'):
@@ -53,19 +54,24 @@ def next_robots_material(robots, material, blueprint):
         new_state = new_robots, new_material
         states.append(new_state)
         # if we can build a geode robot, don't look at other possible new states
-        return states
+        return [new_state]
+        # states.append(new_state)
 
+    max_robots_obsidian = blueprint[6]
     # make obsidian robot
-    if ore >= ob_ore and clay >= ob_clay:
+    if ore >= ob_ore and clay >= ob_clay and robot_obsidian < max_robots_obsidian:
         new_robots = robot_ore, robot_clay, robot_obsidian + 1, robot_geode
         new_material = ore - ob_ore, clay - ob_clay, obsidian, geode
         new_state = new_robots, new_material
         states.append(new_state)
-        # if we can build a geode robot, don't look at other possible new states
-        return states
+        # if we can build an obsidian robot, don't look at other possible new states
+        # states.append(new_state)
+        return [new_state]
+        # return states
 
+    max_robots_clay = blueprint[4]
     # make clay robot
-    if ore >= clay_ore:
+    if ore >= clay_ore and robot_clay < max_robots_clay:
         new_robots = robot_ore, robot_clay + 1, robot_obsidian, robot_geode
         new_material = ore - clay_ore, clay, obsidian, geode
         new_state = new_robots, new_material
@@ -81,7 +87,7 @@ def next_robots_material(robots, material, blueprint):
     return states
 
 
-def run(blueprint):
+def run(blueprint, T):
     '''
     Blueprint:
         id, ore robot cost (ore), clay robot cost (ore), obsidian robot cost (ore, clay),
@@ -98,13 +104,16 @@ def run(blueprint):
     q = [start]
     seen = set()
     best_quality_level = 0
-    # best_example = None
+    best_example = None
+    best_geode_count = 0
 
     # i = 0
 
     while q:
         state = heapq.heappop(q)
         t, robots, material = state
+
+        # print(t, robots, material)
 
         # i += 1
         # if i % 1_000_000 == 0:
@@ -115,7 +124,9 @@ def run(blueprint):
             ql = quality_level(robots, material, blueprint)
             if ql > best_quality_level:
                 best_quality_level = ql
-                # best_example = robots, material
+                best_example = robots, material
+            geode_count = material[3]
+            best_geode_count = max(geode_count, best_geode_count)
 
         else:
             for nrobots, nmaterial in next_robots_material(robots, material, blueprint):
@@ -131,28 +142,34 @@ def run(blueprint):
                     heapq.heappush(q, nstate)
                     seen.add(check)
 
-    # print(best_example)
-    return best_quality_level
+    print(best_example, best_quality_level, best_geode_count)
+    return best_quality_level, best_geode_count
 
 
-def part1(blueprints):
+def part1(blueprints, T):
     n = 0
+    g = 1
     for i, b in enumerate(blueprints):
-        # print('blueprint:', i + 1)
-        n += run(b)
-    return n
+        print('blueprint:', i + 1)
+        n1, g1 = run(b, T)
+        n += n1
+        g *= g1
+    return n, g
 
 
 def main():
     s = get_input('19')
     # s = TEST1.strip()
     blueprints = [b for b in parse(s)]
-    # b1 = blueprints[1]
+    b1 = blueprints[0]
 
-    # p1 = run(b1)
-    p1 = part1(blueprints)
+    # p1 = run(b1, T1)
+    # p1 = part1(blueprints, T1)
 
-    print('Part 1:', p1)
+    _, p2 = part1(blueprints[:3], T2)
+
+    # print('Part 1:', p1)
+    print('Part 2:', p2)
 
 
 def test1():
