@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 from functools import cache
 import heapq
 
@@ -107,6 +107,9 @@ def run(blueprint, T):
     best_example = None
     best_geode_count = 0
 
+    # the most number of geodes produced for a particular time.
+    t_geodes = defaultdict(int)
+
     # i = 0
 
     while q:
@@ -114,6 +117,11 @@ def run(blueprint, T):
         t, robots, material = state
 
         # print(t, robots, material)
+        geode_count = material[3]
+        if geode_count < t_geodes[t]:
+            continue
+        else:
+            t_geodes[t] = geode_count
 
         # i += 1
         # if i % 1_000_000 == 0:
@@ -125,7 +133,6 @@ def run(blueprint, T):
             if ql > best_quality_level:
                 best_quality_level = ql
                 best_example = robots, material
-            geode_count = material[3]
             best_geode_count = max(geode_count, best_geode_count)
 
         else:
@@ -166,7 +173,8 @@ def main():
     # p1 = run(b1, T1)
     # p1 = part1(blueprints, T1)
 
-    _, p2 = part1(blueprints[:3], T2)
+    # p1, p2 = part1(blueprints, T1)
+    p1, p2 = part1(blueprints[:3], T2)
 
     # print('Part 1:', p1)
     print('Part 2:', p2)
