@@ -98,8 +98,8 @@ def run(blueprint, T):
     robots = 1, 0, 0, 0
     # ore, clay, obsidian, geode
     material = 0, 0, 0, 0
-    # first item is time
-    start = 0, robots, material
+    # negative of number of geodes, time
+    start = 0, 0, robots, material
 
     q = [start]
     seen = set()
@@ -114,10 +114,10 @@ def run(blueprint, T):
 
     while q:
         state = heapq.heappop(q)
-        t, robots, material = state
+        geode_count, t, robots, material = state
+        geode_count = -geode_count
 
         # print(t, robots, material)
-        geode_count = material[3]
         if geode_count < t_geodes[t]:
             continue
         else:
@@ -128,12 +128,15 @@ def run(blueprint, T):
         #     print(i, len(q))
         #     print(t, robots, material, best_quality_level)
 
-        if t == T:
-            ql = quality_level(robots, material, blueprint)
+        # don't need to perform the final step: creating a new robot is pointless because
+        # it doesn't add to the number of geodes created.
+        if t == T - 1:
+            final_material = robots[0] + material[0], robots[1] + material[1], robots[2] + material[2], robots[3] + material[3]
+            ql = quality_level(robots, final_material, blueprint)
             if ql > best_quality_level:
                 best_quality_level = ql
-                best_example = robots, material
-            best_geode_count = max(geode_count, best_geode_count)
+                best_example = robots, final_material
+            best_geode_count = max(final_material[3], best_geode_count)
 
         else:
             for nrobots, nmaterial in next_robots_material(robots, material, blueprint):
@@ -141,9 +144,10 @@ def run(blueprint, T):
                 # print(nrobots, nmaterial)
                 # print('new material', robots)
                 total_material = robots[0] + nmaterial[0], robots[1] + nmaterial[1], robots[2] + nmaterial[2], robots[3] + nmaterial[3]
+                new_geode_count = total_material[3]
                 # input()
 
-                nstate = t + 1, nrobots, total_material
+                nstate = -new_geode_count, t + 1, nrobots, total_material
                 check = nrobots, total_material
                 if check not in seen:
                     heapq.heappush(q, nstate)
