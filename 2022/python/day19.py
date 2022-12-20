@@ -77,8 +77,9 @@ def next_robots_material(robots, material, blueprint):
         new_state = new_robots, new_material
         states.append(new_state)
 
+    max_robots_ore = max(blueprint[1], blueprint[2], blueprint[3], blueprint[5])
     # make ore robot
-    if ore >= ore_ore:
+    if ore >= ore_ore and robot_ore < max_robots_ore:
         new_robots = robot_ore + 1, robot_clay, robot_obsidian, robot_geode
         new_material = ore - ore_ore, clay, obsidian, geode
         new_state = new_robots, new_material
@@ -153,7 +154,7 @@ def run(blueprint, T):
                     heapq.heappush(q, nstate)
                     seen.add(check)
 
-    print(best_example, best_quality_level, best_geode_count)
+    # print(best_example, best_quality_level, best_geode_count)
     return best_quality_level, best_geode_count
 
 
@@ -161,7 +162,7 @@ def part1(blueprints, T):
     n = 0
     g = 1
     for i, b in enumerate(blueprints):
-        print('blueprint:', i + 1)
+        # print('blueprint:', i + 1)
         n1, g1 = run(b, T)
         n += n1
         g *= g1
