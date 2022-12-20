@@ -15,12 +15,7 @@ class Node:
         self.n = n
         self.before = before
         self.after = after
-        if n > 0:
-            self.move = n % (size - 1)
-        elif n < 0:
-            self.move = n % (size - 1)
-        else:
-            self.move = 0
+        self.move = n % (size - 1)
 
 
     def __repr__(self) -> str:
