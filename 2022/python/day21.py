@@ -55,13 +55,43 @@ def evaluate(monkey, monkeys):
         raise ValueError
 
 
+def test(humn, monkeys):
+    monkeys['humn'] = humn
+    _, m1, m2 = monkeys['root']
+    m1 = evaluate(m1, monkeys)
+    m2 = evaluate(m2, monkeys)
+    if m1 < m2:
+        return -1
+    elif m1 > m2:
+        return 1
+    else:
+        return 0
+
+
+def part2(monkeys):
+    lower = -5589789975037200
+    upper = 5589789975037200
+    while lower < upper:
+        n = (upper + lower) // 2
+        t = test(n, monkeys)
+        if t < 0:
+            upper = n - 1
+        elif t > 0:
+            lower = n + 1
+        else:
+            return n
+
+
 def main():
     s = get_input('21')
     # s = TEST.strip()
     monkeys = parse(s)
 
     p1 = evaluate('root', monkeys)
+    p2 = part2(monkeys)
+
     print('Part 1:', p1)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
