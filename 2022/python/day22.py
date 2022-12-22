@@ -8,6 +8,9 @@ Part 1
 ------
 172062: too high
 
+Part 2
+------
+101330: too low
 '''
 
 TEST = '''        ...#
@@ -67,9 +70,8 @@ def get_neighbour(location, direction, map_):
     nx, ny = x + dx, y + dy
     new_location = nx, ny
     if new_location in map_:
-        return new_location, map_[new_location]
+        return new_location, direction, map_[new_location]
     else:
-        # print('new location not in map', direction)
         if direction == U:
             ny = max(c[1] for c in map_ if c[0] == x)
         elif direction == D:
@@ -78,18 +80,153 @@ def get_neighbour(location, direction, map_):
             nx = max(c[0] for c in map_ if c[1] == y)
         elif direction == R:
             nx = min(c[0] for c in map_ if c[1] == y)
-            # print('jump --', nx)
         else:
             raise ValueError(location, direction)
 
         new_location = nx, ny
         if new_location in map_:
-            return new_location, map_[new_location]
+            return new_location, direction, map_[new_location]
     raise ValueError(location, direction)
 
 
 def get_neighbour_2(location, direction, map_):
-    return location, direction
+    '''
+    Use Rubik's cube colours
+
+                    W       W
+                    ^       ^
+                -----------------
+            O < |   B   |   R   | > G
+                -----------------
+                |   Y   |
+        -----------------
+    B < |   O   |   G   | > R
+        -----------------
+    B < |   W   |
+        ---------
+            v
+            R
+
+    Blue
+    ----
+    B -> W
+    direction: U ->
+
+    Red
+    ---
+    R -> W
+    directions: U ->
+
+    R -> Y
+    direction: D -> L
+    coords:
+
+    R -> G
+    direction: R ->
+
+    Yellow
+    ------
+    Y -> O
+    direction: L -> D
+
+    Y -> R
+    direction: R -> U
+    '''
+    x, y = location
+    dx, dy = direction
+    nx, ny = x + dx, y + dy
+    new_location = nx, ny
+    if new_location in map_:
+        return new_location, direction, map_[new_location]
+    else:
+        if direction == U:
+            if 1 <= x <= 50:
+                # O -> Y
+                new_direction = R
+                nx = 51
+                ny = x + 50
+            elif 51 <= x <= 100:
+                # B -> W
+                new_direction = R
+                nx = 1
+                ny = x + 100
+            elif 101 <= x <= 150:
+                # R -> W
+                new_direction = direction
+                nx = x - 100
+                ny = 200
+            else:
+                raise ValueError(location, direction)
+        elif direction == D:
+            if 1 <= x <= 50:
+                # W -> R
+                new_direction = direction
+                nx = x + 100
+                ny = 1
+            elif 51 <= x <= 100:
+                # G -> W
+                new_direction = L
+                nx = 50
+                ny = x + 100
+            elif 101 <= x <= 150:
+                # R -> Y
+                new_direction = L
+                nx = 100
+                ny = x - 50
+            else:
+                raise ValueError(location, direction)
+        elif direction == L:
+            if 1 <= y <= 50:
+                # B -> O
+                new_direction = R
+                nx = 1
+                ny = 151 - y
+            elif 51 <= y <= 100:
+                # Y -> 0
+                new_direction = D
+                nx = y - 50
+                ny = 101
+            elif 101 <= y <= 150:
+                # O -> B
+                new_direction = R
+                nx = 51
+                ny = 151 - y
+            elif 151 <= y <= 200:
+                # W -> B
+                new_direction = D
+                nx = y - 100
+                ny = 1
+            else:
+                raise ValueError(location, direction)
+        elif direction == R:
+            if 1 <= y <= 50:
+                # R -> G
+                new_direction = L
+                nx = 100
+                ny = 151 - y
+            elif 51 <= y <= 100:
+                # Y -> R
+                new_direction = U
+                nx = y + 50
+                ny = 50
+            elif 101 <= y <= 150:
+                # G -> R
+                new_direction = L
+                nx = 150
+                ny = 151 - y
+            elif 151 <= y <= 200:
+                # W -> G
+                new_direction = U
+                nx = y - 100
+                ny = 150
+            else:
+                raise ValueError(location, direction)
+
+        new_location = nx, ny
+        if new_location in map_:
+            return new_location, new_direction, map_[new_location]
+
+        raise ValueError(location, direction)
 
 
 def get_initial_location(map_):
@@ -103,18 +240,13 @@ def part(location, direction, instructions, neighbour_function, map_):
     for i in instructions:
         if isinstance(i, int):
             for _ in range(i):
-                # print('move', d)
-                new_location, value = neighbour_function(location, d, map_)
+                new_location, new_direction, value = neighbour_function(location, d, map_)
                 if value == '#':
-                    # print('blocked')
                     continue
                 else:
                     location = new_location
-
-                # print(location, d)
+                    d = new_direction
         else:
-            # print('new direction', d)
-            # d = get_new_direction(d, i)
             d = CHANGE_DIRECTION[i][d]
 
     f = FACING[d]
@@ -132,8 +264,10 @@ def main():
     location = get_initial_location(map_)
 
     p1 = part(location, d, instructions, get_neighbour, map_)
+    p2 = part(location, d, instructions, get_neighbour_2, map_)
 
     print('Part 1:', p1)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
