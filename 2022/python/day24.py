@@ -1,6 +1,7 @@
 
 from collections import defaultdict
 import heapq
+import math
 
 from help import get_input
 
@@ -26,7 +27,6 @@ DIRS = [(-1, 0), (1, 0), (0, -1), (0, 1), (0, 0)]
 
 
 def parse(s):
-    print(s)
     rows = s.split('\n')
     start = 1, 0
     goal = len(rows[0]) - 2, len(rows) - 1
@@ -71,6 +71,18 @@ def draw(map_, blizzards, start, goal, location, xmax, ymax):
     print()
 
 
+def make_blizzard_time_map(blizzards, xmax, ymax):
+    map_ = {0: blizzards}
+    total = math.lcm(xmax, ymax)
+    for t in range(total):
+        blizzards = move_blizzards(blizzards, xmax, ymax)
+        map_[t + 1] = blizzards
+    def f(t):
+        t = t % total
+        return map_[t]
+    return f
+
+
 def move_blizzards(blizzards, xmax, ymax):
     new_blizzards = defaultdict(list)
     for location, items in blizzards.items():
@@ -113,49 +125,42 @@ def manhattan(a, b):
     return abs(x2 - x1) + abs(y2 - y1)
 
 
-def part1(map_, blizzards, start, goal, xmax, ymax, status):
-    print('xmax', xmax, 'ymax', ymax)
+def part1(map_, blizzard_map, start, goal, initial_t, xmax, ymax, status):
     dgoal = manhattan(start, goal)
     # heuristic is t + distance to goal
-    h = 0 + dgoal
-    q = [(h, 0, start, blizzards)]
+    h = initial_t + dgoal
+    q = [(h, initial_t, start)]
     # (distance, location pairs)
     seen = set()
 
-    i = 0
+    # i = 0
 
     while q:
-        h, t, location, bl = heapq.heappop(q)
+        h, t, location = heapq.heappop(q)
 
-        # print(d, dgoal, location)
-        # draw(map_, bl, start, goal, location, xmax, ymax)
-        # input()
-        i += 1
-        if i % 10_000 == 0:
-            print(t, dgoal, location, status)
+        # i += 1
+        # if i % 10_000 == 0:
+        #     print(t, dgoal, location, status)
 
         if location == goal:
-            return t, bl
+            return t
 
         s = t, location
         if s in seen:
             continue
         seen.add(s)
 
-        new_bl = move_blizzards(bl, xmax, ymax)
-        for nl in get_neighbours(location, map_, new_bl):
+        bl = blizzard_map(t + 1)
+        for nl in get_neighbours(location, map_, bl):
             ndgoal = manhattan(nl, goal)
             h = t + 1 + ndgoal
-            heapq.heappush(q, (h, t + 1, nl, new_bl))
+            heapq.heappush(q, (h, t + 1, nl))
 
 
-def part2(map_, blizzards, start, goal, xmax, ymax):
-    t1, bl1 = part1(map_, blizzards, start, goal, xmax, ymax, 'to goal')
-    t2, bl2 = part1(map_, bl1, goal, start, xmax, ymax, 'to start')
-    t3, _ = part1(map_, bl2, start, goal, xmax, ymax, 'to goal 2')
-
-    print(t1, t2, t3)
-    return t1 + t2 + t3
+def part2(map_, blizzard_map, start, goal, t1, xmax, ymax):
+    t2 = part1(map_, blizzard_map, goal, start, t1, xmax, ymax, 'to start')
+    t3 = part1(map_, blizzard_map, start, goal, t2, xmax, ymax, 'to goal 2')
+    return t3
 
 
 def main():
@@ -163,9 +168,10 @@ def main():
     # s = TEST.strip()
     # s = TEST2.strip()
     start, goal, xmax, ymax, map_, blizzards = parse(s)
+    blizzard_map = make_blizzard_time_map(blizzards, xmax, ymax)
 
-    p1, _ = part1(map_, blizzards, start, goal, xmax, ymax, '')
-    p2 = part2(map_, blizzards, start, goal, xmax, ymax)
+    p1 = part1(map_, blizzard_map, start, goal, 0, xmax, ymax, '')
+    p2 = part2(map_, blizzard_map, start, goal, p1, xmax, ymax)
 
     print('Part 1:', p1)
     print('Part 2:', p2)
