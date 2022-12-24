@@ -113,7 +113,7 @@ def manhattan(a, b):
     return abs(x2 - x1) + abs(y2 - y1)
 
 
-def part1(map_, blizzards, start, goal, xmax, ymax):
+def part1(map_, blizzards, start, goal, xmax, ymax, status):
     print('xmax', xmax, 'ymax', ymax)
     dgoal = manhattan(start, goal)
     q = [(0, dgoal, start, blizzards)]
@@ -130,10 +130,10 @@ def part1(map_, blizzards, start, goal, xmax, ymax):
         # input()
         i += 1
         if i % 10_000 == 0:
-            print(t, dgoal, location)
+            print(t, dgoal, location, status)
 
         if location == goal:
-            return t
+            return t, bl
 
         s = t, location
         if s in seen:
@@ -146,15 +146,26 @@ def part1(map_, blizzards, start, goal, xmax, ymax):
             heapq.heappush(q, (t + 1, ndgoal, nl, new_bl))
 
 
+def part2(map_, blizzards, start, goal, xmax, ymax):
+    t1, bl1 = part1(map_, blizzards, start, goal, xmax, ymax, 'to goal')
+    t2, bl2 = part1(map_, bl1, goal, start, xmax, ymax, 'to start')
+    t3, _ = part1(map_, bl2, start, goal, xmax, ymax, 'to goal 2')
+
+    print(t1, t2, t3)
+    return t1 + t2 + t3
+
+
 def main():
     s = get_input('24')
     # s = TEST.strip()
     # s = TEST2.strip()
     start, goal, xmax, ymax, map_, blizzards = parse(s)
 
-    p1 = part1(map_, blizzards, start, goal, xmax, ymax)
+    p1, _ = part1(map_, blizzards, start, goal, xmax, ymax, '')
+    p2 = part2(map_, blizzards, start, goal, xmax, ymax)
 
     print('Part 1:', p1)
+    print('Part 2:', p2)
 
 
 if __name__ == '__main__':
