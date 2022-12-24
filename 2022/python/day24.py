@@ -116,14 +116,16 @@ def manhattan(a, b):
 def part1(map_, blizzards, start, goal, xmax, ymax, status):
     print('xmax', xmax, 'ymax', ymax)
     dgoal = manhattan(start, goal)
-    q = [(0, dgoal, start, blizzards)]
+    # heuristic is t + distance to goal
+    h = 0 + dgoal
+    q = [(h, 0, start, blizzards)]
     # (distance, location pairs)
     seen = set()
 
     i = 0
 
     while q:
-        t, dgoal, location, bl = heapq.heappop(q)
+        h, t, location, bl = heapq.heappop(q)
 
         # print(d, dgoal, location)
         # draw(map_, bl, start, goal, location, xmax, ymax)
@@ -143,7 +145,8 @@ def part1(map_, blizzards, start, goal, xmax, ymax, status):
         new_bl = move_blizzards(bl, xmax, ymax)
         for nl in get_neighbours(location, map_, new_bl):
             ndgoal = manhattan(nl, goal)
-            heapq.heappush(q, (t + 1, ndgoal, nl, new_bl))
+            h = t + 1 + ndgoal
+            heapq.heappush(q, (h, t + 1, nl, new_bl))
 
 
 def part2(map_, blizzards, start, goal, xmax, ymax):
