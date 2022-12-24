@@ -125,7 +125,7 @@ def manhattan(a, b):
     return abs(x2 - x1) + abs(y2 - y1)
 
 
-def part1(map_, blizzard_map, start, goal, initial_t, xmax, ymax, status):
+def part1(map_, blizzard_map, start, goal, initial_t):
     dgoal = manhattan(start, goal)
     # heuristic is t + distance to goal
     h = initial_t + dgoal
@@ -157,9 +157,9 @@ def part1(map_, blizzard_map, start, goal, initial_t, xmax, ymax, status):
             heapq.heappush(q, (h, t + 1, nl))
 
 
-def part2(map_, blizzard_map, start, goal, t1, xmax, ymax):
-    t2 = part1(map_, blizzard_map, goal, start, t1, xmax, ymax, 'to start')
-    t3 = part1(map_, blizzard_map, start, goal, t2, xmax, ymax, 'to goal 2')
+def part2(map_, blizzard_map, start, goal, t1):
+    t2 = part1(map_, blizzard_map, goal, start, t1)
+    t3 = part1(map_, blizzard_map, start, goal, t2)
     return t3
 
 
@@ -170,8 +170,8 @@ def main():
     start, goal, xmax, ymax, map_, blizzards = parse(s)
     blizzard_map = make_blizzard_time_map(blizzards, xmax, ymax)
 
-    p1 = part1(map_, blizzard_map, start, goal, 0, xmax, ymax, '')
-    p2 = part2(map_, blizzard_map, start, goal, p1, xmax, ymax)
+    p1 = part1(map_, blizzard_map, start, goal, 0)
+    p2 = part2(map_, blizzard_map, start, goal, p1)
 
     print('Part 1:', p1)
     print('Part 2:', p2)
