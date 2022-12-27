@@ -17,16 +17,6 @@ TEST = '''1=-0-2
 122'''
 
 
-def number5(n):
-    if n == 0:
-        return [0]
-    digits = []
-    while n:
-        digits.append(str(n % 5))
-        n //= 5
-    return ''.join(digits[::-1])
-
-
 def convert_from(s):
     result = 0
     for i, c in enumerate(reversed(s)):
@@ -44,28 +34,19 @@ def convert_from(s):
 
 def convert_to(n):
     result = []
-    m5 = int(number5(n))
-    while m5 > 0:
-        k = m5 % 10
-        assert 0 <= k <= 4
-        m5 = m5 // 10
-        if k == 0 or k == 1 or k == 2:
+    while n > 0:
+        k = n % 5
+        n //= 5
+        if 0 <= k <= 2:
             result.append(str(k))
         elif k == 3:
             result.append('=')
-            m5 += 1
+            n += 1
         elif k == 4:
             result.append('-')
-            m5 += 1
+            n += 1
         else:
-            raise ValueError
-
-        a = m5 % 10
-        if a == 5:
-            m5 += 5
-        if a > 5:
-            raise ValueError
-
+            raise ValueError(k)
     return ''.join(reversed(result))
 
 
