@@ -79,9 +79,7 @@ private extension Computer {
         assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-
-        let n = n1 + n2
-        memory[p3] = n
+        memory[p3] = n1 + n2
         pointer += 4
     }
 
@@ -90,9 +88,7 @@ private extension Computer {
         assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-
-        let n = n1 * n2
-        memory[p3] = n
+        memory[p3] = n1 * n2
         pointer += 4
     }
 
@@ -116,24 +112,14 @@ private extension Computer {
     func jumpIfTrue(mode1: Instruction.Mode, mode2: Instruction.Mode) {
         let (p1, p2) = get2()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-
-        if n1 != 0 {
-            pointer = n2
-        } else {
-            pointer += 3
-        }
+        pointer = n1 != 0 ? n2 : pointer + 3
     }
 
 
     func jumpIfFalse(mode1: Instruction.Mode, mode2: Instruction.Mode) {
         let (p1, p2) = get2()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-
-        if n1 == 0 {
-            pointer = n2
-        } else {
-            pointer += 3
-        }
+        pointer = n1 == 0 ? n2 : pointer + 3
     }
 
 
@@ -141,12 +127,7 @@ private extension Computer {
         assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-
-        if n1 < n2 {
-            memory[p3] = 1
-        } else {
-            memory[p3] = 0
-        }
+        memory[p3] = n1 < n2 ? 1 : 0
         pointer += 4
     }
 
@@ -155,12 +136,7 @@ private extension Computer {
         assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-
-        if n1 == n2 {
-            memory[p3] = 1
-        } else {
-            memory[p3] = 0
-        }
+        memory[p3] = n1 == n2 ? 1 : 0
         pointer += 4
     }
 
