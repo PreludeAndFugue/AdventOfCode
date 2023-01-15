@@ -21,6 +21,8 @@
 		4E78A88A297454C3001A7FD4 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 4E78A889297454C3001A7FD4 /* Algorithms */; };
 		4E78A88C29747D54001A7FD4 /* Day08.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A88B29747D54001A7FD4 /* Day08.swift */; };
 		4E78A88E2974959C001A7FD4 /* Day09.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A88D2974959C001A7FD4 /* Day09.swift */; };
+		4E78A8902974A022001A7FD4 /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A88F2974A022001A7FD4 /* Day10.swift */; };
+		4E78A8922974A311001A7FD4 /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A8912974A311001A7FD4 /* Maths.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +52,8 @@
 		4E78A886297446DE001A7FD4 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		4E78A88B29747D54001A7FD4 /* Day08.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day08.swift; sourceTree = "<group>"; };
 		4E78A88D2974959C001A7FD4 /* Day09.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day09.swift; sourceTree = "<group>"; };
+		4E78A88F2974A022001A7FD4 /* Day10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
+		4E78A8912974A311001A7FD4 /* Maths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maths.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 				4E78A885297446D1001A7FD4 /* Computer */,
 				4E383435297367ED00104C51 /* main.swift */,
 				4E38343E29736BBD00104C51 /* Help.swift */,
+				4E78A8912974A311001A7FD4 /* Maths.swift */,
 				4E38343C2973684400104C51 /* Day01.swift */,
 				4E38344029736CCC00104C51 /* Day02.swift */,
 				4E3834442973740A00104C51 /* Day03.swift */,
@@ -95,6 +100,7 @@
 				4E78A88329744558001A7FD4 /* Day07.swift */,
 				4E78A88B29747D54001A7FD4 /* Day08.swift */,
 				4E78A88D2974959C001A7FD4 /* Day09.swift */,
+				4E78A88F2974A022001A7FD4 /* Day10.swift */,
 			);
 			path = AdventOfCode2019a;
 			sourceTree = "<group>";
@@ -173,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E383436297367ED00104C51 /* main.swift in Sources */,
+				4E78A8902974A022001A7FD4 /* Day10.swift in Sources */,
 				4E383449297384DB00104C51 /* Day05.swift in Sources */,
 				4E38344B29738D2000104C51 /* Day06.swift in Sources */,
 				4E38343D2973684400104C51 /* Day01.swift in Sources */,
@@ -184,6 +191,7 @@
 				4E78A88C29747D54001A7FD4 /* Day08.swift in Sources */,
 				4E78A88429744558001A7FD4 /* Day07.swift in Sources */,
 				4E38343F29736BBD00104C51 /* Help.swift in Sources */,
+				4E78A8922974A311001A7FD4 /* Maths.swift in Sources */,
 				4E3834452973740A00104C51 /* Day03.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
