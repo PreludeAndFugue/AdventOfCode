@@ -49,6 +49,7 @@ class Computer {
     func load(program: IntCode) {
         self.memory = Memory(program: program)
         self.pointer = 0
+        self.relativeBase = 0
         self.input = []
         self.output = []
     }

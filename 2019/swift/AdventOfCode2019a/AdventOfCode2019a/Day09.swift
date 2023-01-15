@@ -16,7 +16,12 @@ func day09() {
     c.load(program: program)
     c.input.append(1)
     c.run()
-    print(c.output)
+    print(c.output.first!)
+
+    c.load(program: program)
+    c.input.append(2)
+    c.run()
+    print(c.output.first!)
 }
 
 
