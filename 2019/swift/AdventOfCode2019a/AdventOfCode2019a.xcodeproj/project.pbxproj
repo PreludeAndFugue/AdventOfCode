@@ -16,6 +16,9 @@
 		4E38344729737BB500104C51 /* Day04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38344629737BB500104C51 /* Day04.swift */; };
 		4E383449297384DB00104C51 /* Day05.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E383448297384DB00104C51 /* Day05.swift */; };
 		4E38344B29738D2000104C51 /* Day06.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E38344A29738D2000104C51 /* Day06.swift */; };
+		4E78A88429744558001A7FD4 /* Day07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A88329744558001A7FD4 /* Day07.swift */; };
+		4E78A887297446DE001A7FD4 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A886297446DE001A7FD4 /* Memory.swift */; };
+		4E78A88A297454C3001A7FD4 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 4E78A889297454C3001A7FD4 /* Algorithms */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +44,8 @@
 		4E38344629737BB500104C51 /* Day04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day04.swift; sourceTree = "<group>"; };
 		4E383448297384DB00104C51 /* Day05.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day05.swift; sourceTree = "<group>"; };
 		4E38344A29738D2000104C51 /* Day06.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day06.swift; sourceTree = "<group>"; };
+		4E78A88329744558001A7FD4 /* Day07.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day07.swift; sourceTree = "<group>"; };
+		4E78A886297446DE001A7FD4 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E78A88A297454C3001A7FD4 /* Algorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,8 +79,8 @@
 		4E383434297367ED00104C51 /* AdventOfCode2019a */ = {
 			isa = PBXGroup;
 			children = (
+				4E78A885297446D1001A7FD4 /* Computer */,
 				4E383435297367ED00104C51 /* main.swift */,
-				4E38344229736D3200104C51 /* Computer.swift */,
 				4E38343E29736BBD00104C51 /* Help.swift */,
 				4E38343C2973684400104C51 /* Day01.swift */,
 				4E38344029736CCC00104C51 /* Day02.swift */,
@@ -82,8 +88,18 @@
 				4E38344629737BB500104C51 /* Day04.swift */,
 				4E383448297384DB00104C51 /* Day05.swift */,
 				4E38344A29738D2000104C51 /* Day06.swift */,
+				4E78A88329744558001A7FD4 /* Day07.swift */,
 			);
 			path = AdventOfCode2019a;
+			sourceTree = "<group>";
+		};
+		4E78A885297446D1001A7FD4 /* Computer */ = {
+			isa = PBXGroup;
+			children = (
+				4E38344229736D3200104C51 /* Computer.swift */,
+				4E78A886297446DE001A7FD4 /* Memory.swift */,
+			);
+			path = Computer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,6 +118,9 @@
 			dependencies = (
 			);
 			name = AdventOfCode2019a;
+			packageProductDependencies = (
+				4E78A889297454C3001A7FD4 /* Algorithms */,
+			);
 			productName = AdventOfCode2019a;
 			productReference = 4E383432297367ED00104C51 /* AdventOfCode2019a */;
 			productType = "com.apple.product-type.tool";
@@ -130,6 +149,9 @@
 				Base,
 			);
 			mainGroup = 4E383429297367ED00104C51;
+			packageReferences = (
+				4E78A888297454C3001A7FD4 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
 			productRefGroup = 4E383433297367ED00104C51 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -149,8 +171,10 @@
 				4E38344B29738D2000104C51 /* Day06.swift in Sources */,
 				4E38343D2973684400104C51 /* Day01.swift in Sources */,
 				4E38344329736D3200104C51 /* Computer.swift in Sources */,
+				4E78A887297446DE001A7FD4 /* Memory.swift in Sources */,
 				4E38344129736CCC00104C51 /* Day02.swift in Sources */,
 				4E38344729737BB500104C51 /* Day04.swift in Sources */,
+				4E78A88429744558001A7FD4 /* Day07.swift in Sources */,
 				4E38343F29736BBD00104C51 /* Help.swift in Sources */,
 				4E3834452973740A00104C51 /* Day03.swift in Sources */,
 			);
@@ -316,6 +340,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4E78A888297454C3001A7FD4 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4E78A889297454C3001A7FD4 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E78A888297454C3001A7FD4 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4E38342A297367ED00104C51 /* Project object */;
 }

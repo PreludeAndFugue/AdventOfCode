@@ -28,6 +28,7 @@ class Computer {
     }
 
 
+//    private(set) var memory: Memory = Memory(program: [])
     private(set) var memory: IntCode = []
     private var pointer = 0
 
@@ -36,6 +37,7 @@ class Computer {
 
 
     func load(program: IntCode) {
+//        self.memory = Memory(program: program)
         self.memory = program
         self.pointer = 0
         self.input = []
@@ -51,7 +53,7 @@ class Computer {
             case .multiplies(let m1, let m2, let m3):
                 multiplies(mode1: m1, mode2: m2, mode3: m3)
             case .input(let m1):
-                let i = input.popLast()!
+                let i = input.removeFirst()
                 input_(mode1: m1, input: i)
             case .output(let m1):
                 let o = output_(mode1: m1)
@@ -147,7 +149,7 @@ private extension Computer {
 
 
     func get3() -> (Int, Int, Int) {
-        (memory[pointer + 1], memory[pointer + 2], memory[pointer] + 3)
+        (memory[pointer + 1], memory[pointer + 2], memory[pointer + 3])
     }
 
 
