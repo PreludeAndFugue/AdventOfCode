@@ -10,6 +10,13 @@ import Foundation
 typealias IntCode = Array<Int>
 
 class Computer {
+    enum State {
+        case running
+        case paused
+        case done
+    }
+
+
     enum Instruction {
         enum Mode: Int {
             case position = 0
@@ -34,6 +41,7 @@ class Computer {
 
     var input: [Int] = []
     var output: [Int] = []
+    var state: State = .paused
 
 
     func load(program: IntCode) {
@@ -46,7 +54,8 @@ class Computer {
 
 
     func run() {
-        while true {
+        state = .running
+        while state == .running {
             switch Instruction(n: memory[pointer]) {
             case .adds(let m1, let m2, let m3):
                 adds(mode1: m1, mode2: m2, mode3: m3)
@@ -58,6 +67,7 @@ class Computer {
             case .output(let m1):
                 let o = output_(mode1: m1)
                 output.append(o)
+                state = .paused
             case .jumpIfTrue(let m1, let m2):
                 jumpIfTrue(mode1: m1, mode2: m2)
             case .jumpIfFalse(let m1, let m2):
@@ -67,6 +77,7 @@ class Computer {
             case .equals(let m1, let m2, let m3):
                 equals(mode1: m1, mode2: m2, mode3: m3)
             case .halt:
+                state = .done
                 return
             }
         }
