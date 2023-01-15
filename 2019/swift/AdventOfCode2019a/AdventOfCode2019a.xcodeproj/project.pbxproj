@@ -19,6 +19,7 @@
 		4E78A88429744558001A7FD4 /* Day07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A88329744558001A7FD4 /* Day07.swift */; };
 		4E78A887297446DE001A7FD4 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A886297446DE001A7FD4 /* Memory.swift */; };
 		4E78A88A297454C3001A7FD4 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 4E78A889297454C3001A7FD4 /* Algorithms */; };
+		4E78A88C29747D54001A7FD4 /* Day08.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A88B29747D54001A7FD4 /* Day08.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,7 @@
 		4E38344A29738D2000104C51 /* Day06.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day06.swift; sourceTree = "<group>"; };
 		4E78A88329744558001A7FD4 /* Day07.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day07.swift; sourceTree = "<group>"; };
 		4E78A886297446DE001A7FD4 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		4E78A88B29747D54001A7FD4 /* Day08.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day08.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				4E383448297384DB00104C51 /* Day05.swift */,
 				4E38344A29738D2000104C51 /* Day06.swift */,
 				4E78A88329744558001A7FD4 /* Day07.swift */,
+				4E78A88B29747D54001A7FD4 /* Day08.swift */,
 			);
 			path = AdventOfCode2019a;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 				4E78A887297446DE001A7FD4 /* Memory.swift in Sources */,
 				4E38344129736CCC00104C51 /* Day02.swift in Sources */,
 				4E38344729737BB500104C51 /* Day04.swift in Sources */,
+				4E78A88C29747D54001A7FD4 /* Day08.swift in Sources */,
 				4E78A88429744558001A7FD4 /* Day07.swift in Sources */,
 				4E38343F29736BBD00104C51 /* Help.swift in Sources */,
 				4E3834452973740A00104C51 /* Day03.swift in Sources */,
