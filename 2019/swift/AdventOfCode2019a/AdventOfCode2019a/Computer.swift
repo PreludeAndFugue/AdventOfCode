@@ -77,12 +77,9 @@ class Computer {
 private extension Computer {
     func adds(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
         assert(mode3 == .position)
-        let p1 = memory[pointer + 1]
-        let p2 = memory[pointer + 2]
-        let p3 = memory[pointer + 3]
+        let (p1, p2, p3) = get3()
+        let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
 
-        let n1 = mode1 == .position ? memory[p1] : p1
-        let n2 = mode2 == .position ? memory[p2] : p2
         let n = n1 + n2
         memory[p3] = n
         pointer += 4
@@ -91,12 +88,9 @@ private extension Computer {
 
     func multiplies(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
         assert(mode3 == .position)
-        let p1 = memory[pointer + 1]
-        let p2 = memory[pointer + 2]
-        let p3 = memory[pointer + 3]
+        let (p1, p2, p3) = get3()
+        let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
 
-        let n1 = mode1 == .position ? memory[p1] : p1
-        let n2 = mode2 == .position ? memory[p2] : p2
         let n = n1 * n2
         memory[p3] = n
         pointer += 4
@@ -120,11 +114,8 @@ private extension Computer {
 
 
     func jumpIfTrue(mode1: Instruction.Mode, mode2: Instruction.Mode) {
-        let p1 = memory[pointer + 1]
-        let p2 = memory[pointer + 2]
-
-        let n1 = mode1 == .position ? memory[p1] : p1
-        let n2 = mode2 == .position ? memory[p2] : p2
+        let (p1, p2) = get2()
+        let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
 
         if n1 != 0 {
             pointer = n2
@@ -135,11 +126,8 @@ private extension Computer {
 
 
     func jumpIfFalse(mode1: Instruction.Mode, mode2: Instruction.Mode) {
-        let p1 = memory[pointer + 1]
-        let p2 = memory[pointer + 2]
-
-        let n1 = mode1 == .position ? memory[p1] : p1
-        let n2 = mode2 == .position ? memory[p2] : p2
+        let (p1, p2) = get2()
+        let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
 
         if n1 == 0 {
             pointer = n2
@@ -151,12 +139,8 @@ private extension Computer {
 
     func lessThan(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
         assert(mode3 == .position)
-        let p1 = memory[pointer + 1]
-        let p2 = memory[pointer + 2]
-        let p3 = memory[pointer + 3]
-
-        let n1 = mode1 == .position ? memory[p1] : p1
-        let n2 = mode2 == .position ? memory[p2] : p2
+        let (p1, p2, p3) = get3()
+        let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
 
         if n1 < n2 {
             memory[p3] = 1
@@ -169,12 +153,8 @@ private extension Computer {
 
     func equals(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
         assert(mode3 == .position)
-        let p1 = memory[pointer + 1]
-        let p2 = memory[pointer + 2]
-        let p3 = memory[pointer + 3]
-
-        let n1 = mode1 == .position ? memory[p1] : p1
-        let n2 = mode2 == .position ? memory[p2] : p2
+        let (p1, p2, p3) = get3()
+        let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
 
         if n1 == n2 {
             memory[p3] = 1
@@ -182,6 +162,23 @@ private extension Computer {
             memory[p3] = 0
         }
         pointer += 4
+    }
+
+
+    func get2() -> (Int, Int) {
+        (memory[pointer + 1], memory[pointer + 2])
+    }
+
+
+    func get3() -> (Int, Int, Int) {
+        (memory[pointer + 1], memory[pointer + 2], memory[pointer] + 3)
+    }
+
+
+    func get(p1: Int, m1: Instruction.Mode, p2: Int, m2: Instruction.Mode) -> (Int, Int) {
+        let n1 = m1 == .position ? memory[p1] : p1
+        let n2 = m2 == .position ? memory[p2] : p2
+        return (n1, n2)
     }
 }
 
@@ -191,43 +188,30 @@ extension Computer.Instruction {
         let opcode = n % 100
         switch opcode {
         case 1:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            let m2 = Mode(rawValue: (n / 1000) % 10)!
-            let m3 = Mode(rawValue: (n / 10000) % 10)!
-            self = .adds(m1, m2, m3)
+            self = .adds(mode(n, 100), mode(n, 1000), mode(n, 10000))
         case 2:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            let m2 = Mode(rawValue: (n / 1000) % 10)!
-            let m3 = Mode(rawValue: (n / 10000) % 10)!
-            self = .multiplies(m1, m2, m3)
+            self = .multiplies(mode(n, 100), mode(n, 1000), mode(n, 10000))
         case 3:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            self = .input(m1)
+            self = .input(mode(n, 100))
         case 4:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            self = .output(m1)
+            self = .output(mode(n, 100))
         case 5:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            let m2 = Mode(rawValue: (n / 1000) % 10)!
-            self = .jumpIfTrue(m1, m2)
+            self = .jumpIfTrue(mode(n, 100), mode(n, 1000))
         case 6:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            let m2 = Mode(rawValue: (n / 1000) % 10)!
-            self = .jumpIfFalse(m1, m2)
+            self = .jumpIfFalse(mode(n, 100), mode(n, 1000))
         case 7:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            let m2 = Mode(rawValue: (n / 1000) % 10)!
-            let m3 = Mode(rawValue: (n / 10000) % 10)!
-            self = .lessThan(m1, m2, m3)
+            self = .lessThan(mode(n, 100), mode(n, 1000), mode(n, 10000))
         case 8:
-            let m1 = Mode(rawValue: (n / 100) % 10)!
-            let m2 = Mode(rawValue: (n / 1000) % 10)!
-            let m3 = Mode(rawValue: (n / 10000) % 10)!
-            self = .equals(m1, m2, m3)
+            self = .equals(mode(n, 100), mode(n, 1000), mode(n, 10000))
         case 99:
             self = .halt
         default:
             fatalError()
         }
     }
+}
+
+
+private func mode(_ n: Int, _ d: Int) -> Computer.Instruction.Mode {
+    Computer.Instruction.Mode(rawValue: (n / d) % 10)!
 }
