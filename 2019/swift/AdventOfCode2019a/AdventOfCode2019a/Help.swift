@@ -28,3 +28,20 @@ func getIncode(file: String) -> IntCode {
         .split(separator: ",")
         .map({ Int($0)! })
 }
+
+
+func manhattan(p1: Point, p2: Point) -> Int {
+    abs(p1.x - p2.x) + abs(p1.y - p2.y)
+}
+
+
+struct Point: Hashable, CustomDebugStringConvertible {
+    let x: Int
+    let y: Int
+
+    static let origin = Point(x: 0, y: 0)
+
+    var debugDescription: String {
+        "(\(x), \(y))"
+    }
+}

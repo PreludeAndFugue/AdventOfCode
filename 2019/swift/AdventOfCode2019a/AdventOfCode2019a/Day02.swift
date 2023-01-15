@@ -18,7 +18,7 @@ func day02() {
 }
 
 
-func part1(program: IntCode) -> Int {
+private func part1(program: IntCode) -> Int {
     var p = program
     p[1] = 12
     p[2] = 2
@@ -29,7 +29,7 @@ func part1(program: IntCode) -> Int {
 }
 
 
-func part2(progam: IntCode) -> Int {
+private func part2(progam: IntCode) -> Int {
     let c = Computer()
     for noun in 0..<100 {
         for verb in 0..<100 {
