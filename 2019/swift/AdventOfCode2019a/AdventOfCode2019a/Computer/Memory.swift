@@ -21,7 +21,7 @@ class Memory {
 
     subscript(index: Int) -> Int {
         get {
-            memory[index]!
+            memory[index, default: 0]
         }
 
         set(newValue) {

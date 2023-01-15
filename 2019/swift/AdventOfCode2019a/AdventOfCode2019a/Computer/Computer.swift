@@ -21,6 +21,7 @@ class Computer {
         enum Mode: Int {
             case position = 0
             case immediate = 1
+            case relative = 2
         }
 
         case adds(Mode, Mode, Mode)
@@ -31,13 +32,14 @@ class Computer {
         case jumpIfFalse(Mode, Mode)
         case lessThan(Mode, Mode, Mode)
         case equals(Mode, Mode, Mode)
+        case adjustRelativeBase(Mode)
         case halt
     }
 
 
-//    private(set) var memory: Memory = Memory(program: [])
-    private(set) var memory: IntCode = []
+    private(set) var memory: Memory = Memory(program: [])
     private var pointer = 0
+    private var relativeBase = 0
 
     var input: [Int] = []
     var output: [Int] = []
@@ -45,8 +47,7 @@ class Computer {
 
 
     func load(program: IntCode) {
-//        self.memory = Memory(program: program)
-        self.memory = program
+        self.memory = Memory(program: program)
         self.pointer = 0
         self.input = []
         self.output = []
@@ -67,7 +68,7 @@ class Computer {
             case .output(let m1):
                 let o = output_(mode1: m1)
                 output.append(o)
-                state = .paused
+//                state = .paused
             case .jumpIfTrue(let m1, let m2):
                 jumpIfTrue(mode1: m1, mode2: m2)
             case .jumpIfFalse(let m1, let m2):
@@ -76,6 +77,8 @@ class Computer {
                 lessThan(mode1: m1, mode2: m2, mode3: m3)
             case .equals(let m1, let m2, let m3):
                 equals(mode1: m1, mode2: m2, mode3: m3)
+            case .adjustRelativeBase(let m1):
+                adjustRelativeBase(mode: m1)
             case .halt:
                 state = .done
                 return
@@ -89,34 +92,35 @@ class Computer {
 
 private extension Computer {
     func adds(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
-        assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-        memory[p3] = n1 + n2
+        let p = mode3 == .relative ? relativeBase + p3 : p3
+        memory[p] = n1 + n2
         pointer += 4
     }
 
 
     func multiplies(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
-        assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-        memory[p3] = n1 * n2
+        let p = mode3 == .relative ? relativeBase + p3 : p3
+        memory[p] = n1 * n2
         pointer += 4
     }
 
 
     func input_(mode1: Instruction.Mode, input: Int) {
-        assert(mode1 == .position)
+        assert(mode1 != .immediate)
         let p1 = memory[pointer + 1]
-        memory[p1] = input
+        let p = mode1 == .relative ? relativeBase + p1 : p1
+        memory[p] = input
         pointer += 2
     }
 
 
     func output_(mode1: Instruction.Mode) -> Int {
         let p1 = memory[pointer + 1]
-        let n1 = mode1 == .position ? memory[p1] : p1
+        let n1 = get(p: p1, mode: mode1)
         pointer += 2
         return n1
     }
@@ -137,20 +141,28 @@ private extension Computer {
 
 
     func lessThan(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
-        assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-        memory[p3] = n1 < n2 ? 1 : 0
+        let p = mode3 == .relative ? relativeBase + p3 : p3
+        memory[p] = n1 < n2 ? 1 : 0
         pointer += 4
     }
 
 
     func equals(mode1: Instruction.Mode, mode2: Instruction.Mode, mode3: Instruction.Mode) {
-        assert(mode3 == .position)
         let (p1, p2, p3) = get3()
         let (n1, n2) = get(p1: p1, m1: mode1, p2: p2, m2: mode2)
-        memory[p3] = n1 == n2 ? 1 : 0
+        let p = mode3 == .relative ? relativeBase + p3 : p3
+        memory[p] = n1 == n2 ? 1 : 0
         pointer += 4
+    }
+
+
+    func adjustRelativeBase(mode: Instruction.Mode) {
+        let p = memory[pointer + 1]
+        let n = get(p: p, mode: mode)
+        relativeBase += n
+        pointer += 2
     }
 
 
@@ -165,9 +177,19 @@ private extension Computer {
 
 
     func get(p1: Int, m1: Instruction.Mode, p2: Int, m2: Instruction.Mode) -> (Int, Int) {
-        let n1 = m1 == .position ? memory[p1] : p1
-        let n2 = m2 == .position ? memory[p2] : p2
-        return (n1, n2)
+        return (get(p: p1, mode: m1), get(p: p2, mode: m2))
+    }
+
+
+    func get(p: Int, mode: Instruction.Mode) -> Int {
+        switch mode {
+        case .immediate:
+            return p
+        case .position:
+            return memory[p]
+        case .relative:
+            return memory[relativeBase + p]
+        }
     }
 }
 
@@ -192,6 +214,8 @@ extension Computer.Instruction {
             self = .lessThan(mode(n, 100), mode(n, 1000), mode(n, 10000))
         case 8:
             self = .equals(mode(n, 100), mode(n, 1000), mode(n, 10000))
+        case 9:
+            self = .adjustRelativeBase(mode(n, 100))
         case 99:
             self = .halt
         default:
