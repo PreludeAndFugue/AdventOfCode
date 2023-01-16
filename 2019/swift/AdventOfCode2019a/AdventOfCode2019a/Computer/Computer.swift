@@ -69,7 +69,7 @@ class Computer {
             case .output(let m1):
                 let o = output_(mode1: m1)
                 output.append(o)
-//                state = .paused
+                state = .paused
             case .jumpIfTrue(let m1, let m2):
                 jumpIfTrue(mode1: m1, mode2: m2)
             case .jumpIfFalse(let m1, let m2):
