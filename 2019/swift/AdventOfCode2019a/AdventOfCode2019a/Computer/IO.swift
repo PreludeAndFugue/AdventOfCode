@@ -8,11 +8,9 @@
 import Foundation
 
 protocol IO {
-//    var input: [Int] { get set }
     func getInput() -> Int
     func addInput(_ n: Int)
 
-//    var output: [Int] { get set }
     func setOutput(_ n: Int)
     func getOutput() -> Int
 
@@ -21,12 +19,17 @@ protocol IO {
 
 
 class StandardIO: IO {
+    private let id: Int
+
     private var input: [Int] = []
     private var output: [Int] = []
 
+    init(id: Int = 1) {
+        self.id = id
+    }
+
 
     func getInput() -> Int {
-//        print("io.get", input[0])
         return input.removeFirst()
     }
 
@@ -37,7 +40,7 @@ class StandardIO: IO {
 
 
     func getOutput() -> Int {
-        output.removeFirst()
+        return output.removeFirst()
     }
 
 
@@ -57,11 +60,7 @@ class GameTestIO: IO {
     private var counter = 0
     private(set) var blockCounter = 0
 
-
-    func getInput() -> Int { return 0}
-
-    func addInput(_ n: Int) {}
-
+    
     func setOutput(_ n: Int) {
         if counter % 3 == 2 && n == 2 {
             blockCounter += 1
@@ -69,11 +68,11 @@ class GameTestIO: IO {
         counter += 1
     }
 
+
+    func getInput() -> Int { return 0 }
+    func addInput(_ n: Int) {}
     func getOutput() -> Int { return 0 }
-
     func reset() {}
-
-
 }
 
 
@@ -99,9 +98,6 @@ class GameIO: IO {
     }
 
 
-    func addInput(_ n: Int) {}
-
-
     func setOutput(_ n: Int) {
         switch counter % 3 {
         case 0:
@@ -124,12 +120,8 @@ class GameIO: IO {
         counter += 1
     }
 
-
-    func getOutput() -> Int {
-        return 0
-    }
-
-    func reset() {
-
-    }
+    
+    func addInput(_ n: Int) {}
+    func getOutput() -> Int { return 0 }
+    func reset() {}
 }

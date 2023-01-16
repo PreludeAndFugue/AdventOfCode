@@ -26,15 +26,18 @@ private func part1(program: IntCode) -> Int {
     let phaseValues = 0...4
     var inputSignal = 0
     var maxSignal = 0
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     for phases in phaseValues.permutations() {
         inputSignal = 0
         for phase in phases {
             c.load(program: program)
             let input = [phase, inputSignal]
-            c.input.append(contentsOf: input)
+            for i in input {
+                io.addInput(i)
+            }
             c.run()
-            inputSignal = c.output.last!
+            inputSignal = io.getOutput()
         }
         maxSignal = max(maxSignal, inputSignal)
     }
@@ -54,16 +57,21 @@ private func part2(program: IntCode) -> Int {
 
 private func run2(program: IntCode, phases: [Int]) -> Int {
     var inputSignal = 0
-    let computers = [Computer(), Computer(), Computer(), Computer(), Computer()]
+    let computers = [
+        Computer(io: StandardIO(id: 1)), Computer(io: StandardIO(id: 2)), Computer(io: StandardIO(id: 3)),
+        Computer(io: StandardIO(id: 4)), Computer(io: StandardIO(id: 5))
+    ]
     for (c, p) in zip(computers, phases) {
         c.load(program: program)
-        c.input.append(p)
+        c.io.addInput(p)
     }
     while !allDone(computers: computers) {
         for c in computers {
-            c.input.append(inputSignal)
+            c.io.addInput(inputSignal)
             c.run()
-            inputSignal = c.output.last!
+            if c.state != .done {
+                inputSignal = c.io.getOutput()
+            }
         }
     }
     return inputSignal
