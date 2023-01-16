@@ -24,23 +24,26 @@ func day05() {
 
 
 private func part1(program: IntCode) -> Int {
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     c.load(program: program)
-    c.input.append(1)
+    io.addInput(1)
     c.run()
-    var output = c.output
-    let n = output.popLast()!
-    for i in output {
-        assert(i == 0)
+    let n = io.getOutput()
+    while true {
+        let n = io.getOutput()
+        if n != 0 {
+            return n
+        }
     }
-    return n
 }
 
 
 private func part2(program: IntCode) -> Int {
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     c.load(program: program)
-    c.input.append(5)
+    io.addInput(5)
     c.run()
-    return c.output.first!
+    return io.getOutput()
 }
