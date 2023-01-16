@@ -41,17 +41,20 @@ class Computer {
     private var pointer = 0
     private var relativeBase = 0
 
-    var input: [Int] = []
-    var output: [Int] = []
+    let io: IO
     var state: State = .paused
+
+
+    init(io: IO) {
+        self.io = io
+    }
 
 
     func load(program: IntCode) {
         self.memory = Memory(program: program)
         self.pointer = 0
         self.relativeBase = 0
-        self.input = []
-        self.output = []
+        self.io.reset()
     }
 
 
@@ -64,12 +67,12 @@ class Computer {
             case .multiplies(let m1, let m2, let m3):
                 multiplies(mode1: m1, mode2: m2, mode3: m3)
             case .input(let m1):
-                let i = input.removeFirst()
+                let i = io.getInput()
                 input_(mode1: m1, input: i)
             case .output(let m1):
                 let o = output_(mode1: m1)
-                output.append(o)
-                state = .paused
+                io.setOutput(o)
+//                state = .paused
             case .jumpIfTrue(let m1, let m2):
                 jumpIfTrue(mode1: m1, mode2: m2)
             case .jumpIfFalse(let m1, let m2):
