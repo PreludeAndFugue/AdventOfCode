@@ -29,7 +29,6 @@ private func part1(program: IntCode) -> Int {
     c.load(program: program)
     io.addInput(1)
     c.run()
-    let n = io.getOutput()
     while true {
         let n = io.getOutput()
         if n != 0 {
