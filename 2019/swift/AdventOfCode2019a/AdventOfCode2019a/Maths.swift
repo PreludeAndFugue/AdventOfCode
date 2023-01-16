@@ -29,6 +29,11 @@ func gcd(a: Int, b: Int) -> Int {
 }
 
 
+func lcm(a: Int, b: Int) -> Int {
+    abs(a) * (abs(b) / gcd(a: a, b: b))
+}
+
+
 func hypot(p1: Point, p2: Point) -> Double {
     let a = Double(p2.x - p1.x)
     let b = Double(p2.y - p1.y)
