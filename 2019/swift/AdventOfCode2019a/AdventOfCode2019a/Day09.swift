@@ -12,16 +12,17 @@ func day09() {
 //        .split(separator: ",")
 //        .map({ Int($0)! })
     let program = getIncode(file: "09")
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     c.load(program: program)
-    c.input.append(1)
+    io.addInput(1)
     c.run()
-    print(c.output.first!)
+    print(io.getOutput())
 
     c.load(program: program)
-    c.input.append(2)
+    io.addInput(2)
     c.run()
-    print(c.output.first!)
+    print(io.getOutput())
 }
 
 
