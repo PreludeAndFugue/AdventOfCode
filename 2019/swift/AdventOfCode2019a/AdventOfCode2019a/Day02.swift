@@ -22,7 +22,8 @@ private func part1(program: IntCode) -> Int {
     var p = program
     p[1] = 12
     p[2] = 2
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     c.load(program: p)
     c.run()
     return c.memory[0]
@@ -30,7 +31,8 @@ private func part1(program: IntCode) -> Int {
 
 
 private func part2(progam: IntCode) -> Int {
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     for noun in 0..<100 {
         for verb in 0..<100 {
             var p = progam
