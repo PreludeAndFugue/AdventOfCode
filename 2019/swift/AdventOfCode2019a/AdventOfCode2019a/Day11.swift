@@ -18,24 +18,26 @@ func day11() {
 
 
 private func part1(program: IntCode) -> Int {
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     c.load(program: program)
-    c.input.append(0)
-    let map = run(computer: c)
+    io.addInput(0)
+    let map = run(computer: c, io: io)
     return map.count
 }
 
 
 private func part2(program: IntCode) {
-    let c = Computer()
+    let io = StandardIO()
+    let c = Computer(io: io)
     c.load(program: program)
-    c.input.append(1)
-    let map = run(computer: c)
+    io.addInput(1)
+    let map = run(computer: c, io: io)
     print(map: map)
 }
 
 
-private func run(computer: Computer) -> [Point: Int] {
+private func run(computer: Computer, io: IO) -> [Point: Int] {
     var map: [Point: Int] = [:]
     var position = Point.origin
     var direction = Direction.up
@@ -46,15 +48,15 @@ private func run(computer: Computer) -> [Point: Int] {
         if computer.state == .done {
             break
         }
-        let paint = computer.output.removeFirst()
-        let turn = computer.output.removeFirst()
+        let paint = io.getOutput()
+        let turn = io.getOutput()
         map[position] = paint
 
         direction = direction.turn(turn)
         position = position + direction.diff
 
         let a = map[position, default: 0]
-        computer.input.append(a)
+        io.addInput(a)
     }
     return map
 }
