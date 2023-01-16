@@ -44,21 +44,10 @@ private func part2(xs: [Int], ys: [Int], zs: [Int]) -> Int {
     var vys = [0, 0, 0, 0]
     var vzs = [0, 0, 0, 0]
 
-    var statesX: Set<[Int]> = []
-    var statesY: Set<[Int]> = []
-    var statesZ: Set<[Int]> = []
-
-    var statesXPosition: [[Int]: Int] = [:]
-    var statesYPosition: [[Int]: Int] = [:]
-    var statesZPosition: [[Int]: Int] = [:]
-
-    statesX.insert(xs + vxs)
-    statesY.insert(ys + vys)
-    statesZ.insert(zs + vzs)
-
-    statesXPosition[xs + vxs] = 0
-    statesYPosition[ys + vys] = 0
-    statesZPosition[zs + vzs] = 0
+    // Cheat: the repeated states match the initial states
+    let initialX = xs + vxs
+    let initialY = ys + vys
+    let initialZ = zs + vzs
 
     var foundX = false
     var foundY = false
@@ -72,32 +61,23 @@ private func part2(xs: [Int], ys: [Int], zs: [Int]) -> Int {
         apply(xs: &xs, ys: &ys, zs: &zs, vxs: &vxs, vys: &vys, vzs: &vzs)
         if !foundX {
             let x = xs + vxs
-            if statesX.contains(x) {
+            if x == initialX {
                 ix = i
                 foundX = true
-            } else {
-                statesX.insert(x)
-                statesXPosition[x] = i
             }
         }
         if !foundY {
             let y = ys + vys
-            if statesY.contains(y) {
+            if y == initialY {
                 iy = i
                 foundY = true
-            } else {
-                statesY.insert(y)
-                statesYPosition[y] = i
             }
         }
         if !foundZ {
             let z = zs + vzs
-            if statesZ.contains(z) {
+            if z == initialZ {
                 iz = i
                 foundZ = true
-            } else {
-                statesZ.insert(z)
-                statesZPosition[z] = i
             }
         }
         if foundX && foundY && foundZ {
