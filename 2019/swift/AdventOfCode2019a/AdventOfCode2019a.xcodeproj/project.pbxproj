@@ -27,6 +27,7 @@
 		4E78A8922974A311001A7FD4 /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A8912974A311001A7FD4 /* Maths.swift */; };
 		4E78A8942974CCC4001A7FD4 /* Day11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78A8932974CCC4001A7FD4 /* Day11.swift */; };
 		4ECC02E02975BA8600BDEE31 /* IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECC02DF2975BA8600BDEE31 /* IO.swift */; };
+		4ECC02E52975D0F000BDEE31 /* Day14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECC02E42975D0F000BDEE31 /* Day14.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,6 +63,7 @@
 		4E78A8912974A311001A7FD4 /* Maths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maths.swift; sourceTree = "<group>"; };
 		4E78A8932974CCC4001A7FD4 /* Day11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day11.swift; sourceTree = "<group>"; };
 		4ECC02DF2975BA8600BDEE31 /* IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IO.swift; sourceTree = "<group>"; };
+		4ECC02E42975D0F000BDEE31 /* Day14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day14.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				4E78A8932974CCC4001A7FD4 /* Day11.swift */,
 				4E443A8E2975880B00AE7DFC /* Day12.swift */,
 				4E443A902975B27900AE7DFC /* Day13.swift */,
+				4ECC02E42975D0F000BDEE31 /* Day14.swift */,
 			);
 			path = AdventOfCode2019a;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				4E78A88E2974959C001A7FD4 /* Day09.swift in Sources */,
 				4E78A8942974CCC4001A7FD4 /* Day11.swift in Sources */,
 				4E443A8F2975880B00AE7DFC /* Day12.swift in Sources */,
+				4ECC02E52975D0F000BDEE31 /* Day14.swift in Sources */,
 				4E38344329736D3200104C51 /* Computer.swift in Sources */,
 				4E78A887297446DE001A7FD4 /* Memory.swift in Sources */,
 				4E38344129736CCC00104C51 /* Day02.swift in Sources */,
