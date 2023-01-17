@@ -25,12 +25,13 @@ private func part1(eqns: [Equation]) -> Int {
     let c = 1 + oreEqns.count + otherEqns.count
     assert(c == eqns.count)
 
-    for _ in 0...2 {
+    for i in 0...1 {
+        let notEnough = i == 1
         while true {
             var didChange = false
             for eqn in otherEqns {
                 if fuelEqn.contains(name: eqn.rhs.name) {
-                    let change = fuelEqn.substitute(eqn: eqn)
+                    let change = fuelEqn.substitute(eqn: eqn, notEnough: notEnough)
                     if change {
     //                    print(fuelEqn)
                         didChange = true
@@ -45,7 +46,7 @@ private func part1(eqns: [Equation]) -> Int {
             var didChange = false
             for eqn in oreEqns {
                 if fuelEqn.contains(name: eqn.rhs.name) {
-                    let change = fuelEqn.substitute(eqn: eqn)
+                    let change = fuelEqn.substitute(eqn: eqn, notEnough: true)
                     if change {
     //                    print(fuelEqn)
                         didChange = true
@@ -124,7 +125,7 @@ private struct Equation: CustomDebugStringConvertible {
     }
 
 
-    mutating func substitute(eqn: Equation) -> Bool {
+    mutating func substitute(eqn: Equation, notEnough: Bool) -> Bool {
         let s = eqn.rhs
         guard let s1 = lhs.filter({ $0.name == s.name }).first else {
             return false
@@ -138,6 +139,9 @@ private struct Equation: CustomDebugStringConvertible {
             let n = Symbol(quantity: s1.quantity - s.quantity, name: s1.name)
             lhs = lhs.filter({ $0.name != s1.name }) + eqn.lhs + [n]
         } else {
+            if !notEnough {
+                return false
+            }
 //            print("not enough")
             let n = Symbol(quantity: s1.quantity - s.quantity, name: s1.name)
             lhs = lhs.filter({ $0.name != s1.name }) + eqn.lhs + [n]
