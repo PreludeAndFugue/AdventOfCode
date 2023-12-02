@@ -24,9 +24,8 @@ def main():
             parts = r.strip().split(', ')
             parts = [p.split(' ') for p in parts]
             parts = [(p[1], int(p[0])) for p in parts]
-            parts = dict(parts)
 
-            for k, v in parts.items():
+            for k, v in parts:
                 # part 1
                 if g_valid and MAX[k] < v:
                     g_valid = False
