@@ -24,12 +24,19 @@ def adjacent(p1, p2):
     return dx <=1 and dy <= 1
 
 
-def adj(n, n_ps, symbols):
+def part1(n, n_ps, symbols):
     for n_p in n_ps:
         for p in symbols:
             if adjacent(n_p, p):
                 return n
     return 0
+
+
+def part2(g, n, n_ps):
+    for n_p in n_ps:
+        if adjacent(g, n_p):
+            return True
+    return False
 
 
 def main():
@@ -72,18 +79,17 @@ def main():
 
     t1 = 0
     for n, n_ps in ns:
-        t1 += adj(n, n_ps, symbols)
+        t1 += part1(n, n_ps, symbols)
 
     t2 = 0
     for g in gears:
-        n_g = set()
+        n_g = []
         for n, n_ps in ns:
-            for n_p in n_ps:
-                if adjacent(g, n_p):
-                    n_g.add(n)
+            if part2(g, n, n_ps):
+                n_g.append(n)
         if len(n_g) == 2:
-            a = n_g.pop()
-            b = n_g.pop()
+            a = n_g[0]
+            b = n_g[1]
             t2 += a * b
 
     print(t1)
