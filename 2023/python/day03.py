@@ -32,7 +32,7 @@ def part1(n, n_ps, symbols):
     return 0
 
 
-def part2(g, n, n_ps):
+def part2(g, n_ps):
     for n_p in n_ps:
         if adjacent(g, n_p):
             return True
@@ -53,10 +53,7 @@ def main():
             p = x, y
             if c.isdigit():
                 n_ps.add(p)
-                if n == 0:
-                    n = int(c)
-                else:
-                    n = 10*n + int(c)
+                n = 10*n + int(c)
             elif c == '.':
                 if n != 0:
                     ns.append((n, n_ps))
@@ -85,7 +82,7 @@ def main():
     for g in gears:
         n_g = []
         for n, n_ps in ns:
-            if part2(g, n, n_ps):
+            if part2(g, n_ps):
                 n_g.append(n)
         if len(n_g) == 2:
             a = n_g[0]
