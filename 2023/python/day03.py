@@ -38,6 +38,7 @@ def main():
     ns = []
     n_ps = set()
     symbols = set()
+    gears = set()
     for y, l in enumerate(d):
         n = 0
 
@@ -61,17 +62,32 @@ def main():
                     n_ps = set()
                 p = x, y
                 symbols.add(p)
+                if c == '*':
+                    gears.add(p)
 
         if n != 0:
             ns.append((n, n_ps))
             n = 0
             n_ps = set()
 
-    t = 0
+    t1 = 0
     for n, n_ps in ns:
-        t += adj(n, n_ps, symbols)
+        t1 += adj(n, n_ps, symbols)
 
-    print(t)
+    t2 = 0
+    for g in gears:
+        n_g = set()
+        for n, n_ps in ns:
+            for n_p in n_ps:
+                if adjacent(g, n_p):
+                    n_g.add(n)
+        if len(n_g) == 2:
+            a = n_g.pop()
+            b = n_g.pop()
+            t2 += a * b
+
+    print(t1)
+    print(t2)
 
 
 if __name__ == '__main__':
