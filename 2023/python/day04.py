@@ -41,6 +41,28 @@ def part2(cards):
     return sum(counter.values())
 
 
+def part2_recursive(card_no, cards):
+    '''Recursion with generators'''
+    _, winning_numbers, numbers = cards[card_no - 1]
+    yield 1
+    n = len(numbers.intersection(winning_numbers))
+    if n > 0:
+        for i in range(card_no + 1, card_no + n + 1):
+            yield from part2_recursive(i, cards)
+
+
+def part2_recursive_1(card_no, cards):
+    '''Recursion without generators'''
+    _, winning_numbers, numbers = cards[card_no - 1]
+    n = len(numbers.intersection(winning_numbers))
+    if n == 0:
+        return 1
+    t = 1
+    for i in range(card_no + 1, card_no + n + 1):
+        t += part2_recursive_1(i, cards)
+    return t
+
+
 def main():
     d = get_input('04').strip().split('\n')
     # d = TEST.strip().split('\n')
@@ -52,7 +74,11 @@ def main():
     p2 = part2(cards)
     print(p2)
 
+    r = sum(sum(part2_recursive(card_no, cards)) for card_no, _, _ in cards)
+    print('p2:', r)
 
+    r1 = sum(part2_recursive_1(card_no, cards) for card_no, _, _ in cards)
+    print('p2:', r1)
 
 
 if __name__ == '__main__':
