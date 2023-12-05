@@ -39,10 +39,9 @@ humidity-to-location map:
 def make_map(d):
     rows = []
     for row in d:
-        # destination, source, range length
         row = [int(n) for n in row.split()]
-        rows.append((row[1], row[0], row[2]))
-    rows.sort()
+        rows.append(row)
+    rows
     return rows
 
 
@@ -66,17 +65,66 @@ def do_mapping(seed, map_):
     return seed
 
 
-def main():
-    d = get_input('05')
-    # d = TEST.strip()
-    seeds, maps = parse(d)
-    results = []
+def part1(seeds, maps):
+    lowest = 1_000_000_000_000_000
+    x = 0
+
+    new_maps = []
+    for map_ in maps:
+        new_map = []
+        for row in map_:
+            row = (row[1], row[0], row[2])
+            new_map.append(row)
+        new_map.sort()
+        new_maps.append(new_map)
+
     for seed in seeds:
         n = seed
-        for map_ in maps:
+        for map_ in new_maps:
             n = do_mapping(n, map_)
-        results.append(n)
-    print(min(results))
+        lowest = min(n, lowest)
+        if n < lowest:
+            lowest = n
+            x = seed
+    return lowest, seed
+
+
+def part2(seeds, maps):
+    seed_ranges = []
+    for a, b in zip(seeds[::2], seeds[1::2]):
+        seed_ranges.append(range(a, a + b))
+
+    new_maps = []
+    for map_ in maps:
+        new_map = []
+        for row in map_:
+            row = (row[0], row[1], row[2])
+            new_map.append(row)
+        new_map.sort()
+        new_maps.append(new_map)
+    new_maps = list(reversed(new_maps))
+
+    n = 1
+    while True:
+        m = n
+        for map_ in new_maps:
+            m = do_mapping(m, map_)
+        for r in seed_ranges:
+            if m in r:
+                return n, m
+        n += 1
+
+
+def main():
+    # d = get_input('05')
+    d = TEST.strip()
+    seeds, maps = parse(d)
+
+    p1 = part1(seeds, maps)
+    print(p1)
+
+    p2 = part2(seeds, maps)
+    print(p2)
 
 
 if __name__ == '__main__':
