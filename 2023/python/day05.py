@@ -1,6 +1,41 @@
 
 from help import get_input
 
+'''
+Better algorithm for part 2?
+----------------------------
+- Only interested in lowest integer in a range because this will map to the lowest
+  integer in a new range.
+- A range can be mapped into new non-overlapping ranges.
+
+         1    2      3       4
+         -------------------------
+         |    |      |       |
+         |    |      |       |
+      ---+----|      +-------|
+         |    |      |       |
+         |    |      |       |
+         a    b      c       d
+
+    a is the mapping of 1 (the first value in the range)
+    b is the mapping of 2 (the first value after the end of the first mapping range)
+    c is the mapping of 3 (the first value in the range equal to the first value of the
+    second mapping range)
+    d is the mapping of 4 (the first value after the end of the first mapping range)
+
+    It may not be the case that a < b < c < d.
+
+         1    2
+         ---------------
+         |    |
+         |    |
+         |    +----------------
+         |    |
+         |    |
+         a    b
+
+'''
+
 TEST = '''seeds: 79 14 55 13
 
 seed-to-soil map:
