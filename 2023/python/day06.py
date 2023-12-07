@@ -1,4 +1,5 @@
 from collections import Counter
+from math import ceil, sqrt
 
 from help import get_input
 
@@ -55,6 +56,9 @@ def main():
     x1 = int(x1) + 1
     x2 = t2 - x1 + 1
     print(x2 - x1)
+
+    a = ceil(sqrt(t2*t2 - 4*d2))
+    print(a)
 
 
 if __name__ == '__main__':
