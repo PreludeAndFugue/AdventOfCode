@@ -1,7 +1,8 @@
 
+from math import lcm
 from itertools import cycle
 
-from help import get_input, lcm
+from help import get_input
 
 TEST1 = '''RL
 
