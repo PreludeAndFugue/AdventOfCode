@@ -28,22 +28,6 @@ TEST_EXPAND = '''....#........
 #....#.......'''
 
 
-def expand(x):
-    def e(rows):
-        y = []
-        for row in rows:
-            s = set(row)
-            y.append(row)
-            if len(s) == 1:
-                y.append(tuple('.' for _ in range(len(row))))
-        return y
-    x = e(x)
-    x = list(zip(*x))
-    x = e(x)
-    x = list(zip(*x))
-    return x
-
-
 def get_galaxies(x):
     galaxies = []
     for r, row in enumerate(x):
@@ -73,17 +57,7 @@ def expand_2(galaxies, empty_r, empty_c, n):
     return expanded_galaxies
 
 
-def part1(x):
-    x = expand(x)
-
-    # test = '\n'.join(''.join(a) for a in x)
-    # assert test == TEST_EXPAND
-
-    galaxies = get_galaxies(x)
-    return distance(galaxies)
-
-
-def part2(x):
+def get_empty(x):
     empty_r = set()
     for r, row in enumerate(x):
         if len(set(row)) == 1:
@@ -94,8 +68,11 @@ def part2(x):
         if len(set(row)) == 1:
             empty_c.add(c)
 
-    galaxies = get_galaxies(x)
-    expanded_galaxies = expand_2(galaxies, empty_r, empty_c, 1_000_000)
+    return empty_r, empty_c
+
+
+def solve(galaxies, empty_r, empty_c, expand):
+    expanded_galaxies = expand_2(galaxies, empty_r, empty_c, expand)
     return distance(expanded_galaxies)
 
 
@@ -103,8 +80,11 @@ d = get_input('11').strip()
 # d = TEST.strip()
 x = [tuple(a) for a in d.split('\n')]
 
-p1 = part1(x)
+galaxies = get_galaxies(x)
+empty_r, empty_c = get_empty(x)
+
+p1 = solve(galaxies, empty_r, empty_c, 2)
 print(p1)
 
-p2 = part2(x)
+p2 = solve(galaxies, empty_r, empty_c, 1_000_000)
 print(p2)
