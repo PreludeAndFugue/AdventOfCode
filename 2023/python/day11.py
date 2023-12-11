@@ -29,12 +29,7 @@ TEST_EXPAND = '''....#........
 
 
 def get_galaxies(x):
-    galaxies = []
-    for r, row in enumerate(x):
-        for c, ch in enumerate(row):
-            if ch == '#':
-                galaxies.append((r, c))
-    return galaxies
+    return [(r, c) for r, row in enumerate(x) for c, ch in enumerate(row) if ch == '#']
 
 
 def distance(galaxies):
