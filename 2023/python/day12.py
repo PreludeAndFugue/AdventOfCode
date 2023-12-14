@@ -45,61 +45,83 @@ def unfold(s, ns):
 
 
 def part2(s, ns):
-    if not s and not ns:
-        yield 1
+    print('part 2', s, ns)
+    if not s:
+        if not ns:
+            return 1
+        return 0
+    if not ns:
+        if not s:
+            return 1
+        return 0
     s0 = s[0]
     if s0 == '.':
         yield from part2(s[1:], ns)
     elif s0 == '?':
+        # replace ? with .
+        yield from part2(s[1:], ns)
+        # replace ? with #
         n = ns[0]
         s_sub = s[1:n]
+        s_after = s[n + 1]
         if '.' not in s_sub:
-
+            if s_after == '.' or s_after == '?':
+                yield from part2(s[n+ 2:], ns[1:])
     elif s0 == '#':
         n = ns[0]
-
-
+        s_sub = s[1:n]
+        s_after = s[n + 1]
+        if '.' not in s_sub:
+            if s_after == '.' or s_after == '?':
+                yield from part2(s[n + 2:], ns[1:])
 
 
 p1 = 0
-for l in tqdm(d.split('\n')):
-# for l in d.split('\n'):
+# for l in tqdm(d.split('\n')):
+for l in d.split('\n'):
     s, ns = l.split(' ')
-    # print(s, ns)
     ns = ns.split(',')
     ns = [int(n) for n in ns]
 
-    s, ns = unfold(s, ns)
+    print(s, ns)
 
-    q_count = s.count('?')
-    h_count = s.count('#')
-    h_total = sum(ns)
-    h = h_total - h_count
+    for x in part2(s, ns):
+        print(x)
 
-    q_indexes = []
-    for i, ch in enumerate(s):
-        if ch == '?':
-            q_indexes.append(i)
-    print(l, ns, '-- h', h, ' -- ', 'q count', q_count, ' -- ', q_indexes)
+    input()
 
-    for i in tqdm(get_bins(h, q_count)):
-        # print(i)
-        chs = []
-        for j in range(q_count):
-            chs.append('#' if i & 1 else '.')
-            i >>= 1
-        # print(chs)
 
-        test = []
-        for ch in s:
-            if ch == '?':
-                x = chs.pop()
-                test.append(x)
-            else:
-                test.append(ch)
-        # print(test)
-        if is_valid(test, ns):
-            p1 += 1
+    # s, ns = unfold(s, ns)
+
+    # q_count = s.count('?')
+    # h_count = s.count('#')
+    # h_total = sum(ns)
+    # h = h_total - h_count
+
+    # q_indexes = []
+    # for i, ch in enumerate(s):
+    #     if ch == '?':
+    #         q_indexes.append(i)
+    # print(l, ns, '-- h', h, ' -- ', 'q count', q_count, ' -- ', q_indexes)
+
+    # for i in tqdm(get_bins(h, q_count)):
+    #     # print(i)
+    #     chs = []
+    #     for j in range(q_count):
+    #         chs.append('#' if i & 1 else '.')
+    #         i >>= 1
+    #     # print(chs)
+
+    #     test = []
+    #     for ch in s:
+    #         if ch == '?':
+    #             x = chs.pop()
+    #             test.append(x)
+    #         else:
+    #             test.append(ch)
+    #     # print(test)
+    #     if is_valid(test, ns):
+    #         p1 += 1
 
     # input()
 print(p1)
