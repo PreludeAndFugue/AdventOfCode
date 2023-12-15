@@ -183,6 +183,8 @@ p2 = part2(d)
 # print(p2)
 
 '''
+https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare
+
 Test
 ----
 cycle start: 169
