@@ -120,83 +120,98 @@ def part1(d):
     return p1
 
 
-def part1a(d):
-    # @cache
-    def create(start, s, ns):
-        # print('create', repr(start), repr(s), ns)
-        if not s:
-            if ns:
-                pass
-            else:
-                yield start
-        elif not ns:
-            if s:
-                if '#' in s:
-                    pass
-                else:
-                    yield start + '.'*len(s)
+# @cache
+def create(s, ns):
+    print('create', repr(s), ns)
+    if not s:
+        if ns:
+            yield 0
         else:
-            s0 = s[0]
-            if s0 == '.':
-                yield from create(start + s0, s[1:], ns)
-            elif s0 == '?':
-                yield from create(start + '.', s[1:], ns)
-                yield from create(start, '#' + s[1:], ns)
-            elif s0 == '#':
-                n = ns[0]
-                s_part = s[:n]
-                l = len(s_part)
-                if l < n:
-                    pass
-                elif '.' in s_part:
-                    pass
-                elif l == n:
-                    s = s[n:]
-                    ls = len(s)
-                    if ls == 0:
-                        yield from create(start + '#'*l, '', ns[1:])
-                    else:
-                        x = s[0]
-                        if x == '.' or x == '?':
-                            yield from create(start + '#'*l + '.', s[1:], ns[1:])
-                        else:
-                            pass
+            yield 1
+    elif not ns:
+        if s:
+            if '#' in s:
+                yield 0
+            else:
+                yield 1
+    else:
+        s0 = s[0]
+        if s0 == '.':
+            yield from create(s[1:], ns)
+        elif s0 == '?':
+            yield from create(s[1:], ns)
+            yield from create('#' + s[1:], ns)
+        elif s0 == '#':
+            n = ns[0]
+            s_part = s[:n]
+            l = len(s_part)
+            if l < n:
+                yield 0
+            elif '.' in s_part:
+                yield 0
+            elif l == n:
+                s = s[n:]
+                ls = len(s)
+                if ls == 0:
+                    yield from create('', ns[1:])
                 else:
-                    raise ValueError
+                    x = s[0]
+                    if x == '.' or x == '?':
+                        yield from create(s[1:], ns[1:])
+                    else:
+                        yield 0
             else:
                 raise ValueError
+        else:
+            raise ValueError
 
+
+def part1a(d):
     p1 = 0
     for s, ns in parse(d):
-        s, ns = unfold(s, ns)
+        # s, ns = unfold(s, ns)
         print(s, ns)
         print()
 
-        for _ in create('', s, tuple(ns)):
+        for n in create(s, tuple(ns)):
             # print('\t', pattern, pattern.count('#'))
             # input()
-            p1 += 1
+            p1 += n
+            if n:
+                print('\tyes')
+            else:
+                print('\tno')
             # if is_valid(pattern, ns):
             #     p1 += 1
             # else:
             #     print(pattern)
-        # print()
-        # input()
+        print()
+        input()
 
     return p1
+
+def test():
+    s = '???'
+    ns = (1,)
+    t = 0
+    for x in create(s, ns):
+        print(x)
+        t += x
+    print('t =', t)
 
 
 def main():
     # d = get_input('12').strip()
     d = TEST.strip()
 
-    # t1 = perf_counter()
+    t1 = perf_counter()
 
     # p1 = part1(d)
     p1 = part1a(d)
+    # test()
 
-    # t2 = perf_counter()
-    # print('dt', t2 - t1)
+    t2 = perf_counter()
+    print('dt', t2 - t1)
 
     print(p1)
 
