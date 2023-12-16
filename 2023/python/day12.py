@@ -1,4 +1,6 @@
+from functools import cache
 from itertools import combinations, permutations
+from time import perf_counter
 
 from tqdm import tqdm
 
@@ -11,8 +13,13 @@ TEST = '''???.### 1,1,3
 ????.######..#####. 1,6,5
 ?###???????? 3,2,1'''
 
-# d = get_input('12').strip()
-d = TEST.strip()
+
+def parse(d):
+    for l in d.split('\n'):
+        s, ns = l.split(' ')
+        ns = ns.split(',')
+        ns = [int(n) for n in ns]
+        yield s, ns
 
 
 def is_valid(s, ns):
@@ -36,6 +43,7 @@ def get_bins(h, q_count):
         if i.bit_count() != h:
             continue
         yield i
+
 
 def unfold(s, ns):
     ss = [s] * 5
@@ -76,52 +84,122 @@ def part2(s, ns):
                 yield from part2(s[n + 2:], ns[1:])
 
 
-p1 = 0
-# for l in tqdm(d.split('\n')):
-for l in d.split('\n'):
-    s, ns = l.split(' ')
-    ns = ns.split(',')
-    ns = [int(n) for n in ns]
+def part1(d):
+    p1 = 0
+    for s, ns in parse(d):
+        # print(s, ns)
+        q_count = s.count('?')
+        h_count = s.count('#')
+        h_total = sum(ns)
+        h = h_total - h_count
 
-    print(s, ns)
+        q_indexes = []
+        for i, ch in enumerate(s):
+            if ch == '?':
+                q_indexes.append(i)
+        # print(ns, '-- h', h, ' -- ', 'q count', q_count, ' -- ', q_indexes)
 
-    for x in part2(s, ns):
-        print(x)
+        for i in get_bins(h, q_count):
+            # print(i)
+            chs = []
+            for _ in range(q_count):
+                chs.append('#' if i & 1 else '.')
+                i >>= 1
+            # print(chs)
 
-    input()
+            test = []
+            for ch in s:
+                if ch == '?':
+                    x = chs.pop()
+                    test.append(x)
+                else:
+                    test.append(ch)
+            # print(test)
+            if is_valid(test, ns):
+                p1 += 1
+    return p1
 
 
-    # s, ns = unfold(s, ns)
+def part1a(d):
+    # @cache
+    def create(start, s, ns):
+        # print('create', repr(start), repr(s), ns)
+        if not s:
+            if ns:
+                pass
+            else:
+                yield start
+        elif not ns:
+            if s:
+                if '#' in s:
+                    pass
+                else:
+                    yield start + '.'*len(s)
+        else:
+            s0 = s[0]
+            if s0 == '.':
+                yield from create(start + s0, s[1:], ns)
+            elif s0 == '?':
+                yield from create(start + '.', s[1:], ns)
+                yield from create(start, '#' + s[1:], ns)
+            elif s0 == '#':
+                n = ns[0]
+                s_part = s[:n]
+                l = len(s_part)
+                if l < n:
+                    pass
+                elif '.' in s_part:
+                    pass
+                elif l == n:
+                    s = s[n:]
+                    ls = len(s)
+                    if ls == 0:
+                        yield from create(start + '#'*l, '', ns[1:])
+                    else:
+                        x = s[0]
+                        if x == '.' or x == '?':
+                            yield from create(start + '#'*l + '.', s[1:], ns[1:])
+                        else:
+                            pass
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
 
-    # q_count = s.count('?')
-    # h_count = s.count('#')
-    # h_total = sum(ns)
-    # h = h_total - h_count
+    p1 = 0
+    for s, ns in parse(d):
+        s, ns = unfold(s, ns)
+        print(s, ns)
+        print()
 
-    # q_indexes = []
-    # for i, ch in enumerate(s):
-    #     if ch == '?':
-    #         q_indexes.append(i)
-    # print(l, ns, '-- h', h, ' -- ', 'q count', q_count, ' -- ', q_indexes)
+        for _ in create('', s, tuple(ns)):
+            # print('\t', pattern, pattern.count('#'))
+            # input()
+            p1 += 1
+            # if is_valid(pattern, ns):
+            #     p1 += 1
+            # else:
+            #     print(pattern)
+        # print()
+        # input()
 
-    # for i in tqdm(get_bins(h, q_count)):
-    #     # print(i)
-    #     chs = []
-    #     for j in range(q_count):
-    #         chs.append('#' if i & 1 else '.')
-    #         i >>= 1
-    #     # print(chs)
+    return p1
 
-    #     test = []
-    #     for ch in s:
-    #         if ch == '?':
-    #             x = chs.pop()
-    #             test.append(x)
-    #         else:
-    #             test.append(ch)
-    #     # print(test)
-    #     if is_valid(test, ns):
-    #         p1 += 1
 
-    # input()
-print(p1)
+def main():
+    # d = get_input('12').strip()
+    d = TEST.strip()
+
+    # t1 = perf_counter()
+
+    # p1 = part1(d)
+    p1 = part1a(d)
+
+    # t2 = perf_counter()
+    # print('dt', t2 - t1)
+
+    print(p1)
+
+
+if __name__ == '__main__':
+    main()
