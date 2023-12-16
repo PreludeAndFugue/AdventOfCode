@@ -22,21 +22,16 @@ for r, row in enumerate(d.split('\n')):
     for c, ch in enumerate(row):
         map_[(r, c)] = ch
 
-# print(map_)
-
-
+# Direction: change in coordinates
 D = {
     'R': (0, 1),
     'L': (0, -1),
     'U': (-1, 0),
     'D': (1, 0)
 }
-DD = {
-    (0, 1): 'R',
-    (0, -1): 'L',
-    (-1, 0): 'U',
-    (1, 0): 'D'
-}
+# Change in coordinates: direction
+DD = {v: k for k, v in D.items()}
+# Mirrors
 M = {
     'R': {
         '/': (-1, 0),
@@ -56,6 +51,7 @@ M = {
         '\\': (0, 1)
     }
 }
+# Splitters
 S = {
     'R': {'|': ((-1, 0), (1, 0))},
     'L': {'|': ((-1, 0), (1, 0))},
@@ -64,9 +60,9 @@ S = {
 }
 
 def print_map(map_, items):
-    points = set(p for p, d in items)
-    rs = [r for r, c in map_.keys()]
-    cs = [c for r, c in map_.keys()]
+    points = set(p for p, _ in items)
+    rs = [r for r, _ in map_.keys()]
+    cs = [c for _, c in map_.keys()]
     r_max = max(rs)
     c_max = max(cs)
     rows = []
@@ -84,7 +80,7 @@ def print_map(map_, items):
 
 def energise(start, map_):
     q = deque([start])
-    # unique positions the light has been.
+    # unique positions, direcion pairs the light has been.
     seen = set()
 
     while q:
@@ -96,21 +92,13 @@ def energise(start, map_):
         p, d = item
         r, c = p
         g = map_.get(p, None)
-        # print(p, d, g)
-
-        # print(g)
-
-        # print(print_map(map_, seen))
-        # input()
 
         if g is None:
-            # print('g is None')
             continue
         elif g == '.':
             dr, dc = D[d]
             rr = r + dr
             cc = c + dc
-            # print('\t',r, c,  dr, dc, rr, cc)
             q.append(((rr, cc), d))
         elif g == '\\' or g == '/':
             dp = M[d][g]
@@ -136,22 +124,16 @@ def energise(start, map_):
         else:
             raise ValueError
 
-        # print('adding item to seen', item)
         seen.add(item)
 
-    # print(seen)
     seen_p = set(p for p, d in seen)
-    # print(len(seen_p))
     return len(seen_p)
 
 def part2(map_):
-    rs = [r for r, c in map_.keys()]
-    cs = [c for r, c in map_.keys()]
-    r_min = min(rs)
+    rs = [r for r, _ in map_.keys()]
+    cs = [c for _, c in map_.keys()]
     r_max = max(rs)
-    c_min = min(cs)
     c_max = max(cs)
-    # print(r_min, r_max, c_min, c_max)
     es = []
     for r in range(r_max + 1):
         for c in range(c_max + 1):
@@ -165,7 +147,6 @@ def part2(map_):
             if c == c_max:
                 ds.append('L')
             if ds:
-                # print(r, c, ds)
                 for d in ds:
                     start = (r, c), d
                     e = energise(start, map_)
