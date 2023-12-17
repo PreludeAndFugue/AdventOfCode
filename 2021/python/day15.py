@@ -4,7 +4,7 @@
 658: too high
 '''
 
-import csv
+import heapq
 
 from helpers import BASE
 
@@ -65,17 +65,17 @@ def dijkstra(input_map):
     distance[start] = 0
     processed = {l: False for l in input_map}
     q = [(0, start)]
+    heapq.heapify(q)
     counter = 0
     while q:
         counter += 1
-        q.sort()
-        _, a = q.pop(0)
+        _, a = heapq.heappop(q)
         if not processed[a]:
             processed[a] = True
             for b, w in neighbours(a, input_map):
                 if distance[a] + w < distance[b]:
                     distance[b] = distance[a] + w
-                    q.append((distance[b], b))
+                    heapq.heappush(q, (distance[b], b))
     return distance[end]
 
 
