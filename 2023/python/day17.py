@@ -4,8 +4,42 @@ import heapq
 from help import get_input
 
 '''
-Answers
-- 1081 too high
+https://www.reddit.com/r/adventofcode/comments/18kipuy/2023_day_17_why_do_most_people_dijkstras_work/
+
+You need to account for the minimum and maximum straight-line distance you can travel --
+there's no way around that. But you can account for it in two different places...
+
+Include it in the description of the node you're at -- you have an x,y coordinate, a
+direction of travel to get here, and the number of moves in that direction you've made.
+With that information, you can figure out your continuations. For part 1, the starting
+node is connected to two nodes, which could be described like:
+    (1,0) east, 1 square and (0,1) south, 1 square
+include it in the connections on the graph. I can travel east 1-3 squares, or i can travel
+south 1-3 squares. Those are all directly connected to the starting square. So you have
+six nodes connected to the starting node --
+    (1,0) east, (2,0) east, (3,0) east, (0,1) south, (0,2) south, (0,3) south.
+Now when you travel to one of those nodes, you no longer consider continuing straight --
+all of the straight-line continuations are already in your boundary nodes as one-step with
+a given cost. You only need consider turning 90° right or left, then traveling 1-3 nodes
+in that direction.
+
+
+https://www.reddit.com/r/adventofcode/comments/18khohi/2023_day_17_why_can_you_only_cache_pos_dir_in/
+
+From how I understand it there are two different ways to set up the state graph, on which
+we search the shortest path.
+
+Either we do (pos, dir, chain) and every state has at most 3 neighbors, representing a
+single step in a direction.
+
+Or we just do (pos, dir) and assume it is the beginning of a straight section and it
+neighbors are every state that can be reached in a straight line from the current position
+that is orthogonal to the previous straight.
+
+Both are possible, but #2 results in a smaller (but more connected) graph and should be
+faster to search.
+
+
 '''
 
 TEST = '''2413432311323
