@@ -163,43 +163,29 @@ def main():
     start_p = 0, 0
     end_p = max(map_.keys())
 
+    # Need to set-up two starting states for part 2 because the ultra
+    # crucible is not moving at the start position, so it can move both
+    # east and south.
     # heat, position, direction, length (no. of steps in same direction)
-    # check = [(0, start_p, (0, 1), 0), (0, start_p, (1, 0), 0)]
-    check = [(0, start_p, (0, 1), 0)]
+    check = [(0, start_p, (0, 1), 0), (0, start_p, (1, 0), 0)]
+    # check = [(0, start_p, (0, 1), 0)]
     seen = set()
     heapq.heapify(check)
 
-    i = 0
     while check:
         state = heapq.heappop(check)
-
-        # print(state)
-
-        i += 1
-        if i % 100_000 == 0:
-            print(state)
-            print(len(check))
-
-        # print('state', state)
         h, p, d, l = state
 
         if p == end_p and l > 3:
-        # if p == end_p:
             print('done', h)
             break
 
-        # s = state[0], state[1]
         k = p, d, l
         if k in seen:
             continue
-            # print('\tin seen', state)
-            # hh = seen[k]
-            # if hh < h:
-            #     continue
 
         seen.add(k)
 
-        # for new_state in get_next(state, map_):
         for new_state in get_next_2(state, map_):
             heapq.heappush(check, new_state)
 
