@@ -102,33 +102,43 @@ def parse2(d):
                     raise ValueError
             else:
                 parts.append(part)
-        print(key, parts)
+        # print(key, parts)
         all_workflows[key] = parts
     return all_workflows
 
 
 def part2(ranges, workflows):
+    print('\n+++ Part 2')
     ranges = deepcopy(ranges)
 
-    # new_test = {}
+    if 'R' in ranges:
+        del ranges['R']
+
+    AA = []
+
     keys = list(ranges.keys())
     for flow_id in keys:
+        print('---')
         print('processing key', flow_id)
         while flow_id in ranges:
             workflow = workflows[flow_id]
             for item in workflow:
                 if isinstance(item, str):
-                    print('map to new key')
+                    print('map to new key', item)
                     # print(item)
                     # v = test[flow_id]
                     # new_test[item] = v
                     thing = deepcopy(ranges[flow_id])
-                    ranges[item] = thing
+
+                    if item == 'A':
+                        AA.append(thing)
+                    else:
+                        ranges[item] = thing
+
                     del ranges[flow_id]
-                    pass
                 else:
-                    print('map ranges to new keys')
                     key, op, n, new_flow_id = item
+                    print('map ranges to new keys', flow_id, new_flow_id)
                     # print(key, op, n, new_flow_id)
                     r = ranges[flow_id][key]
                     # print(r)
@@ -137,35 +147,51 @@ def part2(ranges, workflows):
                             # print('n in r', n, r)
                             r1 = range(r.start, n)
                             r2 = range(n, r.stop)
-                            # print(r1, r2)
+                            print('\t',n,  r, '->', r1, r2)
+                            print('\t')
+
                             thing1 = deepcopy(ranges[flow_id])
                             thing1[key] = r1
-                            ranges[new_flow_id] = thing1
-
                             thing2 = deepcopy(ranges[flow_id])
                             thing2[key] = r2
+
+                            if new_flow_id == 'A':
+                                AA.append(thing1)
+                            else:
+                                ranges[new_flow_id] = thing1
+
                             ranges[flow_id] = thing2
                         else:
-                            ranges[new_flow_id] = ranges[flow_id]
+                            thing = deepcopy(ranges[flow_id])
+                            ranges[new_flow_id] = thing
                     elif op == '>':
                         if n in r:
                             r1 = range(r.start, n)
                             r2 = range(n, r.stop)
+                            print('\t',n , r, '->', r1, r2)
+                            print('\t')
 
                             thing1 = deepcopy(ranges[flow_id])
                             thing1[key] = r1
-                            ranges[flow_id] = thing1
-
                             thing2 = deepcopy(ranges[flow_id])
                             thing2[key] = r2
-                            ranges[new_flow_id] = thing2
+
+                            ranges[flow_id] = thing1
+
+                            if new_flow_id == 'A':
+                                AA.append(thing2)
+                            else:
+                                ranges[new_flow_id] = thing2
                         else:
-                            ranges[new_flow_id] = ranges[flow_id]
+                            thing = deepcopy(ranges[flow_id])
+                            ranges[new_flow_id] = thing
                     else:
                         raise ValueError
 
     # print(ranges)
-    return ranges
+            if flow_id == 'lnx':
+                print('lnx', AA)
+    return ranges, AA
 
 
 
@@ -225,8 +251,8 @@ def extract(ranges):
 
 
 def main():
-    d = get_input('19').strip()
-    # d = TEST.strip()
+    # d = get_input('19').strip()
+    d = TEST.strip()
 
     # workflows, parts = parse1(d)
     # p1 = part1(workflows, parts)
@@ -244,25 +270,33 @@ def main():
 
     total = 0
     other = 0
+    all_aa = []
     for _ in range(6):
-        ranges = part2(ranges, workflows)
-        print(ranges)
-        ranges, n, m = extract(ranges)
-        total += n
-        other += m
-        print(ranges)
-        print(n)
-        print(m)
+        ranges, aa = part2(ranges, workflows)
+        all_aa.extend(aa)
+        print('ranges keys', list(ranges.keys()))
+        # print(ranges)
+        # ranges, n, m = extract(ranges)
+        # total += n
+        # other += m
+        # print(ranges)
+        # print(n)
+        # print(m)
 
-    print('total')
-    print(total)
-    print('other', other)
-    print('total + other', total + other)
+    m = 0
+    for aa in all_aa:
+        n = 1
+        for r in aa.values():
+            n *= len(r)
+        print(n)
+        m += n
+
+    print()
+    print(m)
+
+
     a = 167409079868000
-    b = 4_000 * 4_000 * 4_000 * 4_000
     print(a)
-    print(b)
-    print(b - a)
 
 
 if __name__ == '__main__':
