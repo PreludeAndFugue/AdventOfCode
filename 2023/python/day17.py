@@ -86,36 +86,39 @@ def make_map(d):
 
 
 def get_next(state, map_):
-    h, p, d, l = state
-    if l < 2:
-        # continue straight on
-        r, c = p
-        dr, dc = d
-        pp = r + dr, c + dc
-        hh = map_.get(pp, None)
-        if hh is not None:
-            yield h + hh, pp, d, l + 1
+    '''
+    Get all states 3 steps distant so don't need to keep track of how long have been
+    moving in the same direction
+    '''
+    h, p, d = state
+    r, c = p
+
     # turn left
     dd = LEFT[d]
-    r, c = p
     dr, dc = dd
-    pp = r + dr, c + dc
-    hh = map_.get(pp, None)
-    if hh is not None:
-        yield h + hh, pp, dd, 0
+    dh = h
+    for i in range(1, 4):
+        pp = r + i*dr, c + i*dc
+        hh = map_.get(pp, None)
+        if hh is not None:
+            dh += hh
+            yield dh, pp, dd
+
     # turn right
     dd = RIGHT[d]
-    r, c = p
     dr, dc = dd
-    pp = r + dr, c + dc
-    hh = map_.get(pp, None)
-    if hh is not None:
-        yield h + hh, pp, dd, 0
+    dh = h
+    for i in range(1, 4):
+        pp = r + i*dr, c + i*dc
+        hh = map_.get(pp, None)
+        if hh is not None:
+            dh += hh
+            yield dh, pp, dd
 
 
 def get_next_2(state, map_):
     h, p, d, l = state
-    if l < 3:
+    if l < 4:
         # continue straight on
         r, c = p
         dr, dc = d
@@ -139,7 +142,7 @@ def get_next_2(state, map_):
         pp = r + dr, c + dc
         hh = map_.get(pp, None)
         if hh is not None:
-            yield h + hh, pp, dd, 0
+            yield h + hh, pp, dd, 1
         # turn right
         dd = RIGHT[d]
         r, c = p
@@ -147,55 +150,59 @@ def get_next_2(state, map_):
         pp = r + dr, c + dc
         hh = map_.get(pp, None)
         if hh is not None:
-            yield h + hh, pp, dd, 0
+            yield h + hh, pp, dd, 1
 
 
-# d = get_input('17')
-# d = TEST.strip()
-d = TEST_2.strip()
+def main():
+    d = get_input('17').strip()
+    # d = TEST.strip()
+    # d = TEST_2.strip()
 
-map_ = make_map(d)
+    map_ = make_map(d)
+
+    start_p = 0, 0
+    end_p = max(map_.keys())
+
+    # heat, position, direction, length (no. of steps in same direction)
+    # check = [(0, start_p, (0, 1), 0), (0, start_p, (1, 0), 0)]
+    check = [(0, start_p, (0, 1), 0)]
+    seen = set()
+    heapq.heapify(check)
+
+    i = 0
+    while check:
+        state = heapq.heappop(check)
+
+        # print(state)
+
+        i += 1
+        if i % 100_000 == 0:
+            print(state)
+            print(len(check))
+
+        # print('state', state)
+        h, p, d, l = state
+
+        if p == end_p and l > 3:
+        # if p == end_p:
+            print('done', h)
+            break
+
+        # s = state[0], state[1]
+        k = p, d, l
+        if k in seen:
+            continue
+            # print('\tin seen', state)
+            # hh = seen[k]
+            # if hh < h:
+            #     continue
+
+        seen.add(k)
+
+        # for new_state in get_next(state, map_):
+        for new_state in get_next_2(state, map_):
+            heapq.heappush(check, new_state)
 
 
-start_p = 0, 0
-end_p = max(k for k in map_.keys())
-# print(start_p, end_p)
-
-# heat, position, direction, step count
-start_state = (0, start_p, (0, 1), 0)
-check = [start_state]
-seen = set()
-heapq.heapify(check)
-
-i = 0
-while check:
-    state = heapq.heappop(check)
-
-    h, (r, c), d, l = state
-
-    i += 1
-    if i % 100_000 == 0:
-        print(state)
-        print(len(check))
-
-    # print('state', state)
-    _, p, _, l = state
-
-    if p == end_p and l > 2:
-        print('done', h)
-        break
-
-    # s = state[0], state[1]
-    if state in seen:
-        # print('\tin seen', state)
-        continue
-
-    seen.add(state)
-
-    # for new_state in get_next(state, map_):
-    for new_state in get_next_2(state, map_):
-        # print('\tnext', new_state)
-        h, (r, c), d, l = new_state
-        ns = h, (r, c), d, l
-        heapq.heappush(check, ns)
-
+if __name__ == '__main__':
+    main()
