@@ -87,7 +87,7 @@ def parse1(d):
 
 def parse2(d):
     all_workflows = {}
-    workflows, S = d.split('\n\n')
+    workflows, _ = d.split('\n\n')
     for workflow in workflows.split('\n'):
         key, rest = workflow.split('{')
         rest = rest.strip('}').split(',')
@@ -166,7 +166,6 @@ def part2(ranges, workflows):
                         thing = deepcopy(ranges[flow_id])
                         ranges[new_flow_id] = thing
     return ranges, AA
-
 
 
 def test_workflow(part, workflow):
