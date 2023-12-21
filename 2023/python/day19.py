@@ -1,9 +1,16 @@
 
 from collections import Counter
 from copy import deepcopy
+from itertools import combinations
 import operator
 
 from help import get_input
+
+'''
+Part 2
+67_782_870_229_872: too low
+130_326_142_216_582: too high
+'''
 
 
 TEST = '''px{a<2006:qkq,m>2090:A,rfg}
@@ -86,10 +93,8 @@ def parse2(d):
         rest = rest.strip('}').split(',')
         parts = []
         for part in rest:
-            # print(part)
             if ':' in part:
                 p1, p2 = part.split(':')
-                # print(p1, p2)
                 if '<' in p1:
                     p1a, p1b = p1.split('<')
                     p1b = int(p1b)
@@ -102,32 +107,23 @@ def parse2(d):
                     raise ValueError
             else:
                 parts.append(part)
-        # print(key, parts)
         all_workflows[key] = parts
     return all_workflows
 
 
 def part2(ranges, workflows):
-    print('\n+++ Part 2')
     ranges = deepcopy(ranges)
 
     if 'R' in ranges:
         del ranges['R']
-
     AA = []
 
     keys = list(ranges.keys())
     for flow_id in keys:
-        print('---')
-        print('processing key', flow_id)
+        workflow = workflows[flow_id]
         while flow_id in ranges:
-            workflow = workflows[flow_id]
             for item in workflow:
                 if isinstance(item, str):
-                    print('map to new key', item)
-                    # print(item)
-                    # v = test[flow_id]
-                    # new_test[item] = v
                     thing = deepcopy(ranges[flow_id])
 
                     if item == 'A':
@@ -138,43 +134,24 @@ def part2(ranges, workflows):
                     del ranges[flow_id]
                 else:
                     key, op, n, new_flow_id = item
-                    print('map ranges to new keys', flow_id, new_flow_id)
-                    # print(key, op, n, new_flow_id)
                     r = ranges[flow_id][key]
-                    # print(r)
-                    if op == '<':
-                        if n in r:
-                            # print('n in r', n, r)
-                            r1 = range(r.start, n)
-                            r2 = range(n, r.stop)
-                            print('\t',n,  r, '->', r1, r2)
-                            print('\t')
 
-                            thing1 = deepcopy(ranges[flow_id])
-                            thing1[key] = r1
-                            thing2 = deepcopy(ranges[flow_id])
-                            thing2[key] = r2
+                    if n in r:
+                        thing1 = deepcopy(ranges[flow_id])
+                        thing2 = deepcopy(ranges[flow_id])
+                        if op == '<':
+                            thing1[key] = range(r.start, n)
+                            thing2[key] = range(n, r.stop)
+
+                            ranges[flow_id] = thing2
 
                             if new_flow_id == 'A':
                                 AA.append(thing1)
                             else:
                                 ranges[new_flow_id] = thing1
-
-                            ranges[flow_id] = thing2
-                        else:
-                            thing = deepcopy(ranges[flow_id])
-                            ranges[new_flow_id] = thing
-                    elif op == '>':
-                        if n in r:
-                            r1 = range(r.start, n)
-                            r2 = range(n, r.stop)
-                            print('\t',n , r, '->', r1, r2)
-                            print('\t')
-
-                            thing1 = deepcopy(ranges[flow_id])
-                            thing1[key] = r1
-                            thing2 = deepcopy(ranges[flow_id])
-                            thing2[key] = r2
+                        elif op == '>':
+                            thing1[key] = range(r.start, n + 1)
+                            thing2[key] = range(n + 1, r.stop)
 
                             ranges[flow_id] = thing1
 
@@ -183,14 +160,11 @@ def part2(ranges, workflows):
                             else:
                                 ranges[new_flow_id] = thing2
                         else:
-                            thing = deepcopy(ranges[flow_id])
-                            ranges[new_flow_id] = thing
-                    else:
-                        raise ValueError
+                            raise ValueError
 
-    # print(ranges)
-            if flow_id == 'lnx':
-                print('lnx', AA)
+                    else:
+                        thing = deepcopy(ranges[flow_id])
+                        ranges[new_flow_id] = thing
     return ranges, AA
 
 
@@ -226,37 +200,13 @@ def part1(workflows, parts):
     return sum(sum(a.values()) for a in accepted)
 
 
-def extract(ranges):
-    aa = 0
-    rr = 0
-    if 'R' in ranges:
-        rr = 1
-        r = ranges['R']
-        print('R', r)
-        for value in r.values():
-            l = len(value)
-            rr *= l
-        del ranges['R']
-
-    if 'A' in ranges:
-        aa = 1
-        r = ranges['A']
-        print('A',  r)
-        for value in r.values():
-            l = len(value)
-            aa *= l
-        del ranges['A']
-
-    return deepcopy(ranges), aa, rr
-
-
 def main():
-    # d = get_input('19').strip()
-    d = TEST.strip()
+    d = get_input('19').strip()
+    # d = TEST.strip()
 
-    # workflows, parts = parse1(d)
-    # p1 = part1(workflows, parts)
-    # print(p1)
+    workflows, parts = parse1(d)
+    p1 = part1(workflows, parts)
+    print(p1)
 
     workflows = parse2(d)
     ranges = {
@@ -268,35 +218,18 @@ def main():
         }
     }
 
-    total = 0
-    other = 0
     all_aa = []
-    for _ in range(6):
+    for _ in range(8):
         ranges, aa = part2(ranges, workflows)
         all_aa.extend(aa)
-        print('ranges keys', list(ranges.keys()))
-        # print(ranges)
-        # ranges, n, m = extract(ranges)
-        # total += n
-        # other += m
-        # print(ranges)
-        # print(n)
-        # print(m)
 
     m = 0
     for aa in all_aa:
         n = 1
         for r in aa.values():
             n *= len(r)
-        print(n)
         m += n
-
-    print()
     print(m)
-
-
-    a = 167409079868000
-    print(a)
 
 
 if __name__ == '__main__':
