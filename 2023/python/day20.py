@@ -1,6 +1,7 @@
 
 from collections import deque
-from enum import Enum
+
+from tqdm import tqdm
 
 from help import get_input
 
@@ -32,11 +33,6 @@ TEST_2 = '''broadcaster -> a
 &con -> output
 '''
 
-class Type(Enum):
-    BROADCASTER = 1
-    FLIP_FLOP = 2
-    CONJUCTION = 3
-
 
 class Broadcaster:
     def __init__(self, name, destinations):
@@ -44,9 +40,9 @@ class Broadcaster:
         self.destinations = destinations
 
     def receive(self, pulse, from_module, modules):
-        fname = from_module if isinstance(from_module, str) else from_module.name
-        p = '-high->' if pulse else '-low->'
-        print(fname, p, self.name)
+        # fname = from_module if isinstance(from_module, str) else from_module.name
+        # p = '-high->' if pulse else '-low->'
+        # print(fname, p, self.name)
 
         for d in self.destinations:
             module = modules[d]
@@ -63,9 +59,9 @@ class FlipFlop:
         self._on = False
 
     def receive(self, pulse, from_module, modules):
-        fname = from_module if isinstance(from_module, str) else from_module.name
-        p = '-high->' if pulse else '-low->'
-        print(fname, p, self.name)
+        # fname = from_module if isinstance(from_module, str) else from_module.name
+        # p = '-high->' if pulse else '-low->'
+        # print(fname, p, self.name)
 
         if pulse:
             pass
@@ -86,9 +82,9 @@ class Conjunction:
         self._state = {}
 
     def receive(self, pulse, from_module, modules):
-        fname = from_module if isinstance(from_module, str) else from_module.name
-        p = '-high->' if pulse else '-low->'
-        print(fname, p, self.name)
+        # fname = from_module if isinstance(from_module, str) else from_module.name
+        # p = '-high->' if pulse else '-low->'
+        # print(fname, p, self.name)
 
         self._state[from_module.name] = pulse
         new_pulse = self._get_pulse(modules)
@@ -98,14 +94,7 @@ class Conjunction:
             yield m, new_pulse, self
 
     def _get_pulse(self, modules):
-        # print('Conjuction get pulse', self.name, self._state)
-        checks = []
-        for m in self._state.keys():
-            module = modules[m]
-            # print('\t', module)
-            checks.append(module._on)
         if all(self._state.values()):
-        # if all(checks):
             return False
         else:
             return True
@@ -143,28 +132,57 @@ def make_modules(d):
     return modules
 
 
-# d = get_input('20')
-d = TEST.strip()
+d = get_input('20')
+# d = TEST.strip()
 # d = TEST_2.strip()
 
 modules = make_modules(d)
-# for m in mod
 
-broadcaster = modules['broadcaster']
-receivers = deque([(broadcaster, False, 'button')])
+def run(modules):
+    broadcaster = modules['broadcaster']
+    receivers = deque([(broadcaster, False, 'button')])
 
-while receivers:
-    # print(receivers)
-    module, pulse, from_module = receivers.popleft()
+    low = 0
+    high = 0
 
-    if isinstance(module, str):
-        fname = from_module if isinstance(from_module, str) else from_module.name
-        p = '-high->' if pulse else '-low->'
-        print(fname, p, module)
-        continue
+    while receivers:
+        # print(receivers)
+        module, pulse, from_module = receivers.popleft()
 
-    for result in module.receive(pulse, from_module, modules):
-        # if not isinstance(m, str):
-        receivers.append(result)
+        if pulse:
+            high += 1
+        else:
+            low += 1
 
-    # input()
+        if isinstance(module, str):
+
+            # fname = from_module if isinstance(from_module, str) else from_module.name
+            # p = '-high->' if pulse else '-low->'
+            # print(fname, p, module)
+
+            if module == 'rx' and not pulse:
+                print('\t', '...')
+                raise ValueError
+            continue
+
+        for result in module.receive(pulse, from_module, modules):
+            receivers.append(result)
+
+    return high, low
+
+
+low_total = 0
+high_total = 0
+df = modules['df']
+for _ in range(1000):
+    high, low = run(modules)
+    high_total += high
+    low_total += low
+
+    # print(df._state)
+    # if any(df._state.values()):
+    #     print(df)
+
+print(low_total*high_total)
+
+# print(df)
