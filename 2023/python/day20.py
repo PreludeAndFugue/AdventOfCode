@@ -1,5 +1,6 @@
 
 from collections import deque
+from math import lcm
 
 from tqdm import tqdm
 
@@ -132,13 +133,7 @@ def make_modules(d):
     return modules
 
 
-d = get_input('20')
-# d = TEST.strip()
-# d = TEST_2.strip()
-
-modules = make_modules(d)
-
-def run(modules):
+def run(modules, i):
     broadcaster = modules['broadcaster']
     receivers = deque([(broadcaster, False, 'button')])
 
@@ -160,29 +155,60 @@ def run(modules):
             # p = '-high->' if pulse else '-low->'
             # print(fname, p, module)
 
-            if module == 'rx' and not pulse:
-                print('\t', '...')
-                raise ValueError
+            # if module == 'rx' and not pulse:
+            #     print('\t', '...')
+                # raise ValueError
             continue
+
+        if not isinstance(from_module, str):
+            if from_module.name == 'xl' and pulse:
+                print(i)
 
         for result in module.receive(pulse, from_module, modules):
             receivers.append(result)
 
     return high, low
 
+def part1(d):
+    modules = make_modules(d)
 
-low_total = 0
-high_total = 0
-df = modules['df']
-for _ in range(1000):
-    high, low = run(modules)
-    high_total += high
-    low_total += low
+    low_total = 0
+    high_total = 0
+    for i in range(1, 5001):
+        high, low = run(modules, i)
+        high_total += high
+        low_total += low
 
-    # print(df._state)
-    # if any(df._state.values()):
-    #     print(df)
+    return low_total*high_total
 
-print(low_total*high_total)
 
-# print(df)
+def part2(d):
+    '''
+    rx <- df <- (gp, ln, xp, xl)
+
+    The number of button presses for each module to send a high pulse. When do they
+    all send a high pulse to df? When all high pulses sent to df, it will send a low
+    pulse. Use lcm.
+    gp: 3833
+    ln: 4021
+    xp: 4057
+    xl: 4051
+    '''
+
+    n = lcm(3833, 4021, 4057, 4051)
+    print(n)
+
+
+def main():
+    d = get_input('20')
+    # d = TEST.strip()
+    # d = TEST_2.strip()
+
+    p1 = part1(d)
+    print(p1)
+
+    part2(d)
+
+
+if __name__ == '__main__':
+    main()
