@@ -2,8 +2,6 @@
 from collections import deque
 from math import lcm
 
-from tqdm import tqdm
-
 from help import get_input
 
 '''
@@ -41,10 +39,6 @@ class Broadcaster:
         self.destinations = destinations
 
     def receive(self, pulse, from_module, modules):
-        # fname = from_module if isinstance(from_module, str) else from_module.name
-        # p = '-high->' if pulse else '-low->'
-        # print(fname, p, self.name)
-
         for d in self.destinations:
             module = modules[d]
             yield module, pulse, self
@@ -60,10 +54,6 @@ class FlipFlop:
         self._on = False
 
     def receive(self, pulse, from_module, modules):
-        # fname = from_module if isinstance(from_module, str) else from_module.name
-        # p = '-high->' if pulse else '-low->'
-        # print(fname, p, self.name)
-
         if pulse:
             pass
         else:
@@ -83,18 +73,14 @@ class Conjunction:
         self._state = {}
 
     def receive(self, pulse, from_module, modules):
-        # fname = from_module if isinstance(from_module, str) else from_module.name
-        # p = '-high->' if pulse else '-low->'
-        # print(fname, p, self.name)
-
         self._state[from_module.name] = pulse
-        new_pulse = self._get_pulse(modules)
+        new_pulse = self._get_pulse()
         for d in self.destinations:
             module = modules.get(d, None)
             m = module if module is not None else d
             yield m, new_pulse, self
 
-    def _get_pulse(self, modules):
+    def _get_pulse(self):
         if all(self._state.values()):
             return False
         else:
@@ -111,16 +97,13 @@ def make_modules(d):
         y = y.split(', ')
         if x.startswith('%'):
             name = x[1:]
-            # m = Module(name, Type.FLIP_FLOP, y)
             m = FlipFlop(name, y)
         elif x.startswith('&'):
             name = x[1:]
-            # m = Module(name, Type.CONJUCTION, y)
             m = Conjunction(name, y)
         elif x.startswith('broadcaster'):
             name = x
-            # m = Module(name, Type.BROADCASTER, y)
-            m = Broadcaster(name, y)
+            m = Broadcaster(x, y)
         modules[name] = m
     for m in modules.values():
         if isinstance(m, Conjunction):
@@ -141,7 +124,6 @@ def run(modules, i):
     high = 0
 
     while receivers:
-        # print(receivers)
         module, pulse, from_module = receivers.popleft()
 
         if pulse:
@@ -150,14 +132,6 @@ def run(modules, i):
             low += 1
 
         if isinstance(module, str):
-
-            # fname = from_module if isinstance(from_module, str) else from_module.name
-            # p = '-high->' if pulse else '-low->'
-            # print(fname, p, module)
-
-            # if module == 'rx' and not pulse:
-            #     print('\t', '...')
-                # raise ValueError
             continue
 
         if not isinstance(from_module, str):
@@ -174,7 +148,7 @@ def part1(d):
 
     low_total = 0
     high_total = 0
-    for i in range(1, 5001):
+    for i in range(1, 1001):
         high, low = run(modules, i)
         high_total += high
         low_total += low
@@ -182,7 +156,7 @@ def part1(d):
     return low_total*high_total
 
 
-def part2(d):
+def part2():
     '''
     rx <- df <- (gp, ln, xp, xl)
 
@@ -195,8 +169,7 @@ def part2(d):
     xl: 4051
     '''
 
-    n = lcm(3833, 4021, 4057, 4051)
-    print(n)
+    return lcm(3833, 4021, 4057, 4051)
 
 
 def main():
@@ -207,7 +180,8 @@ def main():
     p1 = part1(d)
     print(p1)
 
-    part2(d)
+    p2 = part2()
+    print(p2)
 
 
 if __name__ == '__main__':
