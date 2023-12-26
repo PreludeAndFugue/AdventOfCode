@@ -1,4 +1,8 @@
 
+from pathlib import Path
+
+from PIL import Image
+
 from help import get_input
 
 TEST = '''...........
@@ -13,67 +17,60 @@ TEST = '''...........
 .##..##.##.
 ...........'''
 
+
 def make_map(d):
     map_ = set()
     start = None
     for r, line in enumerate(d.split('\n')):
+        c_max = len(line)
         for c, ch in enumerate(line):
-            # print(r, c, ch)
             if ch == '.':
                 map_.add(complex(r, c))
             elif ch == 'S':
                 start = complex(r, c)
                 map_.add(start)
-            else:
-                pass
     return map_, start
 
 
 def expand_map(d, n):
     result = ''
-    for i in range(3):
+    for i in range(n):
         for line in d.split('\n'):
-            for j in range(3):
-                # print(i, j)
-                if i == 1 and j == 1:
+            for j in range(n):
+                if i == n//2 and j == n//2:
                     result += line
                 else:
                     if 'S' in line:
-                        # print('removing S', i, j)
                         l = line.replace('S', '.')
                         result += l
                     else:
                         result += line
             result += '\n'
-    # print(result)
     return make_map(result)
 
 
-def printer(map_, positions):
+def printer(map_, positions, i):
     p = [(int(c.real), int(c.imag)) for c in map_]
     p_min = min(p)
     p_max = max(p)
-    # print(p_min, p_max)
-    # print(positions)
-    rows = []
+    bytes = bytearray()
     for r in range(p_min[0], p_max[0] + 1):
-        row = []
         for c in range(p_min[1], p_max[1] + 1):
             z = complex(r, c)
-            # print(z)
             if z in positions:
-                # print('z in positions', z)
-                # input()
-                row.append('o')
+                bytes.append(255)
             elif z in map_:
-                row.append(' ')
+                bytes.append(0)
             else:
-                row.append('#')
-        rows.append(''.join(row))
-    print('\n'.join(rows))
+                bytes.append(70)
+
+    size = p_max[0] + 1, p_max[1] + 1
+    p = Path(f'./day21/day21_{i:0>4d}.png')
+    im = Image.frombytes('L', size, bytes)
+    im.save(p)
 
 
-def move(map_, positions):
+def move(positions, map_):
     new_positions = set()
     for p in positions:
         for d in DIR:
@@ -95,33 +92,53 @@ def part1(d):
 
 
 def part2(d):
-    map_, start = expand_map(d, 3)
-    print('start', start)
-    # print(map_)
-    positions = set([start])
+    # The following commented out code was used to calculate the number of positons
+    # after the following number of steps: 65, 65 + 131, 65 + 2*131, etc.
+    # Then enter values into Numbers spreadsheet and fit to 2nd degree polynomial.
 
-    for _ in range(30):
-        positions = move(map_, positions)
+    # map_, start = expand_map(d, 11)
+    # positions = frozenset([start])
 
-        printer(map_, positions)
-        input()
+    # x = 65
+    # for i in range(x):
+    #     positions = move(positions, map_)
+    # print(len(positions))
+    # printer(map_, positions, 0)
+
+    # for j in range(5):
+    #     for i in range(dx):
+    #         positions = move(positions, map_)
+    #     print(len(positions))
+    #     printer(map_, positions, j + 1)
+
+    def f(x):
+        '''Exact quadratic equation to calculate the number of positions after the
+        following number of steps:
+
+        x = 0 -> 65 steps
+        x = 1 -> 65 + 131 steps
+        x = 2 -> 65 + 2*131 steps
+        ...
+        '''
+        return 14669*x*x + 14738*x + 3701
+
+    # T = 202300*131 + 65
+    T = 26501365
+    Y = 202300
+
+    return f(Y)
 
 
 def main():
-    # d = get_input('21').strip()
-    d = TEST.strip()
+    d = get_input('21').strip()
+    # d = TEST.strip()
 
-    # p1 = part1(d)
-    # print(p1)
+    p1 = part1(d)
+    print(p1)
 
-    part2(d)
+    p2 = part2(d)
+    print(p2)
 
-    # z1 = complex(3, 4)
-    # z2 = complex(2, 5)
-    # s = set([complex(3, 4)])
-    # print(s)
-    # print(z1 in s)
-    # print(z2 in s)
 
 if __name__ == '__main__':
     main()
