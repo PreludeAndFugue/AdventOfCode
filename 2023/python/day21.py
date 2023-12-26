@@ -22,7 +22,6 @@ def make_map(d):
     map_ = set()
     start = None
     for r, line in enumerate(d.split('\n')):
-        c_max = len(line)
         for c, ch in enumerate(line):
             if ch == '.':
                 map_.add(complex(r, c))
@@ -87,7 +86,7 @@ def part1(d):
     map_, start = make_map(d)
     positions = set([start])
     for _ in range(64):
-        positions = move(map_, positions)
+        positions = move(positions, map_)
     return len(positions)
 
 
