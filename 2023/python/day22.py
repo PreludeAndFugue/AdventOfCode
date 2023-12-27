@@ -1,5 +1,5 @@
 
-from collections import defaultdict
+from collections import defaultdict, deque
 from itertools import combinations
 
 from help import get_input
@@ -78,17 +78,7 @@ def make_dependencies(bricks):
     return supports, rests_on
 
 
-def main():
-    d = get_input('22').strip()
-    # d = TEST.strip()
-
-    bricks = do_fall_a(d)
-
-    bricks = sorted(bricks, key=lambda b: (b.z.start, b.x.start, b.y.start))
-    brick_dict = {b.n: b for b in bricks}
-
-    supports, rests_on = make_dependencies(bricks)
-
+def part1(bricks, supports, rests_on):
     can_disintigrate = set()
     for b in bricks:
         supported = supports[b.n]
@@ -104,7 +94,47 @@ def main():
                 tests.append(False)
         if all(tests):
             can_disintigrate.add(b.n)
-    print(len(can_disintigrate))
+    return len(can_disintigrate)
+
+
+def fallers_for_brick(brick, supports, rests_on):
+    fallers = set([brick.n])
+    to_check = deque([brick.n])
+    while to_check:
+        n = to_check.popleft()
+        supported = supports[n]
+        for s in supported:
+            supporters = rests_on[s.n]
+            if set([s.n for s in supporters]) <= fallers:
+                fallers.add(s.n)
+                to_check.append(s.n)
+    fallers.remove(brick.n)
+    return fallers
+
+
+def part2(bricks, supports, rests_on):
+    total = 0
+    for b in bricks:
+        fallers = fallers_for_brick(b, supports, rests_on)
+        total += len(fallers)
+    return total
+
+
+def main():
+    d = get_input('22').strip()
+    # d = TEST.strip()
+
+    bricks = do_fall_a(d)
+
+    bricks = sorted(bricks, key=lambda b: (b.z.start, b.x.start, b.y.start))
+
+    supports, rests_on = make_dependencies(bricks)
+
+    p1 = part1(bricks, supports, rests_on)
+    print(p1)
+
+    p2 = part2(bricks, supports, rests_on)
+    print(p2)
 
 
 if __name__ == '__main__':
