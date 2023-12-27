@@ -1,6 +1,6 @@
 
 from collections import defaultdict, deque
-from itertools import combinations
+from dataclasses import dataclass
 
 from help import get_input
 
@@ -19,14 +19,14 @@ def intersection(r1, r2):
     return range(max(r1.start, r2.start), min(r1.stop, r2.stop)) or None
 
 
+@dataclass
 class Brick:
-    def __init__(self, n, x, y, z):
-        self.n = n
-        self.x = x
-        self.y = y
-        self.z = z
+    n: int
+    x: range
+    y: range
+    z: range
 
-    def interects_x_y(self, other):
+    def intersects_x_y(self, other):
         x = bool(intersection(self.x, other.x))
         if not x: return False
         y = bool(intersection(self.y, other.y))
@@ -50,7 +50,7 @@ def do_fall_a(d):
         if b.z.start == 1: continue
         zs = []
         for other in bricks[:i]:
-            if b.interects_x_y(other):
+            if b.intersects_x_y(other):
                 zs.append(other.z)
         if zs:
             z_start = max(z.stop for z in zs)
@@ -71,10 +71,10 @@ def make_dependencies(bricks):
     for b in bricks:
         for other in bricks:
             if other.n == b.n: continue
-            if not b.interects_x_y(other): continue
+            if not b.intersects_x_y(other): continue
             if b.z.stop == other.z.start:
-                supports[b.n].append(other)
-                rests_on[other.n].append(b)
+                supports[b.n].append(other.n)
+                rests_on[other.n].append(b.n)
     return supports, rests_on
 
 
@@ -87,7 +87,7 @@ def part1(bricks, supports, rests_on):
             continue
         tests = []
         for s in supported:
-            supporters = rests_on[s.n]
+            supporters = rests_on[s]
             if len(supporters) > 1:
                 tests.append(True)
             else:
@@ -104,10 +104,10 @@ def fallers_for_brick(brick, supports, rests_on):
         n = to_check.popleft()
         supported = supports[n]
         for s in supported:
-            supporters = rests_on[s.n]
-            if set([s.n for s in supporters]) <= fallers:
-                fallers.add(s.n)
-                to_check.append(s.n)
+            supporters = rests_on[s]
+            if set(supporters) <= fallers:
+                fallers.add(s)
+                to_check.append(s)
     fallers.remove(brick.n)
     return fallers
 
