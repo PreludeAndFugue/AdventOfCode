@@ -2,6 +2,8 @@
 from fractions import Fraction
 from itertools import combinations
 
+from sympy import Symbol, nonlinsolve
+
 from help import get_input
 
 '''
@@ -58,11 +60,13 @@ MAX = 400000000000000
 
 
 class Hailstone:
-    def __init__(self, x, y, dx, dy):
+    def __init__(self, x, y, z, dx, dy, dz):
         self.x = x
         self.y = y
+        self.z = z
         self.dx = dx
         self.dy = dy
+        self.dz = dz
         self.m = Fraction(dy, dx)
         self.c = y - self.m*x
 
@@ -73,9 +77,9 @@ class Hailstone:
 def parse(d):
     for line in d.strip().split('\n'):
         p, v = line.split(' @ ')
-        x, y, _ = tuple(map(int, p.split(', ')))
-        dx, dy, _ = tuple(map(int, v.split(', ')))
-        yield Hailstone(x, y, dx, dy)
+        x, y, z = tuple(map(int, p.split(', ')))
+        dx, dy, dz = tuple(map(int, v.split(', ')))
+        yield Hailstone(x, y, z, dx, dy, dz)
 
 
 def solve_for_t(h1, h2):
@@ -88,9 +92,7 @@ def solve_for_t(h1, h2):
     return t1, t2
 
 
-def part1(d):
-    hs = list(parse(d))
-
+def part1(hs):
     MA = MAX
     MI = MIN
     # MA = MAX_TEST
@@ -111,12 +113,44 @@ def part1(d):
     return total
 
 
+def part2(hs):
+    x = Symbol('x')
+    dx = Symbol('dx')
+    y = Symbol('y')
+    dy = Symbol('dy')
+    z = Symbol('z')
+    dz = Symbol('dz')
+    t1 = Symbol('t1')
+    t2 = Symbol('t2')
+    t3 = Symbol('t3')
+    fs = []
+    ts = (t1, t2, t3)
+    for h, t in zip(hs[:3], ts):
+        f1 = x + dx*t - h.x - h.dx*t
+        fs.append(f1)
+        f2 = y + dy*t - h.y - h.dy*t
+        fs.append(f2)
+        f3 = z + dz*t - h.z - h.dz*t
+        fs.append(f3)
+
+    vs = [x, y, z, dx, dy, dz, t1, t2, t3]
+
+    solution = nonlinsolve(fs, vs)
+    for result in solution:
+        x, y, z, _, _, _, _, _, _ = result
+    return x + y + z
+
+
 def main():
     d = get_input('24')
     # d = TEST.strip()
+    hs = list(parse(d))
 
-    p1 = part1(d)
+    p1 = part1(hs)
     print(p1)
+
+    p2 = part2(hs)
+    print(p2)
 
 
 
