@@ -56,45 +56,33 @@ TEST_4 = '''
 '''
 
 
-class Vertex:
-    def __init__(self, p):
-        self.p = p
-        self.visited = False
-
-    def __repr__(self) -> str:
-        return f'V({self.p}, {self.visited})'
-
-    def __hash__(self) -> int:
-        return hash(self.p)
-
-
 def parse(d):
     for line in d.split('\n'):
         p = tuple(int(x) for x in line.split(','))
-        yield Vertex(p)
+        yield p
 
 
-def manhattan(v1, v2):
-    x1, y1, z1, t1 = v1.p
-    x2, y2, z2, t2 = v2.p
+def manhattan(p1, p2):
+    x1, y1, z1, t1 = p1
+    x2, y2, z2, t2 = p2
     return abs(x2 - x1) + abs(y2 - y1) + abs(z2 - z1) + abs(t2 - t1)
 
 
-def make_graph(vs):
+def make_graph(ps):
     graph = defaultdict(list)
-    for v1, v2 in combinations(vs, 2):
-        if manhattan(v1, v2) <= 3:
-            graph[v1].append(v2)
-            graph[v2].append(v1)
+    for p1, p2 in combinations(ps, 2):
+        if manhattan(p1, p2) <= 3:
+            graph[p1].append(p2)
+            graph[p2].append(p1)
     return graph
 
 
-def dfs(graph, start):
+def dfs(graph, start, visited):
     stack = [start]
     seen = set()
     while stack:
         v = stack.pop()
-        v.visited = True
+        visited[v] = True
 
         if v in seen:
             continue
@@ -105,11 +93,12 @@ def dfs(graph, start):
 
 
 def count_components(graph, vertices):
+    visited = {v: False for v in vertices}
     count = 0
     for v in vertices:
-        if not v.visited:
+        if not visited[v]:
             count += 1
-            dfs(graph, v)
+            dfs(graph, v, visited)
     return count
 
 
