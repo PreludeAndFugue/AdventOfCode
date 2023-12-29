@@ -1,37 +1,35 @@
-#!python
-
-'''1.2'''
 
 from itertools import cycle
 
+from help import get_input
 
-INPUT = '1_1.txt'
 
-
-def get_changes():
+def parse(d):
     '''Get frequency changes from file.'''
     changes = []
-    with open(INPUT, 'r') as f:
-        for line in f:
-            changes.append(int(line))
+    for line in d.split('\n'):
+        changes.append(int(line))
     return changes
-    
-    
+
+
 def main():
-    '''Main entry point.'''
-    changes = get_changes()
+    d = get_input('01').strip()
+    changes = parse(d)
+
+    p1 = sum(changes)
+    print(p1)
+
     current_value = 0
     values = set([current_value])
     for n in cycle(changes):
         new_value = current_value + n
-#        print(values)
-#        print(n, new_value)
         if new_value in values:
-            print(new_value)
             break
         values.add(new_value)
         current_value = new_value
-    
-    
+
+    print(new_value)
+
+
 if __name__ == '__main__':
     main()
