@@ -72,6 +72,15 @@ TEST_6 = '''
 '''
 
 
+TEST_7 = '''
+#######
+#E..G.#
+#...#.#
+#.G.#G#
+#######
+'''
+
+
 TEST_A = '''
 ############
 #G...###.###
@@ -112,8 +121,6 @@ class Unit:
     def move(self, opponent):
         path_start = opponent.path_start
         if path_start is not None:
-            # move nearer opponent
-            # print('\tmoving', self, path_start)
             self.p = path_start
         dr = abs(self.p[0] - opponent.unit.p[0])
         dc = abs(self.p[1] - opponent.unit.p[1])
@@ -131,7 +138,9 @@ class Opponent:
 
     @property
     def score(self):
-        return len(self.path), self.unit.hit_points
+        last_path = self.path[-1] if self.path else (0, 0)
+        # Maybe place unit.p after last_path in this tuple?
+        return len(self.path), last_path, self.unit.hit_points
 
     @property
     def path_start(self):
@@ -163,31 +172,18 @@ class Game:
             self._round()
             self._sort_units()
 
-            # print(self.round)
-            # self.print()
-            # print(self.units)
-            # input()
-        # print('done')
-        # print(self.round)
-        # print(self.units)
 
     def result(self):
         hit_points = sum(u.hit_points for u in self.units if u.hit_points > 0)
         return self.round*hit_points
 
     def _round(self):
-        # for u in self.units:
-        #     print(u)
-        self.print()
-        print()
-        input()
         for unit in self.units:
             if not unit.is_alive:
                 continue
             if self._is_done():
                 return
             opponent = self._get_opponent(unit)
-            # print('unit', unit, 'opponent', opponent)
             if opponent is None:
                 continue
             unit.move(opponent)
@@ -296,8 +292,6 @@ def dijkstra(start, end, map_):
     q = [(0, start)]
 
     while q:
-        # print('\t', q)
-        # input()
         d, p = heapq.heappop(q)
 
         if p == end:
@@ -405,7 +399,7 @@ def test2():
 
 
 def test_a():
-    map_, units = parse(TEST_A.strip())
+    map_, units = parse(TEST_7.strip())
     g = Game(units, map_)
     g.play()
     print(g.result())
@@ -441,13 +435,11 @@ def main():
     # d = TEST_5.strip()
     # d = TEST_6.strip()
     map_, units = parse(d)
-    # print(map_)
-    # print(units)
 
     # test1()
     # test2()
 
-    test_a()
+    # test_a()
 
     p1 = part1(d)
     print(p1)
