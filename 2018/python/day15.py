@@ -71,6 +71,20 @@ TEST_6 = '''
 #########
 '''
 
+
+TEST_A = '''
+############
+#G...###.###
+#.....#....#
+####......##
+####......##
+####.EE...##
+#####.....##
+#####..#..##
+#####.######
+############
+'''
+
 DIRS = [
     # reading order
     (-1, 0), (0, -1), (0, 1), (1, 0)
@@ -162,6 +176,11 @@ class Game:
         return self.round*hit_points
 
     def _round(self):
+        # for u in self.units:
+        #     print(u)
+        self.print()
+        print()
+        input()
         for unit in self.units:
             if not unit.is_alive:
                 continue
@@ -197,6 +216,7 @@ class Game:
 
     def _get_opponent(self, unit):
         others = self._get_alive_elfs() if unit.is_goblin else self._get_alive_goblins()
+        assert others
         unit_ps = set(u.p for u in self._get_alive_units())
         total_map = self.map - unit_ps
         opponents = []
@@ -241,7 +261,6 @@ def parse(d):
     units = []
     for r, row in enumerate(d.split('\n')):
         for c, ch in enumerate(row):
-            # print(r, c, ch)
             if ch == '.':
                 map_.add((r, c))
             elif ch == 'E' or ch == 'G':
@@ -385,6 +404,20 @@ def test2():
     assert part2(TEST_6.strip(), 31) == 1140
 
 
+def test_a():
+    map_, units = parse(TEST_A.strip())
+    g = Game(units, map_)
+    g.play()
+    print(g.result())
+
+
+def part1(d):
+    map_, units = parse(d)
+    g = Game(units, map_)
+    g.play()
+    return g.result()
+
+
 def part2(d, start_hit_power):
     hit_power = start_hit_power
     while True:
@@ -411,16 +444,13 @@ def main():
     # print(map_)
     # print(units)
 
-    test1()
-    test2()
+    # test1()
+    # test2()
 
-    # g = Game(units, map_)
+    test_a()
 
-    # g.update_elfs(13)
-
-    # g.play()
-    # print([u for u in g.units if not u.is_goblin and not u.is_alive])
-    # print(g.result(), g.round)
+    p1 = part1(d)
+    print(p1)
 
     p2 = part2(d, 10)
     print(p2)
