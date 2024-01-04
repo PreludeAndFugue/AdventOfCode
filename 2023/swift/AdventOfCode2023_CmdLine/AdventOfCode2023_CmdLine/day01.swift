@@ -7,8 +7,6 @@
 
 import Foundation
 
-let d = getInput("01")
-
 struct Day01 {
     func run() {
         let d = getInput("01")

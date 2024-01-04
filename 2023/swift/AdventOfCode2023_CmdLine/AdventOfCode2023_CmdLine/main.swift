@@ -5,4 +5,5 @@
 //  Created by gary on 03/01/2024.
 //
 
-Day01().run()
+//Day01().run()
+Day02().run()
