@@ -1,6 +1,8 @@
 
 from help import get_input
 
+from collections import Counter
+
 test1 = '''3   4
 4   3
 2   5
@@ -20,4 +22,8 @@ aa.sort()
 bb.sort()
 
 s = sum(abs(a - b) for a, b in zip(aa, bb))
+print(s)
+
+c = Counter(bb)
+s = sum(a * c[a] for a in aa)
 print(s)
