@@ -10,6 +10,7 @@ c++/basepath.cpp
 # Python
 
 __pycache__
+2024/day*.txt
 
 
 # Xcode
