@@ -23,8 +23,13 @@ DIRECTIONS = {
     'DL': (1, -1)
 }
 
-# source = test1.strip()
-source = get_input(4)
+
+def parse(source):
+    map_ = {}
+    for r, row in enumerate(source.split('\n')):
+        for c, ch in enumerate(row):
+            map_[(r, c)] = ch
+    return map_
 
 
 def get_word(p, direction, map_):
@@ -42,18 +47,55 @@ def get_word(p, direction, map_):
     return word
 
 
-map_ = {}
-for r, row in enumerate(source.split('\n')):
-    for c, ch in enumerate(row):
-        map_[(r, c)] = ch
+def get_word_2(p, map_):
+    check = set(['M', 'S'])
+    r, c = p
+    x1 = map_.get((r - 1, c - 1), None)
+    x2 = map_.get((r + 1, c + 1), None)
 
-count = 0
-for p, ch in map_.items():
-    if ch != 'X':
-        continue
-    for d in DIRECTIONS.values():
-        w = get_word(p, d, map_)
-        if w == 'XMAS':
+    y1 = map_.get((r - 1, c + 1), None)
+    y2 = map_.get((r + 1, c - 1), None)
+
+    if not any([x1, x2, y1, y2]):
+        return None
+
+    x = set([x1, x2])
+    y = set([y1, y2])
+    return x == check and y == check
+
+
+def part1():
+    source = test1.strip()
+    # source = get_input(4)
+    map_ = parse(source)
+
+    count = 0
+    for p, ch in map_.items():
+        if ch != 'X':
+            continue
+        for d in DIRECTIONS.values():
+            w = get_word(p, d, map_)
+            if w == 'XMAS':
+                count += 1
+
+    print(count)
+
+
+def part2():
+    # source = test1.strip()
+    source = get_input(4)
+    map_ = parse(source)
+
+    count = 0
+    for p, ch in map_.items():
+        if ch != 'A':
+            continue
+        if get_word_2(p, map_):
             count += 1
 
-print(count)
+    print(count)
+
+
+
+# part1()
+part2()
