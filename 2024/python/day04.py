@@ -42,9 +42,9 @@ def get_word(p, direction, map_):
         pp = r, c
         ch = map_.get(pp, None)
         if ch is None:
-            return None
+            return False
         word += ch
-    return word
+    return word == 'XMAS'
 
 
 def get_word_2(p, map_):
@@ -57,7 +57,7 @@ def get_word_2(p, map_):
     y2 = map_.get((r + 1, c - 1), None)
 
     if not any([x1, x2, y1, y2]):
-        return None
+        return False
 
     x = set([x1, x2])
     y = set([y1, y2])
@@ -65,8 +65,8 @@ def get_word_2(p, map_):
 
 
 def part1():
-    source = test1.strip()
-    # source = get_input(4)
+    # source = test1.strip()
+    source = get_input(4)
     map_ = parse(source)
 
     count = 0
@@ -74,9 +74,7 @@ def part1():
         if ch != 'X':
             continue
         for d in DIRECTIONS.values():
-            w = get_word(p, d, map_)
-            if w == 'XMAS':
-                count += 1
+            count +=  get_word(p, d, map_)
 
     print(count)
 
@@ -90,12 +88,11 @@ def part2():
     for p, ch in map_.items():
         if ch != 'A':
             continue
-        if get_word_2(p, map_):
-            count += 1
+        count += get_word_2(p, map_)
 
     print(count)
 
 
 
-# part1()
+part1()
 part2()
