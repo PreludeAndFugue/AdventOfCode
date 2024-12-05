@@ -73,4 +73,37 @@ def part1():
     print(count)
 
 
-part1()
+def part2():
+    # source = test1.strip()
+    source = get_input(5)
+    map_, ns = parse(source)
+
+    incorrect = []
+    for n in ns:
+        if not check(map_, n):
+            incorrect.append(n)
+
+    result = 0
+    for n in incorrect:
+        len_n = len(n)
+        change = True
+        while change:
+            j = 1
+            change = False
+            while j < len_n:
+                n1 = n[j - 1]
+                n2 = n[j]
+                m = map_.get(n1, [])
+                if n2 not in m:
+                    change = True
+                    n[j - 1] = n2
+                    n[j] = n1
+                j += 1
+        k = len_n // 2
+
+        result += n[k]
+    print(result)
+
+
+# part1()
+part2()
