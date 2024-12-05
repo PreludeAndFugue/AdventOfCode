@@ -34,13 +34,13 @@ test1 = '''47|53
 
 
 def parse(source):
-    map_ = defaultdict(list)
+    map_ = defaultdict(set)
     a, b = source.split('\n\n')
     for line in a.split('\n'):
         x, y = line.split('|')
         x = int(x)
         y = int(y)
-        map_[x].append(y)
+        map_[x].add(y)
 
     ns = []
     for line in b.split('\n'):
@@ -105,5 +105,5 @@ def part2():
     print(result)
 
 
-# part1()
+part1()
 part2()
