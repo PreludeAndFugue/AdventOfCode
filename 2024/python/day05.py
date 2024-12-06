@@ -2,6 +2,7 @@
 from help import get_input
 
 from collections import defaultdict
+from functools import cmp_to_key
 
 test1 = '''47|53
 97|13
@@ -105,5 +106,36 @@ def part2():
     print(result)
 
 
-part1()
-part2()
+def part1a():
+    '''
+    Use built-in sort to solve problems.
+    '''
+    source = test1.strip()
+    map_, ns = parse(source)
+
+    def sorter(n1, n2):
+        m = map_.get(n1, [])
+        if n2 in m:
+            return -1
+        else:
+            return 1
+
+    sort_key = cmp_to_key(sorter)
+
+    a1 = 0
+    a2 = 0
+    for n in ns:
+        m = sorted(n, key=sort_key)
+        mid = m[len(n) // 2]
+        if m == n:
+            a1 += mid
+        else:
+            a2 += mid
+
+    print(a1)
+    print(a2)
+
+
+# part1()
+# part2()
+part1a()
