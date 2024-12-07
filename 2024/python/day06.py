@@ -102,19 +102,18 @@ def part2():
     direction = 'U'
 
     points = original_walk(start, direction, map_)
-    obstructions = sorted(p for p in points if p != start)
+    obstructions = [p for p in points if p != start]
 
-    valid = []
+    valid = 0
     for obstruction in obstructions:
-        print(obstruction)
-        m = deepcopy(map_)
-        m[obstruction] = '#'
-        result = walk(start, direction, m)
+        map_[obstruction] = '#'
+        result = walk(start, direction, map_)
         if result:
-            valid.append(obstruction)
+            valid += 1
+        map_[obstruction] = '.'
 
-    print(len(valid))
+    print(valid)
 
 
-part1()
+# part1()
 part2()
