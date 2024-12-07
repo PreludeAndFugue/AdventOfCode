@@ -1,6 +1,8 @@
 
 from help import get_input
 
+from copy import deepcopy
+
 
 test1 = '''....#.....
 .........#
@@ -55,25 +57,64 @@ def move(p, d, map_):
         return pp, d
 
 
-def part1():
-    source = get_input(6)
-    # source = test1.strip()
+def walk(start, direction, map_):
+    p = start
+    # (start, direction) tuples
+    locations = set([(start, direction)])
+    while True:
+        p, direction = move(p, direction, map_)
+        if p is None:
+            return False
+        location = p, direction
+        if location in locations:
+            return True
+        locations.add(location)
 
-    map_, start = parse(source)
-    direction = 'U'
-    print(map_)
-    print(start)
 
+def original_walk(start, direction, map_):
     points = set([start])
-
     p = start
     while True:
         p, direction = move(p, direction, map_)
         if p is None:
             break
         points.add(p)
+    return points
+
+
+def part1():
+    source = get_input(6)
+    # source = test1.strip()
+
+    map_, start = parse(source)
+    direction = 'U'
+
+    points = original_walk(start, direction, map_)
 
     print(len(points))
 
 
+def part2():
+    source = get_input(6)
+    # source = test1.strip()
+
+    map_, start = parse(source)
+    direction = 'U'
+
+    points = original_walk(start, direction, map_)
+    obstructions = sorted(p for p in points if p != start)
+
+    valid = []
+    for obstruction in obstructions:
+        print(obstruction)
+        m = deepcopy(map_)
+        m[obstruction] = '#'
+        result = walk(start, direction, m)
+        if result:
+            valid.append(obstruction)
+
+    print(len(valid))
+
+
 part1()
+part2()
