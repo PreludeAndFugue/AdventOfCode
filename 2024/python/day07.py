@@ -14,10 +14,21 @@ test1 = '''190: 10 19
 21037: 9 7 18 13
 292: 11 6 16 20'''
 
-OPERATORS = {
-    '*': mul,
-    '+': add
-}
+
+def concat(n1, n2):
+    if n2 < 10:
+        return 10*n1 + n2
+    elif n2 < 100:
+        return 100*n1 + n2
+    elif n2 < 1000:
+        return 1000*n1 + n2
+    else:
+        raise ValueError
+    # return int(str(n1) + str(n2))
+
+
+OPERATORS = (mul, add, concat)
+
 
 def parse(source):
     for line in source.split('\n'):
@@ -31,6 +42,8 @@ def check(m, ns, operators):
     result = ns[0]
     for n, op in zip(ns[1:], operators):
         result = op(result, n)
+        if result > m:
+            return False
     return result == m
 
 
@@ -39,12 +52,9 @@ source = get_input(7)
 
 p1 = 0
 for m, ns in parse(source):
-    # print(m, ns)
     repeat = len(ns) - 1
-    for operators in product('*+', repeat=repeat):
-        ops = [OPERATORS[o] for o in operators]
-        if check(m, ns, ops):
-            # print('\t', m, ns, operators)
+    for operators in product(OPERATORS, repeat=repeat):
+        if check(m, ns, operators):
             p1 += m
             break
 
