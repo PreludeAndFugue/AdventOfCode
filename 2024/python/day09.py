@@ -93,9 +93,10 @@ def compact2(disk_map):
 
         if update:
             new_disk_map.insert(i, (file_no, file_size))
-            new_disk_map.pop(i + 1)
             if new_space:
-                new_disk_map.insert(i + 1, (-1, new_space))
+                new_disk_map[i + 1] = (-1, new_space)
+            else:
+                new_disk_map.pop(i + 1)
 
     seen = set()
     for file_no, file_size in new_disk_map:
