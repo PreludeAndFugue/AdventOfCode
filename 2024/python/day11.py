@@ -34,7 +34,7 @@ map_ = defaultdict(int)
 for n in ns:
     map_[n] += 1
 
-for _ in range(25):
+for _ in range(75):
     map_ = update_all(map_)
 s = sum(v for v in map_.values())
 print(s)
