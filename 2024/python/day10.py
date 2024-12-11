@@ -1,4 +1,5 @@
 
+from collections import defaultdict
 import heapq
 
 from help import get_input
@@ -42,6 +43,21 @@ test5 = '''89010123
 01329801
 10456732'''
 
+test6 = '''.....0.
+..4321.
+..5..2.
+..6543.
+..7..4.
+..8765.
+..9....'''
+
+test7 = '''012345
+123456
+234567
+345678
+4.6789
+56789.'''
+
 
 def parse(source):
     map_ = {}
@@ -63,24 +79,28 @@ def get_neighbours(p, map_):
         dr, dc = direction
         pp = r + dr, c + dc
         nn = map_.get(pp, -1)
+        # if nn == 9:
+        #     print('9', pp)
         if nn - 1 == n:
             yield pp
 
 
 def bfs(start, map_):
+    parents = defaultdict(list)
     seen = set([start])
     q = [start]
-    count = 0
+    end_points = set()
     while q:
         p = heapq.heappop(q)
         n = map_[p]
         if n == 9:
-            count += 1
+            end_points.add(p)
         for pp in get_neighbours(p, map_):
-            if pp not in seen:
-                seen.add(pp)
-                heapq.heappush(q, pp)
-    return count
+            # if pp not in seen:
+            #     seen.add(pp)
+            parents[pp].append(p)
+            heapq.heappush(q, pp)
+    return end_points, parents
 
 
 def test():
@@ -125,5 +145,19 @@ def part1():
     print(s)
 
 
-test()
-part1()
+def part2():
+    # source = test7.strip()
+    source = get_input(10)
+    map_, trailheads = parse(source)
+
+    s = 0
+    for t in trailheads:
+        end_points, parents = bfs(t, map_)
+        for p in end_points:
+            s += len(parents[p])
+    print(s)
+
+
+# test()
+# part1()
+part2()
