@@ -1,9 +1,28 @@
 
 from collections import defaultdict
+from functools import cache
 
 from help import get_input
 
 test1 = '''125 17'''
+
+
+@cache
+def test(n, blinks):
+    '''Recursive function solution'''
+    if blinks == 0:
+        return 1
+    if n == 0:
+        return test(1, blinks - 1)
+    s = str(n)
+    l = len(s)
+    if l % 2 == 0:
+        s1 = s[:l//2]
+        s2 = s[l//2:]
+        return test(int(s1), blinks - 1) + test(int(s2), blinks - 1)
+    else:
+        return test(2024*n, blinks - 1)
+
 
 def update(n):
     if n == 0:
@@ -37,4 +56,7 @@ for n in ns:
 for _ in range(75):
     map_ = update_all(map_)
 s = sum(v for v in map_.values())
+print(s)
+
+s = sum(test(n, 75) for n in ns)
 print(s)
