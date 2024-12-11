@@ -85,22 +85,23 @@ def get_neighbours(p, map_):
             yield pp
 
 
-def bfs(start, map_):
+def bfs(start, map_, part1=True):
     parents = defaultdict(list)
     seen = set([start])
     q = [start]
-    end_points = set()
+    count = 0
     while q:
         p = heapq.heappop(q)
         n = map_[p]
         if n == 9:
-            end_points.add(p)
+            count += 1
         for pp in get_neighbours(p, map_):
-            # if pp not in seen:
-            #     seen.add(pp)
-            parents[pp].append(p)
-            heapq.heappush(q, pp)
-    return end_points, parents
+            if pp not in seen:
+                if part1:
+                    seen.add(pp)
+                parents[pp].append(p)
+                heapq.heappush(q, pp)
+    return count
 
 
 def test():
@@ -141,23 +142,11 @@ def part1():
 
     map_, trailheads = parse(source)
 
-    s = sum(bfs(t, map_) for t in trailheads)
-    print(s)
-
-
-def part2():
-    # source = test7.strip()
-    source = get_input(10)
-    map_, trailheads = parse(source)
-
-    s = 0
-    for t in trailheads:
-        end_points, parents = bfs(t, map_)
-        for p in end_points:
-            s += len(parents[p])
-    print(s)
+    s1 = sum(bfs(t, map_) for t in trailheads)
+    s2 = sum(bfs(t, map_, False) for t in trailheads)
+    print(s1)
+    print(s2)
 
 
 # test()
-# part1()
-part2()
+part1()
