@@ -46,6 +46,8 @@ def parse(source):
         a1, a2 = int(m1.group(1)), int(m1.group(2))
         b1, b2 = int(m2.group(1)), int(m2.group(2))
         c1, c2 = int(m3.group(1)), int(m3.group(2))
+        c1 += 10000000000000
+        c2 += 10000000000000
 
         d1 = a1*b2 - a2*b1
         x1 = c1*b2 - c2*b1
@@ -56,7 +58,6 @@ def parse(source):
         if x.is_integer() and x >= 0 and y.is_integer() and y >= 0:
             t += 3*x + y
     print(t)
-
 
 
 source = test1.strip()
