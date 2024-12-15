@@ -36,6 +36,16 @@ vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
 ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
 v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^'''
 
+test3 = '''#######
+#...#.#
+#.....#
+#..OO@#
+#..O..#
+#.....#
+#######
+
+<vv<<^^<<^^'''
+
 MOVEMENT = {
     '^': UP,
     '>': RIGHT,
@@ -43,12 +53,28 @@ MOVEMENT = {
     'v': DOWN
 }
 
-def parse(source):
+def expand_row(row):
+    r = []
+    for ch in row:
+        if ch in ('.', '#'):
+            r.append(ch*2)
+        elif ch == '@':
+            r.append('@.')
+        elif ch == 'O':
+            r.append('[]')
+        else:
+            raise ValueError
+    return ''.join(r)
+
+
+def parse(source, part2):
     m, movements = source.split('\n\n')
     movements = ''.join(movements.split('\n'))
     map_ = {}
     start = None
     for r, row in enumerate(m.split('\n')):
+        if part2:
+            row = expand_row(row)
         for c, ch in enumerate(row):
             if ch == '#':
                 continue
@@ -57,6 +83,10 @@ def parse(source):
                 ch = '.'
             map_[(r, c)] = ch
     return start, movements, map_
+
+
+def expand(map_source):
+    pass
 
 
 def move_box(p, d, map_):
@@ -86,8 +116,168 @@ def move_box(p, d, map_):
 
     return True
 
+def move_box_horizontal(b, d, map_):
+    r, c = b
+    boxes = [b]
+    dr, dc = d
+    dr *= 2
+    dc *= 2
+    while True:
+        r += dr
+        c += dc
+        pp = r, c
+        ch = map_.get(pp, '#')
+        if ch == '#':
+            return False
+        if ch in '[]':
+            boxes.append(pp)
+        if ch == '.':
+            break
 
-def move(p, d, map_):
+    map_[b] = '.'
+    is_left = d == LEFT
+    parts = '][' if is_left else '[]'
+    for p in boxes:
+        r, c = p
+        r += d[0]
+        c += d[1]
+        map_[(r, c)] = parts[0]
+        r += d[0]
+        c += d[1]
+        map_[(r, c)] = parts[1]
+    return True
+
+
+def can_move_box_vertical(b, d, map_):
+    box = [b]
+    r, c = b
+    ch = map_[b]
+    if ch == '[':
+        b1 = r, c + 1
+    else:
+        b1 = r, c - 1
+    box.append(b1)
+    box.sort()
+
+    dr, dc = d
+    chs = ''
+    for bb in box:
+        r, c = bb
+        rr = r + dr
+        cc = c + dc
+        chs += map_.get((rr, cc), '#')
+
+    if chs == '..':
+        return True
+    if '#' in chs:
+        return False
+    elif chs == '[]':
+        b = box[0]
+        r, c = b
+        r += dr
+        c += dc
+        return can_move_box_vertical((r, c), d, map_)
+    elif chs == '][':
+        b0 = box[0]
+        r0, c0 = b0
+        bb0 = r0 + dr, c0 + dc
+        b1 = box[1]
+        r1, c1 = b1
+        bb1 = r1 + dr, c1 + dc
+        m1 = can_move_box_vertical(bb0, d, map_)
+        m2 = can_move_box_vertical(bb1, d, map_)
+        return m1 and m2
+    elif chs == '.[':
+        b = box[1]
+        r, c = b
+        r += dr
+        c += dc
+        return can_move_box_vertical((r, c), d, map_)
+    elif chs == '].':
+        b = box[0]
+        r, c = b
+        r += dr
+        c += dc
+        return can_move_box_vertical((r, c), d, map_)
+    else:
+        raise ValueError(chs)
+
+
+def move_box_vertical(b, d, map_):
+    box = [b]
+    r, c = b
+    ch = map_[b]
+    if ch == '[':
+        b1 = r, c + 1
+    else:
+        b1 = r, c - 1
+    box.append(b1)
+    box.sort()
+
+    dr, dc = d
+    chs = ''
+    for bb in box:
+        r, c = bb
+        rr = r + dr
+        cc = c + dc
+        chs += map_[(rr, cc)]
+
+    if chs == '..':
+        pass
+    elif '#' in chs:
+        raise ValueError
+    elif chs == '[]':
+        b = box[0]
+        r, c = b
+        r += dr
+        c += dc
+        move_box_vertical((r, c), d, map_)
+    elif chs == '][':
+        b0 = box[0]
+        r0, c0 = b0
+        bb0 = r0 + dr, c0 + dc
+        b1 = box[1]
+        r1, c1 = b1
+        bb1 = r1 + dr, c1 + dc
+        move_box_vertical(bb0, d, map_)
+        move_box_vertical(bb1, d, map_)
+    elif chs == '.[':
+        b = box[1]
+        r, c = b
+        r += dr
+        c += dc
+        move_box_vertical((r, c), d, map_)
+    elif chs == '].':
+        b = box[0]
+        r, c = b
+        r += dr
+        c += dc
+        move_box_vertical((r, c), d, map_)
+    else:
+        raise ValueError
+
+    parts = '[]'
+    for b, p in zip(box, parts):
+        r, c = b
+        map_[b] = '.'
+        rr = r + dr
+        cc = c + dc
+        map_[(rr, cc)] = p
+
+
+def move_box_2(b, d, map_):
+    horizontal = d in (LEFT, RIGHT)
+    if horizontal:
+        return move_box_horizontal(b, d, map_)
+    else:
+        if can_move_box_vertical(b, d, map_):
+            move_box_vertical(b, d, map_)
+            return True
+        else:
+            return False
+
+
+def move(p, d, move_box, map_):
     r, c = p
     dr, dc = d
     rr, cc = r + dr, c + dc
@@ -99,7 +289,8 @@ def move(p, d, map_):
         return pp
     if move_box(pp, d, map_):
         return pp
-    else: return p
+    else:
+        return p
 
 
 def print_map(map_, pp):
@@ -129,22 +320,41 @@ def score(map_):
     return t
 
 
-# source = test1.strip()
-# source = test2.strip()
-source = get_input(15)
+def score2(map_):
+    t = 0
+    for (r, c), ch in map_.items():
+        if ch == '[':
+            t += 100*r + c
+    return t
 
-p, movements, map_ = parse(source)
 
-print(p)
-print(movements)
-for m in movements:
-    d = MOVEMENT[m]
-    print(d)
-    p = move(p, d, map_)
+def part1():
+    # source = test1.strip()
+    # source = test2.strip()
+    source = get_input(15)
 
-    # print_map(map_, p)
-    # input()
+    p, movements, map_ = parse(source, False)
 
-print(p)
-print_map(map_, p)
-print(score(map_))
+    for m in movements:
+        d = MOVEMENT[m]
+        p = move(p, d, move_box, map_)
+    print(score(map_))
+
+
+def part2():
+    # source = test1.strip()
+    # source = test2.strip()
+    # source = test3.strip()
+    source = get_input(15)
+
+    p, movements, map_ = parse(source, True)
+
+    for m in movements:
+        d = MOVEMENT[m]
+        p = move(p, d, move_box_2, map_)
+
+    print(score2(map_))
+
+
+# part1()
+part2()
