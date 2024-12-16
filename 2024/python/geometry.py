@@ -5,3 +5,10 @@ LEFT = (0, -1)
 RIGHT = (0, 1)
 
 DIRECTIONS = [UP, DOWN, LEFT, RIGHT]
+
+NEXT_DIRECTIONS = {
+    UP: [LEFT, RIGHT],
+    RIGHT: [UP, DOWN],
+    DOWN: [RIGHT, LEFT],
+    LEFT: [DOWN, UP]
+}
