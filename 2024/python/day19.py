@@ -25,17 +25,17 @@ def parse(source):
 @cache
 def check(design):
     if design == '':
-        return True
+        return 1
     checks = []
     for p in patterns:
         if design.startswith(p):
             d = design[len(p):]
             c = check(d)
             checks.append(c)
-    return any(checks)
+    return sum(checks)
 
 
-source = test1.strip()
+# source = test1.strip()
 source = get_input(19)
 
 patterns, designs = parse(source)
@@ -43,7 +43,6 @@ patterns, designs = parse(source)
 t = 0
 for d in designs:
     c = check(d)
-    if c:
-        t += 1
+    t += c
 
 print(t)
