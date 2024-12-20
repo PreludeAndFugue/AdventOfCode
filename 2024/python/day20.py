@@ -2,7 +2,7 @@
 from collections import Counter
 import heapq
 
-from geometry import UP, DOWN, LEFT, RIGHT, DIRECTIONS
+from geometry import UP, DOWN, LEFT, RIGHT, DIRECTIONS, manhattan
 from help import get_input
 
 test1 = '''###############
@@ -92,25 +92,57 @@ def bfs(start, end, map_):
     return distances
 
 
-# source = test1.strip()
-source = get_input(20)
+def part1():
+    # source = test1.strip()
+    source = get_input(20)
 
-map_, start, end = parse(source)
+    map_, start, end = parse(source)
 
-distances = bfs(start, end, map_)
+    distances = bfs(start, end, map_)
 
-counter = Counter()
-for p1, p, p2 in get_shortcuts(map_):
-    d1 = distances[p1]
-    d2 = distances[p2]
-    d = abs(d1 - d2) - 2
-    counter[d] += 1
+    counter = Counter()
+    for p1, p, p2 in get_shortcuts(map_):
+        d1 = distances[p1]
+        d2 = distances[p2]
+        d = abs(d1 - d2) - 2
+        counter[d] += 1
 
 
-t = 0
-for k in sorted(counter.keys()):
-    if k >= 100:
-        t += counter[k]
+    t = 0
+    for k in sorted(counter.keys()):
+        if k >= 100:
+            t += counter[k]
+    print(t)
 
-print(t)
 
+def part2():
+    # source = test1.strip()
+    source = get_input(20)
+
+    map_, start, end = parse(source)
+    distances = bfs(start, end, map_)
+
+    x = sorted((v, k) for k, v in distances.items())
+
+    D = x[-1][0]
+
+    counter = Counter()
+    for i, p in x:
+        for j, pp in x[i + 1:]:
+            d = j - i
+            dd = manhattan(p, pp)
+            if dd > 20:
+                continue
+            if dd >= d:
+                continue
+            saving = d - dd
+            counter[saving] += 1
+
+    t = 0
+    for k, v in counter.items():
+        if k >= 100:
+            t += v
+    print(t)
+
+# part1()
+part2()
