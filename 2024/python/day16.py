@@ -1,7 +1,8 @@
 
+from collections import defaultdict
 import heapq
 
-from geometry import NEXT_DIRECTIONS, RIGHT
+from geometry import NEXT_DIRECTIONS, LEFT, RIGHT, UP, DOWN
 from help import get_input
 
 test1 = '''###############
@@ -68,20 +69,21 @@ def get_next(p, d, map_):
 
 
 def search(start, direction, end, map_):
-    seen = set([(start, direction)])
+    seen = {(start, direction): 0}
     q = [(0, start, direction)]
+    children = defaultdict(set)
     while q:
         t, p, d = heapq.heappop(q)
-        # print(t, p, d)
 
-        if p == end:
-            return t
         for pp, dd, dt in get_next(p, d, map_):
+            tt = t + dt
             x = pp, dd
-            if x not in seen:
-                seen.add(x)
-                # print('\tadding', t + dt, pp, dd)
-                heapq.heappush(q, (t + dt, pp, dd))
+            if x not in seen or tt <= seen[x]:
+                children[x].add((p, d))
+                seen[(pp, dd)] = tt
+                heapq.heappush(q, (tt, pp, dd))
+
+    return children
 
 
 # source = test1.strip()
@@ -89,8 +91,22 @@ def search(start, direction, end, map_):
 source = get_input(16)
 start, end, map_ = parse(source)
 
-# print(start, end)
-# print(map_)
+children = search(start, RIGHT, end, map_)
+print(start, end)
 
-s = search(start, RIGHT, end, map_)
-print(s)
+x = end, UP
+seen = set([x])
+parents = [x]
+while parents:
+    new_parents = []
+    for p in parents:
+        cs = children[p]
+        for c in cs:
+            if c not in seen:
+                new_parents.append(c)
+                seen.add(c)
+    parents = new_parents
+
+
+a = set(x[0] for x in seen)
+print(len(a))
