@@ -58,5 +58,5 @@ for _ in range(75):
 s = sum(v for v in map_.values())
 print(s)
 
-s = sum(test(n, 75) for n in ns)
-print(s)
+# s = sum(test(n, 75) for n in ns)
+# print(s)
