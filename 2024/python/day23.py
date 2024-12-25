@@ -2,6 +2,7 @@
 from collections import defaultdict
 from itertools import combinations
 
+from graphs import find_cliques
 from help import get_input
 
 test1 = '''kh-tc
@@ -122,39 +123,6 @@ for cycle in cycles:
             t += 1
             break
 print(t)
-
-
-def bron_kerbosch(R, P, X, cliques):
-    """
-    Recursive function to find all maximal cliques.
-    R: current clique
-    P: potential vertices to add to the clique
-    X: vertices already processed
-    """
-    if not P and not X:
-        cliques.append(R)
-        return
-
-    for v in list(P):
-        neighbors = set(map_[v])
-        bron_kerbosch(
-            R.union({v}),
-            P.intersection(neighbors),
-            X.intersection(neighbors),
-            cliques
-        )
-        P.remove(v)
-        X.add(v)
-
-
-def find_cliques(map_):
-    """Find all maximal cliques in the graph."""
-    P = set(map_.keys())
-    R = set()
-    X = set()
-    cliques = []
-    bron_kerbosch(R, P, X, cliques)
-    return cliques
 
 
 c = find_cliques(map_)
