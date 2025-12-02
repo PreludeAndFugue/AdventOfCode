@@ -23,12 +23,18 @@ for line in source.split('\n'):
     # print(line)
     d = line[0]
     m = int(line[1:])
-    if d == 'L':
-        n -= m
-        n %= 100
-    elif d == 'R':
-        n += m
-        n %= 100
-    if n == 0:
-        c += 1
+    for i in range(m):
+        if d == 'L':
+            n -= 1
+            n %= 100
+            if n == 0:
+                c += 1
+        elif d == 'R':
+            n += 1
+            n %= 100
+            if n == 0:
+                c += 1
+        else:
+            raise ValueError(f'Unknown direction: {d}')
+
 print(c)
